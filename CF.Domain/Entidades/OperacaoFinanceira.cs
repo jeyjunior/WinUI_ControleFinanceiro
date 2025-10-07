@@ -1,0 +1,54 @@
+﻿using CF.Domain.Atributos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CF.Domain.Entidades
+{
+    [Entidade("OperacaoFinanceira")]
+    public class OperacaoFinanceira
+    {
+        [ChavePrimaria]
+        public int PK_OperacaoFinanceira { get; set; }
+        
+        [Obrigatorio, Relacionamento("TipoOperacaoFinanceira", "PK_TipoOperacaoFinanceira")]
+        public int FK_TipoOperacaoFinanceira { get; set; }
+
+        [Obrigatorio, Relacionamento("EntidadeFinanceira", "PK_EntidadeFinanceira")]
+        public int FK_EntidadeFinanceira { get; set; }
+
+        [Obrigatorio, Relacionamento("Categoria", "PK_Categoria")]
+        public int FK_Categoria { get; set; }
+
+        [Obrigatorio, Relacionamento("StatusPagamento", "PK_StatusPagamento")]
+        public int FK_StatusPagamento { get; set; }
+        
+        [Obrigatorio, TamanhoDecimal(18, 2)]
+        public decimal Valor { get; set; }
+        
+        public DateTime? DataOperacao { get; set; } 
+        
+        public DateTime? DataVencimento { get; set; } 
+
+        [TamanhoString(200)]
+        public string Descricao { get; set; }
+
+        [Relacionamento("Usuario", "PK_Usuario")]
+        public int? FK_Usuario { get; set; }
+
+
+        [Editavel(false)]
+        public TipoOperacaoFinanceira TipoOperacaoFinanceira { get; set; }
+
+        [Editavel(false)]
+        public EntidadeFinanceira EntidadeFinanceira { get; set; }
+
+        [Editavel(false)]
+        public Categoria Categoria { get; set; }
+
+        [Editavel(false)]
+        public StatusPagamento StatusPagamento { get; set; }
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ControleFinanceiro (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ControleFinanceiro (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

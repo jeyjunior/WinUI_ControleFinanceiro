@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>CF.Data</RootNamespace>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
+	  <PackageReference Include="Dapper" Version="2.1.66" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
+	  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+	  <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.7" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CF.Domain\CF.Domain.csproj" />
+  </ItemGroup>
+  
+</Project>
