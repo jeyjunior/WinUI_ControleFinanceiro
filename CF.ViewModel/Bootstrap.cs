@@ -1,5 +1,9 @@
 using CF.Application;
+using CF.Data.Provider;
 using CF.Domain.Entidades;
+using CF.Domain.Enumeradores;
+using CF.Domain.Interfaces.ViewModel;
+using CF.ViewModel.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -31,18 +35,59 @@ namespace CF.ViewModel
 
                 ServiceProvider = host.Services;
 
-                BootstrapApp.IniciarConfiguracao();
+                try
+                {
+                    BootstrapApp.IniciarConfiguracao();
+                }
+                catch (Exception dbEx)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Erro na configuração do banco: {dbEx}");
+                    ConfigurarFallbackParaSQLite();
+                }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Erro na inicialização: {ex}");
             }
         }
+
+        private static void ConfigurarFallbackParaSQLite()
+        {
+            // Lógica para automaticamente mudar para SQLite se SQL Server falhar
+            var gerenciador = new GerenciadorConfiguracao();
+            var todosParametros = gerenciador.ObterTodosParametros();
+
+            var sqliteConfig = todosParametros.FirstOrDefault(p => p.TipoBanco == eTipoBancoDados.SQLite);
+            if (sqliteConfig != null)
+            {
+                gerenciador.DefinirConfiguracaoAtiva(sqliteConfig.NomeAplicacao);
+            }
+        }
+
+        //public static void Iniciar()
+        //{
+        //    try
+        //    {
+        //        var host = Host.CreateDefaultBuilder()
+        //            .ConfigureServices((context, services) =>
+        //            {
+        //                CF.Application.BootstrapApp.RegistrarRepositorios(services);
+        //                RegistrarViewModels(services);
+        //            })
+        //            .Build();
+
+        //        ServiceProvider = host.Services;
+
+        //        BootstrapApp.IniciarConfiguracao();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine($"Erro na inicialização: {ex}");
+        //    }
+        //}
         private static void RegistrarViewModels(IServiceCollection services)
         {
-            //services.AddSingleton<ICategoriaVM, CategoriaVM>();
-            //services.AddSingleton<ITipoInvestimentoVM, TipoInvestimentoVM>();
-            //services.AddSingleton<IEntidadeFinanceiraVM, EntidadeFinanceiraVM>();
+            services.AddSingleton<ICategoriaViewModel, CategoriaViewModel>();
         }
     }
 }

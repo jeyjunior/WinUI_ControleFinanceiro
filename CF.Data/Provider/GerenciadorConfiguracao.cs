@@ -26,6 +26,7 @@ namespace CF.Data.Provider
         {
             if (!File.Exists(_caminhoArquivo))
             {
+                System.Diagnostics.Debug.WriteLine("Arquivo de configuração não encontrado. Criando um novo...");
                 CriarArquivoConfiguracaoPadrao();
             }
 
@@ -124,8 +125,10 @@ namespace CF.Data.Provider
             SalvarParametros(todosParametros);
         }
 
+        // Mantenha os métodos async se precisar em outras partes do código
         public async Task<ParametrosConfiguracao> ObterConfiguracaoAtivaAsync()
         {
+            // Implementação async se necessário
             return await Task.Run(() => ObterConfiguracaoAtiva());
         }
     }

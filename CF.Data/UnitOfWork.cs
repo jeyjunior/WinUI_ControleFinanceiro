@@ -1,5 +1,6 @@
 ﻿using CF.Data.Extensao;
 using CF.Data.Provider;
+using CF.Data.Provider.CF.Data.Provider;
 using CF.Domain.Dto;
 using CF.Domain.Enumeradores;
 using CF.Domain.Interfaces;
@@ -46,12 +47,20 @@ namespace CF.Data
             try
             {
                 if (_connection.State != ConnectionState.Open)
+                {
                     _connection.Open();
+                }
 
                 _transaction = _connection.BeginTransaction();
             }
             catch (Exception ex)
             {
+                if (_connection.State == ConnectionState.Open)
+                    _connection.Close();
+
+                _connection.Open();
+                _transaction = _connection.BeginTransaction();
+
                 throw new InvalidOperationException("Erro ao iniciar a transação", ex);
             }
         }

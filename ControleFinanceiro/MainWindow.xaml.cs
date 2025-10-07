@@ -1,3 +1,4 @@
+using ControleFinanceiro.Telas;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -48,8 +49,8 @@ namespace ControleFinanceiro
         private void DefinirPadraoUI()
         {
             m_AppWindow = ObterAppWindowAtual();
-            m_AppWindow.Title = "FlowCheck";
-            m_AppWindow.SetIcon("Assets/flowcheck_icone_24.ico");
+            m_AppWindow.Title = "Controle Financeiro";
+            m_AppWindow.SetIcon("Assets/controleFinanceiro_icone_24.ico");
 
             DefinirTamanhoUI();
             CentralizarUI();
@@ -109,5 +110,24 @@ namespace ControleFinanceiro
             presenter.PreferredMinimumWidth = Largura;
         }
         #endregion
+
+        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            try
+            {
+                var item = args.InvokedItemContainer as NavigationViewItem;
+                if (item == null)
+                    return;
+
+                if (item.Tag.ToString() == "Categoria")
+                {
+                    MainFrame.Navigate(typeof(CategoriaPage), this);
+                }
+            }
+            catch
+            {
+
+            }
+        }
     }
 }

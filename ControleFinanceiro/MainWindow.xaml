@@ -18,16 +18,17 @@
                         PaneDisplayMode="LeftCompact"
                         IsBackButtonVisible="Collapsed"
                         IsPaneToggleButtonVisible="False"
-                        IsSettingsVisible="False">
+                        IsSettingsVisible="False"
+                        ItemInvoked="NavView_ItemInvoked">
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Name="nviOperacaoFinanceira" Tag="OperacaoFinanceira" Margin="0,34,0,0">
-                    <Image Source="/Assets/operacao_financeira_64x.png" Margin="0" HorizontalAlignment="Stretch" Width="24" Height="24"/>
+                    <Image Source="/Assets/operacao_financeira_64x.png" Margin="0,0,4,0" HorizontalAlignment="Stretch" Width="24" Height="24"/>
                 </NavigationViewItem>
                 <NavigationViewItem x:Name="nviCategoria" Tag="Categoria">
-                    <Image Source="/Assets/categoria_64x.png" Margin="0" HorizontalAlignment="Stretch"  Width="24" Height="24"/>
+                    <Image Source="/Assets/categoria_64x.png" Margin="0,0,4,0" HorizontalAlignment="Stretch"  Width="24" Height="24"/>
                 </NavigationViewItem>
                 <NavigationViewItem x:Name="nviEntidadeFinanceira" Tag="EntidadeFinanceira">
-                    <Image Source="/Assets/entidade_64x.png" Margin="0" HorizontalAlignment="Stretch"  Width="24" Height="24"/>
+                    <Image Source="/Assets/entidade_64x.png" Margin="0,0,4,0" HorizontalAlignment="Center"  Width="24" Height="24"/>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 

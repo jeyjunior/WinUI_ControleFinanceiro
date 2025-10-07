@@ -4,39 +4,28 @@ using Microsoft.Data.SqlClient;
 
 namespace CF.Data.Provider
 {
-    internal static class SqlServerProvider
-    {
-        public static IDbConnection CriarConexao(string connectionString)
-        {
-            var conexao = new SqlConnection(connectionString);
-            TestarConexao(conexao);
-            return conexao;
-        }
+    using System;
+    using System.Data;
+    using Microsoft.Data.SqlClient;
 
-        private static void TestarConexao(SqlConnection conexao)
+    namespace CF.Data.Provider
+    {
+        internal static class SqlServerProvider
         {
-            try
+            private const string STRING_CONEXAO_PADRAO =
+                "Server=(localdb)\\MSSQLLocalDB;Database=ControleFinanceiro;TrustServerCertificate=True;";
+
+            public static IDbConnection CriarConexao()
             {
-                conexao.Open();
-                using (var cmd = conexao.CreateCommand())
-                {
-                    cmd.CommandText = "SELECT 1;";
-                    cmd.ExecuteScalar();
-                }
+                string connectionString = STRING_CONEXAO_PADRAO;
+                var conexao = new SqlConnection(connectionString);
+
+                return conexao;
             }
-            catch (SqlException ex)
+
+            public static IDbConnection CriarConexao(string connectionString)
             {
-                throw new InvalidOperationException(
-                    $"Erro ao conectar com o SQL Server. Verifique a string de conexão: {ex.Message}", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Erro ao testar a conexão com o SQL Server: {ex.Message}", ex);
-            }
-            finally
-            {
-                if (conexao.State == ConnectionState.Open)
-                    conexao.Close();
+                return new SqlConnection(connectionString);
             }
         }
     }
