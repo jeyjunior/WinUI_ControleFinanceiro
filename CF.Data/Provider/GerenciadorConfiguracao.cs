@@ -82,9 +82,9 @@ namespace CF.Data.Provider
                 new ParametrosConfiguracao
                 {
                     Ativo = false,
-                    TipoBanco = eTipoBancoDados.SQLServer,
+                    TipoBanco = eTipoBancoDados.MySQL,
                     NomeAplicacao = "ControleFinanceiro",
-                    StringConexao = "Server=Instancia;Database=NomeBaseDados;Integrated Security=True;TrustServerCertificate=True;"
+                    StringConexao = ";"
                 }
             };
 

@@ -54,6 +54,7 @@ namespace CF.ViewModel
         {
             services.AddSingleton<ICategoriaViewModel, CategoriaViewModel>();
             services.AddSingleton<IEntidadeViewModel, EntidadeViewModel>();
+            services.AddSingleton<IOperacaoFinanceiraViewModel, OperacaoFinanceiraViewModel>();
         }
     }
 }

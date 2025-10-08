@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="ControleFinanceiro.Telas.OperacaoFinanceiraPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ControleFinanceiro.Telas"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+
+    <Grid Background="{StaticResource Cinza10}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="90*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Grid Grid.Column="1" Padding="16" Background="{StaticResource Cinza9Transp10}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1" RowSpacing="24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid RowSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="40*"/>
+                                <ColumnDefinition Width="60*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel x:Name="spTipoOperacao" Grid.Column="0">
+                                <TextBlock x:Name="txtTituloTipoOperacao" Text="Tipo:"/>
+                                <ComboBox x:Name="cboTipoOperacao"
+                                          HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding TipoOperacaoCollection}"
+                                          DisplayMemberPath="Nome"
+                                          SelectedValuePath="PK_TipoOperacao"
+                                          SelectedValue="{Binding PK_TipoOperacaoSelecionada, Mode=TwoWay}" />
+                            </StackPanel>
+
+                            <StackPanel x:Name="spCategoria" Grid.Column="1">
+                                <TextBlock x:Name="txtTituloCategoria" Text="Categoria:"/>
+                                <ComboBox x:Name="cboCategoria"
+                                          HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding CategoriaCollection}"
+                                          DisplayMemberPath="Nome"
+                                          SelectedValuePath="PK_Categoria"
+                                          SelectedValue="{Binding PK_CategoriaSelecionada, Mode=TwoWay}" />
+                            </StackPanel>
+
+                            <StackPanel x:Name="spEntidadeFinanceira" Grid.Column="2">
+                                <TextBlock x:Name="txtTituloEntidadeFinanceira" Text="Entidade Financeira:"/>
+                                <ComboBox x:Name="cboEntidadeFinanceira"
+                                          HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding EntidadeFinanceiraCollection}"
+                                          DisplayMemberPath="Nome"
+                                          SelectedValuePath="PK_EntidadeFinanceira"
+                                          SelectedValue="{Binding PK_EntidadeFinanceiraSelecionada, Mode=TwoWay}" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Grid.Row="1" ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel x:Name="spStatusPagamento" Grid.Column="0">
+                                <TextBlock x:Name="txtTituloStatusPagamento" Text="Pagamento:"/>
+                                <ComboBox x:Name="cboStatusPagamento"
+                                          HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding StatusPagamentoCollection}"
+                                          DisplayMemberPath="Nome"
+                                          SelectedValuePath="PK_StatusPagamento"
+                                          SelectedValue="{Binding PK_StatusPagamentoSelecionada, Mode=TwoWay}" />
+                            </StackPanel>
+
+                            <StackPanel x:Name="spDataVencimento" Grid.Column="1">
+                                <TextBlock x:Name="txtTituloDataVencimento" Text="Vencimento:"/>
+                                <CalendarDatePicker x:Name="cdpVencimento" PlaceholderText="Selecione uma data" Date="{Binding DataVencimento, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+                            </StackPanel>
+                            <StackPanel x:Name="spDataOperacao" Grid.Column="2">
+                                <TextBlock x:Name="txtTituloDataOperacao" Text="Operação:"/>
+                                <CalendarDatePicker HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                            <StackPanel x:Name="spValor" Grid.Column="3">
+                                <TextBlock x:Name="txtTituloValor" Text="Valor:"/>
+                                <NumberBox x:Name="txtValor" Text="{Binding Valor, Mode=TwoWay}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <StackPanel x:Name="spBotoes" Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="8">
+                        <Button x:Name="btnDeletar" Height="34" Width="34" Padding="0" Margin="0" Click="btnDeletar_Click" Visibility="{Binding ExibeBotoesCrud}" IsEnabled="{Binding HabilitaBotaoEditarExcluir}">
+                            <FontIcon Glyph="&#xE74D;" FontSize="16"/>
+                        </Button>
+                        <Button x:Name="btnEditar" Height="34" Width="34" Padding="0" Margin="0" Click="btnEditar_Click" Visibility="{Binding ExibeBotoesCrud}" IsEnabled="{Binding HabilitaBotaoEditarExcluir}">
+                            <FontIcon Glyph="&#xE70F;" FontSize="16"/>
+                        </Button>
+                        <Button x:Name="btnAdicionar" Height="34" Width="34" Padding="0" Margin="0" Click="btnAdicionar_Click" Visibility="{Binding ExibeBotoesCrud}">
+                            <FontIcon Glyph="&#xE710;" FontSize="16"/>
+                        </Button>
+                        <Button x:Name="btnCancelar" Height="34" Width="34" Padding="0" Margin="0" Click="btnCancelar_Click" Visibility="{Binding ExibeBotoesConfirmacao}">
+                            <FontIcon Glyph="&#xE711;" FontSize="16"/>
+                        </Button>
+                        <Button x:Name="btnSalvar" Height="34" Width="34" Padding="0" Margin="0" Style="{StaticResource AccentButtonStyle}" Click="btnSalvar_Click" Visibility="{Binding ExibeBotoesConfirmacao}">
+                            <FontIcon Glyph="&#xE74E;" FontSize="16"/>
+                        </Button>
+                    </StackPanel>
+
+                    <controls:DataGrid  x:Name="dtgPrincipal"
+                                        Grid.Row="2"
+                                        Margin="0,16,0,0"
+                                        Background="{StaticResource Cinza10Transp50}"
+                                        Foreground="{StaticResource Branco}"
+                                        AutoGenerateColumns="False"
+                                        CanUserSortColumns="True"
+                                        CanUserResizeColumns="True"
+                                        IsReadOnly="True"
+                                        SelectionMode="Single"
+                                        HeadersVisibility="Column"
+                                        RowDetailsVisibilityMode="Collapsed"
+                                        SelectionChanged="dtgPrincipal_SelectionChanged"
+                                        GridLinesVisibility="All">
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colPK_OperacaoFinanceira" Visibility="Collapsed" Header="PK_OperacaoFinanceira" Binding="{Binding PK_OperacaoFinanceira}" Width="80"/>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colTipoOperacao" Header="Tipo" Foreground="Aqua" Binding="{Binding TipoOperacao}" Width="80"/>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colCategoria" Header="Categoria" Binding="{Binding Categoria}" Width="*"/>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colEntidadeFinanceira" Header="Entidade Financeira" Binding="{Binding EntidadeFinanceira}" Width="*"/>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colDataVencimento" Header="Vencimento" Binding="{Binding DataVencimento}" Width="120"/>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colDataOperacao" Header="Operação" Binding="{Binding DataOperacao}" Width="120"/>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colValor" Header="Valor" Binding="{Binding Valor}" Width="*"/>
+                            <controls:DataGridTextColumn FontSize="12" x:Name="colStatusPagamento" Header="StatusPagamento" Binding="{Binding StatusPagamento}" Width="*"/>
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

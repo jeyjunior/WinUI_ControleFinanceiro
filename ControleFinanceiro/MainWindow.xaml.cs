@@ -125,6 +125,10 @@ namespace ControleFinanceiro
                 {
                     MainFrame.Navigate(typeof(EntidadePage));
                 }
+                else if (item.Tag.ToString() == "OperacaoFinanceira")
+                {
+                    MainFrame.Navigate(typeof(OperacaoFinanceiraPage));
+                }
             }
             catch
             {

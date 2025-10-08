@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace CF.Domain.Entidades
 {
-    [Entidade("TipoOperacaoFinanceira")]
-    public class TipoOperacaoFinanceira
+    [Entidade("TipoOperacao")]
+    public class TipoOperacao
     {
         [ChavePrimaria]
-        public int PK_TipoOperacaoFinanceira { get; set; }
+        public int PK_TipoOperacao { get; set; }
 
         [Obrigatorio, TamanhoString(50)]
         public string Nome { get; set; }

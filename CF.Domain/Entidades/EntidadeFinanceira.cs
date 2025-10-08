@@ -13,7 +13,7 @@ namespace CF.Domain.Entidades
         [ChavePrimaria]
         public int PK_EntidadeFinanceira { get; set; }
 
-        [Obrigatorio, TamanhoString(100)]
+        [Obrigatorio, TamanhoString(50)]
         public string Nome { get; set; }
 
         [Relacionamento("Usuario", "PK_Usuario")]

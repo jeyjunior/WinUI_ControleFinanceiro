@@ -13,8 +13,8 @@ namespace CF.Domain.Entidades
         [ChavePrimaria]
         public int PK_OperacaoFinanceira { get; set; }
         
-        [Obrigatorio, Relacionamento("TipoOperacaoFinanceira", "PK_TipoOperacaoFinanceira")]
-        public int FK_TipoOperacaoFinanceira { get; set; }
+        [Obrigatorio, Relacionamento("TipoOperacao", "PK_TipoOperacao")]
+        public int FK_TipoOperacao { get; set; }
 
         [Obrigatorio, Relacionamento("EntidadeFinanceira", "PK_EntidadeFinanceira")]
         public int FK_EntidadeFinanceira { get; set; }
@@ -40,7 +40,7 @@ namespace CF.Domain.Entidades
 
 
         [Editavel(false)]
-        public TipoOperacaoFinanceira TipoOperacaoFinanceira { get; set; }
+        public TipoOperacao TipoOperacao { get; set; }
 
         [Editavel(false)]
         public EntidadeFinanceira EntidadeFinanceira { get; set; }
@@ -50,5 +50,25 @@ namespace CF.Domain.Entidades
 
         [Editavel(false)]
         public StatusPagamento StatusPagamento { get; set; }
+    }
+
+    public class OperacaoFinanceiraGrid
+    {
+        [ChavePrimaria]
+        public int PK_OperacaoFinanceira { get; set; }
+        public int FK_TipoOperacao { get; set; }
+        public int FK_EntidadeFinanceira { get; set; }
+        public int FK_Categoria { get; set; }
+        public int FK_StatusPagamento { get; set; }
+        public decimal Valor { get; set; }
+        public DateTime? DataOperacao { get; set; }
+        public DateTime? DataVencimento { get; set; }
+        public string Descricao { get; set; }
+        public int? FK_Usuario { get; set; }
+
+        public string TipoOperacao { get; set; }
+        public string EntidadeFinanceira { get; set; }
+        public string Categoria { get; set; }
+        public string StatusPagamento { get; set; }
     }
 }

@@ -35,7 +35,7 @@
 
                     <StackPanel x:Name="spNome" Grid.Row="0">
                         <TextBlock x:Name="txtTitulo" Text="Categoria:"/>
-                        <TextBox x:Name="txtNome" Text="{Binding Nome, Mode=TwoWay}" IsEnabled="{Binding ExibeBotoesConfirmacao}"/>
+                        <TextBox x:Name="txtNome" Text="{Binding Nome, Mode=TwoWay}" IsEnabled="{Binding ExibeBotoesConfirmacao}" MaxLength="30"/>
                         <TextBlock x:Name="txtErro" Text="Erros"/>
                     </StackPanel>
 

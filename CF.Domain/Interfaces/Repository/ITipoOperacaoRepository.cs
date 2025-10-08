@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CF.Domain.Interfaces.Repository
 {
-    public interface ITipoOperacaoFinanceiraRepository : IRepository<TipoOperacaoFinanceira>
+    public interface ITipoOperacaoRepository : IRepository<TipoOperacao>
     {
     }
 }

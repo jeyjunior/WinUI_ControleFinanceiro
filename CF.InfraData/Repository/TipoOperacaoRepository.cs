@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace CF.InfraData.Repository
 {
-    public class TipoOperacaoFinanceiraRepository : Repository<TipoOperacaoFinanceira>, ITipoOperacaoFinanceiraRepository
+    public class TipoOperacaoRepository : Repository<TipoOperacao>, ITipoOperacaoRepository
     {
-        public TipoOperacaoFinanceiraRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public TipoOperacaoRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
     }
