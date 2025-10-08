@@ -42,7 +42,6 @@ namespace CF.ViewModel
                 catch (Exception dbEx)
                 {
                     System.Diagnostics.Debug.WriteLine($"Erro na configuração do banco: {dbEx}");
-                    ConfigurarFallbackParaSQLite();
                 }
             }
             catch (Exception ex)
@@ -51,43 +50,10 @@ namespace CF.ViewModel
             }
         }
 
-        private static void ConfigurarFallbackParaSQLite()
-        {
-            // Lógica para automaticamente mudar para SQLite se SQL Server falhar
-            var gerenciador = new GerenciadorConfiguracao();
-            var todosParametros = gerenciador.ObterTodosParametros();
-
-            var sqliteConfig = todosParametros.FirstOrDefault(p => p.TipoBanco == eTipoBancoDados.SQLite);
-            if (sqliteConfig != null)
-            {
-                gerenciador.DefinirConfiguracaoAtiva(sqliteConfig.NomeAplicacao);
-            }
-        }
-
-        //public static void Iniciar()
-        //{
-        //    try
-        //    {
-        //        var host = Host.CreateDefaultBuilder()
-        //            .ConfigureServices((context, services) =>
-        //            {
-        //                CF.Application.BootstrapApp.RegistrarRepositorios(services);
-        //                RegistrarViewModels(services);
-        //            })
-        //            .Build();
-
-        //        ServiceProvider = host.Services;
-
-        //        BootstrapApp.IniciarConfiguracao();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        System.Diagnostics.Debug.WriteLine($"Erro na inicialização: {ex}");
-        //    }
-        //}
         private static void RegistrarViewModels(IServiceCollection services)
         {
             services.AddSingleton<ICategoriaViewModel, CategoriaViewModel>();
+            services.AddSingleton<IEntidadeViewModel, EntidadeViewModel>();
         }
     }
 }

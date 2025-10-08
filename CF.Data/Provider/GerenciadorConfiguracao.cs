@@ -68,16 +68,23 @@ namespace CF.Data.Provider
                 new ParametrosConfiguracao
                 {
                     Ativo = true,
-                    TipoBanco = eTipoBancoDados.SQLServer,
-                    NomeAplicacao = "ControleFinanceiro",
-                    StringConexao = "Server=(localdb)\\MSSQLLocalDB;Database=ControleFinanceiro;Integrated Security=True;TrustServerCertificate=True;"
+                    TipoBanco = eTipoBancoDados.SQLite,
+                    NomeAplicacao = "ControleFinanceiro_SQLite",
+                    StringConexao = $"Data Source={Path.Combine(ApplicationData.Current.LocalFolder.Path, "ControleFinanceiro.db")};Version=3;"
                 },
                 new ParametrosConfiguracao
                 {
                     Ativo = false,
-                    TipoBanco = eTipoBancoDados.SQLite,
-                    NomeAplicacao = "ControleFinanceiro_SQLite",
-                    StringConexao = $"Data Source={Path.Combine(ApplicationData.Current.LocalFolder.Path, "ControleFinanceiro.db")};Version=3;"
+                    TipoBanco = eTipoBancoDados.SQLServer,
+                    NomeAplicacao = "ControleFinanceiro",
+                    StringConexao = "Server=Instancia;Database=NomeBaseDados;Integrated Security=True;TrustServerCertificate=True;"
+                },
+                new ParametrosConfiguracao
+                {
+                    Ativo = false,
+                    TipoBanco = eTipoBancoDados.SQLServer,
+                    NomeAplicacao = "ControleFinanceiro",
+                    StringConexao = "Server=Instancia;Database=NomeBaseDados;Integrated Security=True;TrustServerCertificate=True;"
                 }
             };
 

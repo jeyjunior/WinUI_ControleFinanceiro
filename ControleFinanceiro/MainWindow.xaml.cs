@@ -1,3 +1,4 @@
+using CF.Domain.Entidades;
 using ControleFinanceiro.Telas;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -16,14 +17,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+
 
 namespace ControleFinanceiro
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
+    
     public sealed partial class MainWindow : Window
     {
         #region Propriedades
@@ -121,7 +119,11 @@ namespace ControleFinanceiro
 
                 if (item.Tag.ToString() == "Categoria")
                 {
-                    MainFrame.Navigate(typeof(CategoriaPage), this);
+                    MainFrame.Navigate(typeof(CategoriaPage));
+                }
+                else if (item.Tag.ToString() == "EntidadeFinanceira")
+                {
+                    MainFrame.Navigate(typeof(EntidadePage));
                 }
             }
             catch

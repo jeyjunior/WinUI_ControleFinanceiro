@@ -18,13 +18,14 @@ namespace CF.InfraData
     {
         public static void RegistrarServicos(IServiceCollection services)
         {
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
-            services.AddSingleton<IStatusPagamentoRepository, StatusPagamentoRepository>();
-            services.AddSingleton<ITipoOperacaoFinanceiraRepository, TipoOperacaoFinanceiraRepository>();
-            services.AddSingleton<ICategoriaRepository, CategoriaRepository>();
-            services.AddSingleton<IEntidadeFinanceiraRepository, EntidadeFinanceiraRepository>();
-            services.AddSingleton<IOperacaoFinanceiraRepository, OperacaoFinanceiraRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IStatusPagamentoRepository, StatusPagamentoRepository>();
+            services.AddScoped<ITipoOperacaoFinanceiraRepository, TipoOperacaoFinanceiraRepository>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            services.AddScoped<IEntidadeFinanceiraRepository, EntidadeFinanceiraRepository>();
+            services.AddScoped<IOperacaoFinanceiraRepository, OperacaoFinanceiraRepository>();
         }
     }
 }

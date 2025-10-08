@@ -1,6 +1,5 @@
 ﻿using CF.Data.Extensao;
 using CF.Data.Provider;
-using CF.Data.Provider.CF.Data.Provider;
 using CF.Domain.Dto;
 using CF.Domain.Enumeradores;
 using CF.Domain.Interfaces;
@@ -34,7 +33,6 @@ namespace CF.Data
             return config.TipoBanco switch
             {
                 eTipoBancoDados.SQLite => SqliteProvider.CriarConexao(),
-                eTipoBancoDados.SQLServer => SqlServerProvider.CriarConexao(config.StringConexao),
                 _ => throw new InvalidOperationException($"Tipo de banco não suportado: {config.TipoBanco}")
             };
         }

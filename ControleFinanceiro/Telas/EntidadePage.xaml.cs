@@ -21,66 +21,66 @@ using CF.ViewModel;
 
 namespace ControleFinanceiro.Telas
 {
-    public sealed partial class CategoriaPage : Page
+    public sealed partial class EntidadePage : Page
     {
         #region Interfaces
-        private readonly ICategoriaViewModel _categoriaViewModel;
+        private readonly IEntidadeViewModel _entidadeViewModel;
         #endregion
 
         #region Propriedades
         #endregion
 
         #region Método Construtor
-        public CategoriaPage()
+        public EntidadePage()
         {
             InitializeComponent();
-            _categoriaViewModel = Bootstrap.ServiceProvider.GetRequiredService<ICategoriaViewModel>();
+            _entidadeViewModel = Bootstrap.ServiceProvider.GetRequiredService<IEntidadeViewModel>();
 
-            this.DataContext = _categoriaViewModel;
-            dtgPrincipal.ItemsSource = _categoriaViewModel.CategoriaCollection;
+            this.DataContext = _entidadeViewModel;
+            dtgPrincipal.ItemsSource = _entidadeViewModel.EntidadeFinanceiraCollection;
         }
         #endregion
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.CarregarColecoes();
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Cancelar);
-            dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
+            _entidadeViewModel.CarregarColecoes();
+            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacao.Cancelar);
+            dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
         }
         private void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Excluir);
+            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacao.Excluir);
         }
         private void btnEditar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Editar);
+            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacao.Editar);
             txtNome.Focus(FocusState.Keyboard);
             txtNome.SelectAll();
         }
         private void btnAdicionar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Adicionar);
+            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacao.Adicionar);
             txtNome.Focus(FocusState.Keyboard);
             txtNome.SelectAll();
         }
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Cancelar);
-            dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
+            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacao.Cancelar);
+            dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
         }
         private void btnSalvar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.Salvar();
-            dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
+            _entidadeViewModel.Salvar();
+            dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
         }
         private void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Categoria categoria = new Categoria();
+            EntidadeFinanceira entidadeFinanceira = new EntidadeFinanceira();
 
             if (dtgPrincipal.SelectedItem != null)
-                categoria = dtgPrincipal.SelectedItem as Categoria;
+                entidadeFinanceira = dtgPrincipal.SelectedItem as EntidadeFinanceira;
 
-            _categoriaViewModel.DefinirItemSelecionado(categoria);
+            _entidadeViewModel.DefinirItemSelecionado(entidadeFinanceira);
         }
     }
 }

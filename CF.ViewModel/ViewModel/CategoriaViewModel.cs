@@ -1,15 +1,16 @@
-﻿using CF.Domain.Entidades;
-using CF.Domain.Enumeradores;
-using CF.Domain.Interfaces.Repository;
-using CF.Domain.Interfaces.ViewModel;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
+using CF.Domain.Entidades;
+using CF.Domain.Enumeradores;
+using CF.Domain.Interfaces.Repository;
+using CF.Domain.Interfaces.ViewModel;
+using Windows.UI.Input;
 
 namespace CF.ViewModel.ViewModel
 {
@@ -44,8 +45,11 @@ namespace CF.ViewModel.ViewModel
         public bool ExibeBotoesConfirmacao { get => !ExibeBotoesCrud; }
         public bool HabilitaBotaoEditarExcluir { get => _categoriaCollection.Count > 0 && _categoriaSelecionada != null && _categoriaSelecionada.PK_Categoria > 0; }
 
+        private int _indice = -1;
+        public int SelecionarIndice { get => _indice; }
+
         // METÓDOS
-        public void CarregarCategorias()
+        public void CarregarColecoes()
         {
             if (_categoriaCollection == null)
                 _categoriaCollection = new ObservableCollection<Categoria>();
@@ -63,12 +67,39 @@ namespace CF.ViewModel.ViewModel
         public void DefinirTipoOperacao(eTipoOperacao tipoOperacao)
         {
             _tipoOperacao = tipoOperacao;
-
             _habilitarEdicao = (tipoOperacao == eTipoOperacao.Adicionar || tipoOperacao == eTipoOperacao.Editar || tipoOperacao == eTipoOperacao.Excluir) ? eHabilitarEdicao.Sim: eHabilitarEdicao.Nao;
-            
+
+            if (tipoOperacao != eTipoOperacao.Adicionar)
+            {
+                _nome = CategoriaSelecionada != null ? CategoriaSelecionada.Nome : "";
+            }
+            else
+            {
+                _nome = "";
+            }
+
             AtualizarPropriedades();
         }
+        public void DefinirItemSelecionado(Categoria categoria)
+        {
+            _categoriaSelecionada = categoria == null ? new Categoria() : categoria;
 
+            _nome = _categoriaSelecionada.Nome;
+
+            AtualizarPropriedades();
+        }
+        private void AtualizarPropriedades()
+        {
+            PropriedadeAlterada(nameof(ExibeBotoesCrud));
+            PropriedadeAlterada(nameof(ExibeBotoesConfirmacao));
+            PropriedadeAlterada(nameof(HabilitaBotaoEditarExcluir));
+            PropriedadeAlterada(nameof(Nome));
+
+            if (CategoriaCollection.Count > 0 && (CategoriaSelecionada == null || CategoriaSelecionada.PK_Categoria <= 0))
+                _indice = 0;
+
+            PropriedadeAlterada(nameof(SelecionarIndice));
+        }
         public void Salvar()
         {
             if (_tipoOperacao == eTipoOperacao.Adicionar)
@@ -86,25 +117,9 @@ namespace CF.ViewModel.ViewModel
                 var ret = _categoriaRepository.Deletar(_categoriaSelecionada.PK_Categoria);
             }
 
-            CarregarCategorias();
-            DefinirCategoriaSelecionada(null);
+            CarregarColecoes();
+            DefinirItemSelecionado(null);
             DefinirTipoOperacao(eTipoOperacao.Salvar);
-        }
-
-        public void DefinirCategoriaSelecionada(Categoria categoria)
-        {
-            _categoriaSelecionada = categoria == null ? new Categoria() : categoria;
-
-            _nome = _categoriaSelecionada.Nome;
-
-            AtualizarPropriedades();
-        }
-        private void AtualizarPropriedades()
-        {
-            PropriedadeAlterada(nameof(ExibeBotoesCrud));
-            PropriedadeAlterada(nameof(ExibeBotoesConfirmacao));
-            PropriedadeAlterada(nameof(HabilitaBotaoEditarExcluir));
-            PropriedadeAlterada(nameof(Nome));
         }
     }
 }

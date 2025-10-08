@@ -55,6 +55,9 @@
     <Folder Include="Styles\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Telas\EntidadePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Telas\CategoriaPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

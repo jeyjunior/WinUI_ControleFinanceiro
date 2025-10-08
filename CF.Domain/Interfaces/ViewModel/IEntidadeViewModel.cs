@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace CF.Domain.Interfaces.ViewModel
 {
-    public interface ICategoriaViewModel : IViewModelBase
+    public interface IEntidadeViewModel : IViewModelBase
     {
-        ObservableCollection<Categoria> CategoriaCollection { get; }
-        Categoria CategoriaSelecionada { get; }
+        ObservableCollection<EntidadeFinanceira> EntidadeFinanceiraCollection { get; }
+        EntidadeFinanceira EntidadeFinanceiraSelecionada { get; }
 
         bool ExibeBotoesCrud { get; }
         bool ExibeBotoesConfirmacao { get; }
@@ -20,9 +20,10 @@ namespace CF.Domain.Interfaces.ViewModel
         string Nome { get; set; }
         int SelecionarIndice { get; }
 
+
         void CarregarColecoes();
         void DefinirTipoOperacao(eTipoOperacao tipoOperacao);
-        void DefinirItemSelecionado(Categoria categoria);
+        void DefinirItemSelecionado(EntidadeFinanceira entidadeFinanceira);
         void Salvar();
     }
 }
