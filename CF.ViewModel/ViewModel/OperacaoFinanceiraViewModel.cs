@@ -5,6 +5,7 @@ using CF.Domain.Interfaces.ViewModel;
 using CF.InfraData.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -83,11 +84,58 @@ namespace CF.ViewModel.ViewModel
         #endregion
 
         #region DataVencimento
-        private DateTime? _dataVencimento;
-        public DateTime? DataVencimento
+        private DateTimeOffset? _dataVencimento = null;
+        public DateTimeOffset? DataVencimento
         {
             get => _dataVencimento;
             set => _dataVencimento = value;
+        }
+        public string DataVencimentoFormatada
+        {
+            get
+            {
+                if (_dataVencimento == null)
+                    return "";
+
+                return _dataVencimento.Value.Date.ToShortDateString();
+            }
+            set
+            {
+                _dataVencimento = (value == null || value == "") ? DateTime.Now : Convert.ToDateTime(value);
+            }
+        }
+        #endregion
+        #region DataOperacao
+        private DateTimeOffset? _dataOperacao = null;
+        public DateTimeOffset? DataOperacao
+        {
+            get => _dataOperacao;
+            set => _dataOperacao = value;
+        }
+
+        public string DataOperacaoFormatada
+        {
+            get
+            {
+                if (_dataOperacao == null)
+                    return "";
+
+                return _dataOperacao.Value.Date.ToShortDateString();
+            }
+            set
+            {
+                _dataOperacao = (value == null || value == "") ? DateTime.Now : Convert.ToDateTime(value);
+            }
+        }
+        #endregion
+
+        #region Anotacao
+        // PROPRIEDADES OBJETO PRINCIPAL
+        private string _anotacao = "";
+        public string Anotacao
+        {
+            get => _anotacao;
+            set => _anotacao = value;
         }
         #endregion
 
@@ -219,6 +267,8 @@ namespace CF.ViewModel.ViewModel
             _pK_StatusPagamentoSelecionada = _operacaoFinanceiraSelecionada.FK_StatusPagamento;
             _valor = _operacaoFinanceiraSelecionada.Valor;
             _dataVencimento = _operacaoFinanceiraSelecionada.DataVencimento;
+            _dataOperacao = _operacaoFinanceiraSelecionada.DataTransacao;
+            _anotacao = _operacaoFinanceiraSelecionada.Anotacao;
 
             AtualizarPropriedades();
         }
@@ -238,6 +288,10 @@ namespace CF.ViewModel.ViewModel
             PropriedadeAlterada(nameof(PK_StatusPagamentoSelecionada));
             PropriedadeAlterada(nameof(Valor));
             PropriedadeAlterada(nameof(DataVencimento));
+            PropriedadeAlterada(nameof(DataVencimentoFormatada));
+            PropriedadeAlterada(nameof(DataOperacao));
+            PropriedadeAlterada(nameof(DataOperacaoFormatada));
+            PropriedadeAlterada(nameof(Anotacao));
         }
         public void Salvar()
         {
@@ -259,6 +313,23 @@ namespace CF.ViewModel.ViewModel
             CarregarColecoes();
             DefinirItemSelecionado(null);
             DefinirTipoOperacao(eTipoOperacao.Salvar);
+        }
+    }
+
+    public class NullableDateTimeOffsetConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return value is DateTimeOffset dateTime ? dateTime : null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            if (value is DateTimeOffset dateTime)
+            {
+                return dateTime;
+            }
+            return null;
         }
     }
 }

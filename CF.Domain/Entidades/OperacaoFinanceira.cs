@@ -28,12 +28,12 @@ namespace CF.Domain.Entidades
         [Obrigatorio, TamanhoDecimal(18, 2)]
         public decimal Valor { get; set; }
         
-        public DateTime? DataOperacao { get; set; } 
+        public DateTime? DataTransacao { get; set; } 
         
         public DateTime? DataVencimento { get; set; } 
 
         [TamanhoString(200)]
-        public string Descricao { get; set; }
+        public string Anotacao { get; set; }
 
         [Relacionamento("Usuario", "PK_Usuario")]
         public int? FK_Usuario { get; set; }
@@ -61,9 +61,9 @@ namespace CF.Domain.Entidades
         public int FK_Categoria { get; set; }
         public int FK_StatusPagamento { get; set; }
         public decimal Valor { get; set; }
-        public DateTime? DataOperacao { get; set; }
+        public DateTime? DataTransacao { get; set; }
         public DateTime? DataVencimento { get; set; }
-        public string Descricao { get; set; }
+        public string Anotacao { get; set; }
         public int? FK_Usuario { get; set; }
 
         public string TipoOperacao { get; set; }

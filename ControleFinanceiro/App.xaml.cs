@@ -44,6 +44,8 @@ namespace ControleFinanceiro
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "pt-BR";
+
             Bootstrap.Iniciar();
 
             _window = new MainWindow();

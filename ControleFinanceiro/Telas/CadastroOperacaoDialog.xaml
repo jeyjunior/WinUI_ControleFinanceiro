@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="ControleFinanceiro.Telas.CadastroOperacaoDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ControleFinanceiro.Telas"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="CadastroOperacaoFinanceira"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
+    PrimaryButtonClick="CadastroOperacaoFinanceira_PrimaryButtonClick"
+    PrimaryButtonText="Salvar"
+    SecondaryButtonClick="CadastroOperacaoFinanceira_SecondaryButtonClick"
+    SecondaryButtonText="Cancelar"
+    mc:Ignorable="d"
+    MinWidth="600" Width="600" 
+    Closed="CadastroOperacaoFinanceira_Closed"
+    Background="{StaticResource Cinza13}">
+
+    <Grid RowSpacing="12" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" ColumnSpacing="12" RowSpacing="0" MinWidth="500">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="txtTituloTipoOperacao" Text="Tipo:" Grid.Row="0" Grid.Column="0" Margin="0" Padding="0"/>
+            <ComboBox x:Name="cboTipoOperacao"
+                      Grid.Row="1" Grid.Column="0"
+                      HorizontalAlignment="Stretch"
+                      ItemsSource="{Binding TipoOperacaoCollection}"
+                      DisplayMemberPath="Nome"
+                      SelectedValuePath="PK_TipoOperacao"
+                      SelectedValue="{Binding PK_TipoOperacaoSelecionada, Mode=TwoWay}" />
+
+            <TextBlock x:Name="txtTituloCategoria" Text="Categoria:" Grid.Row="0" Grid.Column="1" Margin="0" Padding="0"/>
+            <ComboBox x:Name="cboCategoria" Grid.Row="1" Grid.Column="1"
+                      HorizontalAlignment="Stretch"
+                      ItemsSource="{Binding CategoriaCollection}"
+                      DisplayMemberPath="Nome"
+                      SelectedValuePath="PK_Categoria"
+                      SelectedValue="{Binding PK_CategoriaSelecionada, Mode=TwoWay}" />
+        </Grid>
+
+        <Grid Grid.Row="1" ColumnSpacing="12" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="txtTituloEntidadeFinanceira" Text="Entidade Financeira:" Grid.Row="0"/>
+            <ComboBox x:Name="cboEntidadeFinanceira"
+                      Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding EntidadeFinanceiraCollection}"
+                    DisplayMemberPath="Nome"
+                    SelectedValuePath="PK_EntidadeFinanceira"
+                    SelectedValue="{Binding PK_EntidadeFinanceiraSelecionada, Mode=TwoWay}" />
+        </Grid>
+
+        <Grid Grid.Row="2" ColumnSpacing="12" RowSpacing="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="txtTituloStatusPagamento" Text="Pagamento:" Grid.Row="0"/>
+            <ComboBox x:Name="cboStatusPagamento"
+                       Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        ItemsSource="{Binding StatusPagamentoCollection}"
+                        DisplayMemberPath="Nome"
+                        SelectedValuePath="PK_StatusPagamento"
+                        SelectedValue="{Binding PK_StatusPagamentoSelecionada, Mode=TwoWay}" />
+
+            <TextBlock x:Name="txtTituloDataVencimento" Text="Vencimento:" Grid.Row="0" Grid.Column="1"/>
+            <StackPanel x:Name="spDataVencimento" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="32"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" 
+                            VerticalAlignment="Top" 
+                            CornerRadius="4,0,0,4"
+                            Padding="10,5,0,0"
+                            VerticalContentAlignment="Center"
+                            TextAlignment="Start"
+                            Text="{Binding DataVencimentoFormatada, Mode=TwoWay}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,0,0,0"/>
+
+                    <CalendarDatePicker Grid.Column="1" 
+                              x:Name="cdpVencimento" 
+                              CornerRadius="0,4,4,0"
+                              Margin="0"
+                              Padding="0"
+                              VerticalAlignment="Top"
+                              Date="{Binding DataVencimento, Mode=TwoWay}"
+                              HorizontalAlignment="Stretch"
+                              BorderThickness="1,1,1,1"/>
+                </Grid>
+            </StackPanel>
+
+            <TextBlock x:Name="txtTituloDataTransacao" Text="Transação:" Grid.Row="0" Grid.Column="2"/>
+            <StackPanel x:Name="spDataTransacao" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="32"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" 
+                            VerticalAlignment="Top" 
+                            CornerRadius="4,0,0,4"
+                                Padding="10,5,0,0"
+                                VerticalContentAlignment="Center"
+                                TextAlignment="Start"
+                                Text="{Binding DataTransacaoFormatada, Mode=TwoWay}"
+                                HorizontalAlignment="Stretch"
+                                Margin="0,0,0,0"/>
+
+                    <CalendarDatePicker Grid.Column="1" 
+                                      x:Name="cdpTransacao" 
+                                      CornerRadius="0,4,4,0"
+                                      Margin="0"
+                                      Padding="0"
+                                      VerticalAlignment="Top"
+                                      Date="{Binding DataTransacao, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch"
+                                      BorderThickness="1,1,1,1"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="3" ColumnSpacing="12" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="txtTituloValor" Text="Valor:" Grid.Row="0"/>
+            <NumberBox x:Name="txtValor" Grid.Row="1" Text="{Binding Valor, Mode=TwoWay}"/>
+        </Grid>
+
+        <StackPanel x:Name="spAnotacao" Grid.Row="4">
+            <TextBlock x:Name="txtTituloAnotacao" Text="Anotação:"/>
+            <TextBox x:Name="txtAnotacao" Height="74" MaxLength="200" TextWrapping="Wrap" AcceptsReturn="False" Text="{Binding Anotacao, Mode=TwoWay}"/>
+        </StackPanel>
+    </Grid>
+
+</ContentDialog>

@@ -13,6 +13,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Telas\CadastroOperacaoDialog.xaml" />
     <None Remove="Telas\CategoriaPage.xaml" />
     <None Remove="Themes\Colors.xaml" />
   </ItemGroup>
@@ -62,6 +63,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Telas\CategoriaPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Telas\CadastroOperacaoDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="Themes\Generic.xaml">

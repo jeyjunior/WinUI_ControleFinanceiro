@@ -1,109 +1,164 @@
--- =============================================
--- SCRIPT DE INSERTS PARA DADOS DE TESTE
--- =============================================
+-- TipoOperacao
+INSERT INTO TipoOperacao (PK_TipoOperacao, Nome) VALUES 
+(1, 'Crédito'),
+(2, 'Débito');
 
--- Inserir Usu�rio de teste
-INSERT INTO Usuario (Email, Nome, LoginApi, DataCadastro, Ativo)
-VALUES ('usuario.teste@gmail.com', 'Usuário Teste', 'google_oauth_data', GETDATE(), 1);
+-- StatusPagamento
+INSERT INTO StatusPagamento (PK_StatusPagamento, Nome) VALUES 
+(1, 'Pago'),
+(2, 'Em Aberto'),
+(3, 'Vencido');
 
--- Inserir Tipos de Opera��o
-INSERT INTO TipoOperacaoFinanceira (Nome) VALUES 
-('Entrada'),
-('Saída');
+-- Categorias (NULL em FK_Usuario como solicitado)
+INSERT INTO Categoria (PK_Categoria, Nome, FK_Usuario) VALUES 
+(1, 'Academia', NULL),
+(2, 'Transporte', NULL),
+(3, 'Combustível', NULL),
+(4, 'Manutenção Veicular', NULL),
+(5, 'Estacionamento', NULL),
+(6, 'Seguro Veicular', NULL),
+(7, 'Faculdade', NULL),
+(8, 'Aluguel', NULL),
+(9, 'Condomínio', NULL),
+(10, 'Energia Elétrica', NULL),
+(11, 'Internet', NULL),
+(12, 'Mercado - Carne', NULL),
+(13, 'Mercado - Hortifruti', NULL),
+(14, 'Mercado - Limpeza', NULL),
+(15, 'Mercado - Padaria', NULL),
+(16, 'Roupas', NULL),
+(17, 'Calçados', NULL),
+(18, 'Alimentação - Açai', NULL),
+(19, 'Alimentação - Lanches', NULL),
+(20, 'Restaurantes', NULL),
+(21, 'Lazer - Parques', NULL),
+(22, 'Lazer - Cachoeiras', NULL),
+(23, 'Lazer - Bares', NULL),
+(24, 'Manutenção Residencial', NULL),
+(25, 'Rifas/Bolões', NULL),
+(26, 'Empréstimos', NULL),
+(27, 'Ajuda Familiar', NULL),
+(28, 'Renda Extra', NULL),
+(29, 'Salário', NULL),
+(30, 'Vendas', NULL),
+(31, 'Aulas Particulares', NULL),
+(32, 'Farmácia', NULL),
+(33, 'Plano de Saúde', NULL),
+(34, 'Streaming', NULL),
+(35, 'Telefonia', NULL);
 
--- Inserir Status de Pagamento
-INSERT INTO StatusPagamento (Nome) VALUES 
-('Pago'),
-('Em Aberto'),
-('Vencido');
+-- Entidades Financeiras (NULL em FK_Usuario)
+INSERT INTO EntidadeFinanceira (PK_EntidadeFinanceira, Nome, FK_Usuario) VALUES 
+(1, 'Academia Iron Gym', NULL),
+(2, 'Posto Shell', NULL),
+(3, 'Posto Ipiranga', NULL),
+(4, 'Oficina Mecânica São João', NULL),
+(5, 'Estacionamento Center Park', NULL),
+(6, 'Seguradora Porto', NULL),
+(7, 'Universidade Federal', NULL),
+(8, 'Imobiliária JSL', NULL),
+(9, 'Síndico Edifício Solar', NULL),
+(10, 'Companhia Energética', NULL),
+(11, 'Claro NET', NULL),
+(12, 'Supermercado Extra', NULL),
+(13, 'Supermercado Carrefour', NULL),
+(14, 'Sacolão Frutas Frescas', NULL),
+(15, 'Loja Renner', NULL),
+(16, 'Centro comercial Iguatemi', NULL),
+(17, 'Açai Mania', NULL),
+(18, 'McDonalds', NULL),
+(19, 'Burger King', NULL),
+(20, 'Outback Steakhouse', NULL),
+(21, 'Parque Municipal', NULL),
+(22, 'Cachoeira da Pedra Bonita', NULL),
+(23, 'Bar do Zé', NULL),
+(24, 'Casa & Construção', NULL),
+(25, 'Colega de Trabalho - João', NULL),
+(26, 'Amigo - Maria', NULL),
+(27, 'Família - Pais', NULL),
+(28, 'Empresa XPTO Ltda', NULL),
+(29, 'Freelance Consultoria', NULL),
+(30, 'Plano de Saúde Unimed', NULL),
+(31, 'Farmácia Droga Raia', NULL),
+(32, 'Netflix', NULL),
+(33, 'Spotify', NULL),
+(34, 'Vivo', NULL),
+(35, 'Tim', NULL),
+(36, 'Uber', NULL),
+(37, '99 Pop', NULL),
+(38, 'iFood', NULL),
+(39, 'Americanas', NULL),
+(40, 'Magazine Luiza', NULL);
 
--- Inserir Categorias
-INSERT INTO Categoria (Nome, FK_Usuario) VALUES 
-('Salário', NULL),
-('Freelance', NULL),
-('Aluguel', NULL),
-('Condominio', NULL),
-('Alimentação', NULL),
-('Transporte', NULL),
-('Lazer', NULL),
-('Saúde', NULL),
-('Educação', NULL),
-('Investimentos',NULL);
 
--- Inserir Entidades Financeiras
-INSERT INTO EntidadeFinanceira (Nome, FK_Usuario) VALUES 
-('Empresa XYZ', NULL),
-('Imobiliária ABC', NULL),
-('Condomínio Edifício Central',NULL),
-('Supermercado Preço Bom', NULL),
-('Posto de Gasolina Shell', NULL),
-('Uber/Táxi',NULL),
-('Restaurante Sabor Caseiro', NULL),
-('Academia Fit', NULL),
-('Hospital Saúde Total',NULL),
-('Faculdade USP', NULL),
-('Senhor Zé - Serviços Gerais', NULL);
+-- Operações Financeiras (NULL em FK_Usuario)
+INSERT INTO OperacaoFinanceira (FK_TipoOperacao, FK_EntidadeFinanceira, FK_Categoria, FK_StatusPagamento, Valor, DataTransacao, DataVencimento, Anotacao, FK_Usuario) VALUES 
+-- CRÉDITOS (Tipo 1)
+(1, 28, 29, 1, 4500.00, '2024-01-05', NULL, 'Salário mensal', NULL),
+(1, 29, 28, 1, 800.00, '2024-01-10', NULL, 'Aula particular de matemática', NULL),
+(1, 30, 30, 1, 150.00, '2024-01-15', NULL, 'Venda de guitarra usada', NULL),
+(1, 27, 27, 1, 300.00, '2024-01-20', NULL, 'Ajuda dos pais', NULL),
+(1, 26, 26, 2, 200.00, NULL, '2024-02-01', 'Empréstimo para amigo - a receber', NULL),
 
-INSERT INTO OperacaoFinanceira (
-    FK_TipoOperacao, FK_EntidadeFinanceira, FK_Categoria, FK_StatusPagamento, 
-    Valor, DataOperacao, DataVencimento, Descricao, FK_Usuario
-) VALUES 
--- ENTRADAS
-(1, 1, 1, 2, 2500.00, '2024-01-05', '2024-01-05', 'Salário mensal', null), -- Pago
-(1, 1, 2, 1, 500.00, NULL, '2024-01-20', 'Freelance desenvolvimento', null), -- Em Aberto
+-- DÉBITOS - CONTAS FIXAS (Tipo 2)
+(2, 8, 8, 1, 1200.00, '2024-01-02', '2024-01-05', 'Aluguel apartamento', NULL),
+(2, 9, 9, 1, 350.00, '2024-01-03', '2024-01-10', 'Condomínio', NULL),
+(2, 10, 10, 1, 180.50, '2024-01-08', '2024-01-15', 'Conta de luz', NULL),
+(2, 11, 11, 1, 129.90, '2024-01-05', '2024-01-12', 'Internet + TV', NULL),
+(2, 1, 1, 1, 89.90, '2024-01-10', '2024-01-15', 'Mensalidade academia', NULL),
+(2, 30, 33, 1, 350.00, '2024-01-07', '2024-01-10', 'Plano de saúde', NULL),
 
--- SA�DAS - PAGAS
-(2, 2, 3, 2, 1000.00, '2024-01-10', '2024-01-10', 'Aluguel janeiro', null),
-(2, 3, 4, 2, 350.00, '2024-01-08', '2024-01-08', 'Condomínio janeiro', null),
-(2, 4, 5, 2, 450.00, '2024-01-12', '2024-01-12', 'Compras do mês', null),
-(2, 5, 6, 2, 200.00, '2024-01-15', '2024-01-15', 'Abastecimento carro',null),
-(2, 6, 6, 2, 80.00, '2024-01-18', '2024-01-18', 'Corridas de Uber', null),
+-- DÉBITOS - TRANSPORTE E VEÍCULO
+(2, 2, 3, 1, 200.00, '2024-01-12', NULL, 'Abastecimento completo', NULL),
+(2, 3, 3, 1, 180.00, '2024-01-25', NULL, 'Combustível', NULL),
+(2, 4, 4, 1, 450.00, '2024-01-18', NULL, 'Troca de óleo e filtros', NULL),
+(2, 5, 5, 1, 120.00, '2024-01-22', NULL, 'Estacionamento shopping', NULL),
+(2, 6, 6, 2, 280.00, NULL, '2024-02-05', 'Seguro do carro - vencer', NULL),
 
--- SA�DAS - EM ABERTO (contas futuras)
-(2, 2, 3, 1, 1000.00, NULL, '2024-02-10', 'Aluguel fevereiro', null),
-(2, 3, 4, 1, 350.00, NULL, '2024-02-08', 'Condomínio fevereiro', null),
-(2, 8, 8, 1, 120.00, NULL, '2024-02-05', 'Mensalidade academia', null),
-(2, 11, 7, 1, 300.00, NULL, '2024-02-15', 'Serviço de pintura', null),
+-- DÉBITOS - ALIMENTAÇÃO E MERCADO
+(2, 12, 12, 1, 280.50, '2024-01-07', NULL, 'Carne p/ semana', NULL),
+(2, 13, 13, 1, 95.80, '2024-01-14', NULL, 'Frutas e verduras', NULL),
+(2, 12, 14, 1, 87.30, '2024-01-21', NULL, 'Produtos de limpeza', NULL),
+(2, 13, 15, 1, 45.20, '2024-01-28', NULL, 'Pães e frios', NULL),
+(2, 17, 18, 1, 32.50, '2024-01-19', NULL, 'Açai com complementos', NULL),
+(2, 18, 19, 1, 45.80, '2024-01-13', NULL, 'Lanche rápido', NULL),
+(2, 20, 20, 1, 187.90, '2024-01-26', NULL, 'Jantar com amigos', NULL),
 
--- SA�DAS - VENCIDAS (exemplo de atraso)
-(2, 9, 8, 3, 150.00, NULL, '2023-12-20', 'Consulta médica', null);
+-- DÉBITOS - VESTUÁRIO E LAZER
+(2, 15, 16, 1, 289.90, '2024-01-11', NULL, '2 camisas sociais', NULL),
+(2, 16, 17, 1, 459.99, '2024-01-24', NULL, 'Tênis novo', NULL),
+(2, 21, 21, 1, 25.00, '2024-01-15', NULL, 'Entrada parque', NULL),
+(2, 22, 22, 1, 80.00, '2024-01-20', NULL, 'Passeio cachoeira - gasolina e comida', NULL),
+(2, 23, 23, 1, 95.00, '2024-01-27', NULL, 'Bar com colegas', NULL),
 
--- =============================================
--- CONSULTAS DE VERIFICA��O
--- =============================================
+-- DÉBITOS - DIVERSOS
+(2, 24, 24, 1, 150.00, '2024-01-16', NULL, 'Conserto torneira', NULL),
+(2, 25, 25, 1, 50.00, '2024-01-09', NULL, 'Rifa empresa', NULL),
+(2, 31, 32, 1, 65.80, '2024-01-06', NULL, 'Remédios e produtos', NULL),
+(2, 32, 34, 1, 39.90, '2024-01-01', '2024-01-05', 'Netflix', NULL),
+(2, 33, 34, 1, 19.90, '2024-01-01', '2024-01-05', 'Spotify', NULL),
+(2, 34, 35, 1, 49.90, '2024-01-03', '2024-01-08', 'Plano celular', NULL),
 
--- Verificar totais por tipo
-SELECT 
-    tof.Nome as Tipo,
-    COUNT(*) as Quantidade,
-    SUM(o.Valor) as Total
-FROM OperacaoFinanceira o
-INNER JOIN TipoOperacaoFinanceira tof ON o.FK_TipoOperacaoFinanceira = tof.PK_TipoOperacaoFinanceira
-GROUP BY tof.Nome;
+-- OPERAÇÕES COM DATAS DE VENCIMENTO FUTURAS (Em Aberto)
+(2, 8, 8, 2, 1200.00, NULL, '2024-02-05', 'Aluguel próximo mês', NULL),
+(2, 9, 9, 2, 350.00, NULL, '2024-02-10', 'Condomínio próximo mês', NULL),
+(2, 10, 10, 2, 165.00, NULL, '2024-02-15', 'Conta de luz - vencer', NULL),
+(2, 7, 7, 2, 680.00, NULL, '2024-02-20', 'Mensalidade faculdade', NULL),
 
--- Verificar opera��es por status
-SELECT 
-    sp.Nome as Status,
-    COUNT(*) as Quantidade,
-    SUM(o.Valor) as Total
-FROM OperacaoFinanceira o
-INNER JOIN StatusPagamento sp ON o.FK_StatusPagamento = sp.PK_StatusPagamento
-GROUP BY sp.Nome;
+-- OPERAÇÕES VENCIDAS
+(2, 10, 10, 3, 175.30, NULL, '2023-12-15', 'Conta de luz atrasada', NULL),
+(2, 11, 11, 3, 129.90, NULL, '2023-12-12', 'Internet atrasada', NULL),
 
--- Listar opera��es em aberto (pr�ximas do vencimento)
-SELECT 
-    o.PK_OperacaoFinanceira,
-    tof.Nome as Tipo,
-    ef.Nome as Entidade,
-    c.Nome as Categoria,
-    o.Valor,
-    o.DataVencimento,
-    o.Descricao
-FROM OperacaoFinanceira o
-INNER JOIN TipoOperacaoFinanceira tof ON o.FK_TipoOperacaoFinanceira = tof.PK_TipoOperacaoFinanceira
-INNER JOIN EntidadeFinanceira ef ON o.FK_EntidadeFinanceira = ef.PK_EntidadeFinanceira
-INNER JOIN Categoria c ON o.FK_Categoria = c.PK_Categoria
-INNER JOIN StatusPagamento sp ON o.FK_StatusPagamento = sp.PK_StatusPagamento
-WHERE sp.Nome = 'Em Aberto'
-AND o.DataVencimento >= GETDATE()
-ORDER BY o.DataVencimento;
+-- CRÉDITOS FUTUROS
+(1, 28, 29, 2, 4500.00, NULL, '2024-02-05', 'Próximo salário', NULL),
+(1, 29, 28, 2, 600.00, NULL, '2024-02-15', 'Aulas marcadas', NULL),
+
+-- VALORES EXTREMOS PARA TESTE
+(1, 27, 27, 1, 999999.99, '2024-01-28', NULL, 'HERANÇA - valor máximo teste', NULL),
+(2, 24, 24, 1, 888888.88, '2024-01-29', NULL, 'REFORMA - valor alto teste', NULL),
+(2, 20, 20, 1, 1234.56, '2024-01-30', NULL, 'Jantar corporativo - teste formato', NULL);
+
+-- Operações com anotações longas para testar campo string
+INSERT INTO OperacaoFinanceira (FK_TipoOperacao, FK_EntidadeFinanceira, FK_Categoria, FK_StatusPagamento, Valor, DataOperacao, DataVencimento, Anotacao, FK_Usuario) VALUES 
+(2, 4, 4, 1, 1200.00, '2024-01-17', NULL, 'Manutenção completa do veículo incluindo: troca de pastilhas de freio, alinhamento e balanceamento, revisão dos fluidos, substituição de velas e cabos, limpeza do sistema de ar condicionado. Veículo apresentava ruídos na suspensão dianteira.', NULL),
+(1, 29, 28, 1, 2500.00, '2024-01-22', NULL, 'Projeto de consultoria em desenvolvimento de software para empresa startup do ramo de fintech. Desenvolvimento de API RESTful, arquitetura microserviços, integração com sistemas de pagamento e implementação de segurança JWT. Projeto concluído com sucesso dentro do prazo estabelecido.', NULL);

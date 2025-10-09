@@ -43,8 +43,8 @@
                         <Grid Grid.Row="0" ColumnSpacing="12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="40*"/>
-                                <ColumnDefinition Width="60*"/>
+                                <ColumnDefinition Width="*" MinWidth="300" MaxWidth="350"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <StackPanel x:Name="spTipoOperacao" Grid.Column="0">
@@ -81,8 +81,7 @@
                         <Grid Grid.Row="1" ColumnSpacing="12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="140"/>
-                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="*" MinWidth="300" MaxWidth="350"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
@@ -95,20 +94,85 @@
                                           SelectedValuePath="PK_StatusPagamento"
                                           SelectedValue="{Binding PK_StatusPagamentoSelecionada, Mode=TwoWay}" />
                             </StackPanel>
+                            
+                            <Grid Grid.Column="1" ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                            <StackPanel x:Name="spDataVencimento" Grid.Column="1">
-                                <TextBlock x:Name="txtTituloDataVencimento" Text="Vencimento:"/>
-                                <CalendarDatePicker x:Name="cdpVencimento" PlaceholderText="Selecione uma data" Date="{Binding DataVencimento, Mode=TwoWay}" HorizontalAlignment="Stretch" />
-                            </StackPanel>
-                            <StackPanel x:Name="spDataOperacao" Grid.Column="2">
-                                <TextBlock x:Name="txtTituloDataOperacao" Text="Operação:"/>
-                                <CalendarDatePicker HorizontalAlignment="Stretch"/>
-                            </StackPanel>
+                                <StackPanel x:Name="spDataVencimento" Grid.Column="0" HorizontalAlignment="Stretch">
+                                    <TextBlock x:Name="txtTituloDataVencimento" Text="Vencimento:"/>
+
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="32"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox Grid.Column="0" 
+                                                 VerticalAlignment="Top" 
+                                                 CornerRadius="4,0,0,4"
+                                                 Padding="5,5,0,0"
+                                                 VerticalContentAlignment="Center"
+                                                 TextAlignment="Center"
+                                                 Text="{Binding DataVencimentoFormatada, Mode=TwoWay}"
+                                                 HorizontalAlignment="Stretch"
+                                                 Margin="0,0,0,0"/>
+
+                                        <CalendarDatePicker Grid.Column="1" 
+                                                            x:Name="cdpVencimento" 
+                                                            CornerRadius="0,4,4,0"
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            VerticalAlignment="Top"
+                                                            Date="{Binding DataVencimento, Mode=TwoWay}"
+                                                            HorizontalAlignment="Stretch"
+                                                            BorderThickness="1,1,1,1"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <StackPanel x:Name="spDataOperacao" Grid.Column="1" HorizontalAlignment="Stretch">
+                                    <TextBlock x:Name="txtTituloDataOperacao" Text="Operação:"/>
+
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="32"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox Grid.Column="0" 
+                                                 VerticalAlignment="Top" 
+                                                 CornerRadius="4,0,0,4"
+                                                 Padding="5,5,0,0"
+                                                 VerticalContentAlignment="Center"
+                                                 TextAlignment="Center"
+                                                 Text="{Binding DataOperacaoFormatada, Mode=TwoWay}"
+                                                 HorizontalAlignment="Stretch"
+                                                 Margin="0,0,0,0"/>
+
+                                        <CalendarDatePicker Grid.Column="1" 
+                                                            x:Name="cdpOperacao" 
+                                                            CornerRadius="0,4,4,0"
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            VerticalAlignment="Top"
+                                                            Date="{Binding DataOperacao, Mode=TwoWay}"
+                                                            HorizontalAlignment="Stretch"
+                                                            BorderThickness="1,1,1,1"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
                             <StackPanel x:Name="spValor" Grid.Column="3">
                                 <TextBlock x:Name="txtTituloValor" Text="Valor:"/>
                                 <NumberBox x:Name="txtValor" Text="{Binding Valor, Mode=TwoWay}"/>
                             </StackPanel>
                         </Grid>
+
+                        <StackPanel x:Name="spAnotacao" Grid.Row="2">
+                            <TextBlock x:Name="txtTituloAnotacao" Text="Anotação:"/>
+                            <TextBox x:Name="txtAnotacao" Text="{Binding Anotacao, Mode=TwoWay}"/>
+                        </StackPanel>
                     </Grid>
 
                     <StackPanel x:Name="spBotoes" Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="8">

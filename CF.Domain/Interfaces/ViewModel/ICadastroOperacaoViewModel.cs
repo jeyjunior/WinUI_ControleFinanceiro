@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace CF.Domain.Interfaces.ViewModel
 {
-    public interface IOperacaoFinanceiraViewModel : IViewModelBase
+    public interface ICadastroOperacaoViewModel : IViewModelBase
     {
-        ObservableCollection<OperacaoFinanceiraGrid> OperacaoFinanceiraCollection { get; }
-        OperacaoFinanceiraGrid OperacaoFinanceiraSelecionada { get; }
+        OperacaoFinanceira OperacaoFinanceiraSelecionada { get; }
 
         ObservableCollection<TipoOperacao> TipoOperacaoCollection { get; }
         int PK_TipoOperacaoSelecionada { get; set; }
@@ -23,24 +22,17 @@ namespace CF.Domain.Interfaces.ViewModel
         ObservableCollection<EntidadeFinanceira> EntidadeFinanceiraCollection { get; }
         int PK_EntidadeFinanceiraSelecionada { get; set; }
 
-        decimal Valor { get; set; }
+        string Valor { get; set; }
 
         DateTimeOffset? DataVencimento { get; set; }
         string DataVencimentoFormatada { get; set; }
-        DateTimeOffset? DataOperacao { get; set; }
-        string DataOperacaoFormatada { get; set; }
+        DateTimeOffset? DataTransacao { get; set; }
+        string DataTransacaoFormatada { get; set; }
 
         string Anotacao { get; set; }
 
-        bool ExibeBotoesCrud { get; }
-        bool ExibeBotoesConfirmacao { get; }
-        bool HabilitaBotaoEditarExcluir { get; }
-        int SelecionarIndice { get; }
-
-
-        void CarregarColecoes();
-        void DefinirTipoOperacao(eTipoOperacao tipoOperacao);
-        void DefinirItemSelecionado(OperacaoFinanceiraGrid operacaoFinanceiraGrid);
         void Salvar();
+        void Limpar();
+        void DefinirOperacao(eTipoOperacao _tipoOperacao, int PK_OperacaoFinanceira);
     }
 }
