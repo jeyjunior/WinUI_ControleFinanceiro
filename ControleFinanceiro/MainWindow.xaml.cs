@@ -127,14 +127,7 @@ namespace ControleFinanceiro
                 }
                 else if (item.Tag.ToString() == "OperacaoFinanceira")
                 {
-                    var cadastroOperacaoDialog = new CadastroOperacaoDialog(CF.Domain.Enumeradores.eTipoOperacao.Editar, 1);
-
-                    cadastroOperacaoDialog.XamlRoot = this.MainFrame.XamlRoot;
-                    cadastroOperacaoDialog.HorizontalAlignment = HorizontalAlignment.Center;
-                    cadastroOperacaoDialog.VerticalAlignment = VerticalAlignment.Center;
-
-                    await cadastroOperacaoDialog.ShowAsync();
-                    //MainFrame.Navigate(typeof(OperacaoFinanceiraPage));
+                    MainFrame.Navigate(typeof(OperacaoPage));
                 }
             }
             catch

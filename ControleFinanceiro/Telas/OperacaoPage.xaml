@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="ControleFinanceiro.Telas.OperacaoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ControleFinanceiro.Telas"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="Page_Loaded"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource Cinza10}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- 0- Resumo entrada/saída -->
+            <RowDefinition Height="Auto"/>
+            <!-- 1- Pesquisa/Filtros -->
+            <RowDefinition Height="*"/>
+            <!-- 2- Operações -->
+            <RowDefinition Height="32"/>
+            <!-- 3- Rodapé -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="90*" MaxWidth="900"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 1- Pesquisa/Filtros -->
+        <Grid x:Name="gPesquisa" Background="{StaticResource Cinza11}"
+              Padding="8"
+              Grid.Row="1"
+              Grid.Column="1"
+              ColumnSpacing="24" 
+              HorizontalAlignment="Stretch">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnAdicionar" 
+                    Grid.Row="0" Grid.Column="1"
+                    Height="34" Width="34" 
+                    Padding="0" Margin="0" 
+                    Style="{StaticResource AccentButtonStyle}"
+                    Click="btnAdicionar_Click">
+                <FontIcon Glyph="&#xE710;" FontSize="16"/>
+            </Button>
+        </Grid>
+
+        <!-- 2- Operações -->
+        <ScrollViewer Grid.Row="2" Grid.Column="1" x:Name="scroll" LayoutUpdated="scroll_LayoutUpdated" >
+            <ItemsControl x:Name="spPrincipal" ItemsSource="{Binding OperacaoFinanceiraCollection}" MaxWidth="1366" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid x:Name="gOPeracoes" Background="{StaticResource Cinza11}"
+                              Padding="0"
+                              Height="40"
+                              HorizontalAlignment="Stretch">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*" MinWidth="160"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*" MaxWidth="160" MinWidth="120"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Frame Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="40" Background="{StaticResource Cinza13}"/>
+                            <Frame Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="40" Background="{StaticResource Cinza13}"/>
+
+                            <TextBlock Grid.Column="2" Padding="8,0" FontSize="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Categoria, Mode=OneWay}" />
+                            <TextBlock Grid.Column="3" Padding="8,0" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding EntidadeFinanceira, Mode=OneWay}"/>
+
+                            <StackPanel Grid.Column="4" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <TextBlock Text="Vencimento" FontSize="10" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding DataVencimento, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="5" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <TextBlock Text="Transação" FontSize="10" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding DataTransacao, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Column="6" Padding="8,0,16,0" FontSize="14" TextWrapping="Wrap" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Valor, Mode=OneWay}" />
+                        </Grid>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        
+    </Grid>
+</Page>

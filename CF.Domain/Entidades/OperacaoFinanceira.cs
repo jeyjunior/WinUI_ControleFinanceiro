@@ -56,16 +56,10 @@ namespace CF.Domain.Entidades
     {
         [ChavePrimaria]
         public int PK_OperacaoFinanceira { get; set; }
-        public int FK_TipoOperacao { get; set; }
-        public int FK_EntidadeFinanceira { get; set; }
-        public int FK_Categoria { get; set; }
-        public int FK_StatusPagamento { get; set; }
-        public decimal Valor { get; set; }
-        public DateTime? DataTransacao { get; set; }
-        public DateTime? DataVencimento { get; set; }
+        public string Valor { get; set; }
+        public string DataTransacao { get; set; }
+        public string DataVencimento { get; set; }
         public string Anotacao { get; set; }
-        public int? FK_Usuario { get; set; }
-
         public string TipoOperacao { get; set; }
         public string EntidadeFinanceira { get; set; }
         public string Categoria { get; set; }
