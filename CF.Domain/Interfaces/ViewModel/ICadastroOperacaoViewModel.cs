@@ -30,7 +30,7 @@ namespace CF.Domain.Interfaces.ViewModel
         string DataTransacaoFormatada { get; set; }
 
         string Anotacao { get; set; }
-
+        string TextoBotaoPrimario { get; }
         void Salvar();
         void Limpar();
         void DefinirOperacao(eTipoOperacao _tipoOperacao, int PK_OperacaoFinanceira);

@@ -10,7 +10,7 @@
     Style="{StaticResource DefaultContentDialogStyle}"
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
     PrimaryButtonClick="CadastroOperacaoFinanceira_PrimaryButtonClick"
-    PrimaryButtonText="Salvar"
+    PrimaryButtonText="{Binding TextoBotaoPrimario}"
     SecondaryButtonClick="CadastroOperacaoFinanceira_SecondaryButtonClick"
     SecondaryButtonText="Cancelar"
     mc:Ignorable="d"

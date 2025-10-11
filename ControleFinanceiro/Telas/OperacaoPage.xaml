@@ -23,7 +23,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="90*" MaxWidth="900"/>
+            <ColumnDefinition Width="100*" MaxWidth="900"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
@@ -52,41 +52,86 @@
 
         <!-- 2- Operações -->
         <ScrollViewer Grid.Row="2" Grid.Column="1" x:Name="scroll" LayoutUpdated="scroll_LayoutUpdated" >
-            <ItemsControl x:Name="spPrincipal" ItemsSource="{Binding OperacaoFinanceiraCollection}" MaxWidth="1366" >
+            <ItemsControl x:Name="spPrincipal" ItemsSource="{Binding OperacaoFinanceiraCollection}" Margin="0" MaxWidth="1366" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid x:Name="gOPeracoes" Background="{StaticResource Cinza11}"
-                              Padding="0"
+                              Padding="0,0,4,0"
+                              Margin="0,0,0,2"
                               Height="40"
+                              CornerRadius="8"
                               HorizontalAlignment="Stretch">
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="*" MinWidth="160"/>
+                                <ColumnDefinition Width="4"/>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*" MinWidth="100"/>
                                 <ColumnDefinition Width="90"/>
                                 <ColumnDefinition Width="90"/>
-                                <ColumnDefinition Width="*" MaxWidth="160" MinWidth="120"/>
+                                <ColumnDefinition Width="*" MaxWidth="160" MinWidth="110"/>
+                                <ColumnDefinition Width="24"/>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="32"/>
                             </Grid.ColumnDefinitions>
 
-                            <Frame Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="40" Background="{StaticResource Cinza13}"/>
-                            <Frame Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="40" Background="{StaticResource Cinza13}"/>
+                            <Frame Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{Binding StatusOperacaoCor}"/>
+                            <Frame Grid.Column="1" Background="{StaticResource Cinza13}">
+                                <TextBlock Grid.Column="1" Padding="8,0" FontSize="12" TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Categoria, Mode=OneWay}" />
+                            </Frame>
 
-                            <TextBlock Grid.Column="2" Padding="8,0" FontSize="10" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Categoria, Mode=OneWay}" />
-                            <TextBlock Grid.Column="3" Padding="8,0" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding EntidadeFinanceira, Mode=OneWay}"/>
+                            <TextBlock Grid.Column="2" Padding="8,0" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding EntidadeFinanceira, Mode=OneWay}"/>
 
-                            <StackPanel Grid.Column="4" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="3" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
                                 <TextBlock Text="Vencimento" FontSize="10" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding DataVencimento, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding DataVencimentoFormatado, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource Vermelho2}"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="5" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="4" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
                                 <TextBlock Text="Transação" FontSize="10" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding DataTransacao, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding DataTransacaoFormatado, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource Verde1}"/>
                             </StackPanel>
 
-                            <TextBlock Grid.Column="6" Padding="8,0,16,0" FontSize="14" TextWrapping="Wrap" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Valor, Mode=OneWay}" />
+                            <TextBlock Grid.Column="5" Padding="8,0,16,0" FontSize="14" TextWrapping="Wrap" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Valor, Mode=OneWay}" />
+
+                            <Frame Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
+                                <FontIcon x:Name="iconStatusPagamento" 
+                                          FontFamily="Segoe Fluent Icons" 
+                                          VerticalAlignment="Center" 
+                                          HorizontalAlignment="Center" 
+                                          Glyph="{Binding StatusPagamentoIcone}" 
+                                          Foreground="{Binding StatusPagamentoCor}" 
+                                          FontSize="14"/>
+                            </Frame>
+
+                            <Frame Grid.Column="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
+                                <Button 
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center" 
+                                        x:Name="btnExcluir" 
+                                        Tag="{Binding PK_OperacaoFinanceira}"
+                                        Width="32" 
+                                        Height="32" 
+                                        Padding="0" 
+                                    Click="btnExcluir_Click"
+                                        Style="{StaticResource AlternateCloseButtonStyle}">
+                                    <FontIcon Glyph="&#xE74D;" FontSize="12"/>
+                                </Button>
+                            </Frame>
+
+                            <Frame Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
+                                <Button 
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Center" 
+                                        x:Name="btnEditar" 
+                                        Click="btnEditar_Click"
+                                        Tag="{Binding PK_OperacaoFinanceira}"
+                                        Width="32" 
+                                        Height="32" 
+                                        Padding="0"  
+                                        Style="{StaticResource AlternateCloseButtonStyle}">
+                                    <FontIcon Glyph="&#xE70F;" FontSize="12"/>
+                                </Button>
+                            </Frame>
                         </Grid>
 
                     </DataTemplate>

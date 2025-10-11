@@ -1,4 +1,5 @@
 ﻿using CF.Domain.Atributos;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,12 +58,17 @@ namespace CF.Domain.Entidades
         [ChavePrimaria]
         public int PK_OperacaoFinanceira { get; set; }
         public string Valor { get; set; }
-        public string DataTransacao { get; set; }
-        public string DataVencimento { get; set; }
+        public string DataTransacaoFormatado { get; set; }
+        public DateTime? DataTransacao { get; set; }
+        public string DataVencimentoFormatado { get; set; }
+        public DateTime? DataVencimento { get; set; }
         public string Anotacao { get; set; }
         public string TipoOperacao { get; set; }
         public string EntidadeFinanceira { get; set; }
         public string Categoria { get; set; }
-        public string StatusPagamento { get; set; }
+        public int FK_StatusPagamento { get; set; }
+        public string StatusPagamentoIcone { get; set; }
+        public SolidColorBrush StatusPagamentoCor { get; set; }
+        public SolidColorBrush StatusOperacaoCor { get; set; }
     }
 }

@@ -165,6 +165,17 @@ namespace CF.ViewModel.ViewModel
         }
         #endregion
 
+        public string TextoBotaoPrimario
+        {
+            get
+            {
+                if (_tipoOperacao == eTipoOperacao.Excluir)
+                    return "Excluir";
+
+                return "Salvar";
+            }
+        }
+
         // METÓDOS
         public void CarregarColecoes()
         {
@@ -279,6 +290,7 @@ namespace CF.ViewModel.ViewModel
             PropriedadeAlterada(nameof(DataTransacao));
             PropriedadeAlterada(nameof(DataTransacaoFormatada));
             PropriedadeAlterada(nameof(Anotacao));
+            PropriedadeAlterada(nameof(TextoBotaoPrimario));
         }
         public void Salvar()
         {
@@ -287,27 +299,29 @@ namespace CF.ViewModel.ViewModel
                 OperacaoFinanceiraSelecionada = new OperacaoFinanceira
                 {
                     PK_OperacaoFinanceira = 0,
-                    FK_Categoria = 0,
-                    FK_EntidadeFinanceira = 0,
-                    FK_StatusPagamento = 0,
-                    FK_TipoOperacao = 0,
-                    Anotacao = "",
-                    DataTransacao = null,
-                    DataVencimento = null,
-                    Valor = 0,
-
-                    FK_Usuario = null,
-                    Categoria = null,
-                    EntidadeFinanceira = null,
-                    TipoOperacao = null,
-                    StatusPagamento = null,
+                    FK_Categoria = PK_CategoriaSelecionada,
+                    FK_EntidadeFinanceira = PK_EntidadeFinanceiraSelecionada,
+                    FK_StatusPagamento = PK_StatusPagamentoSelecionada,
+                    FK_TipoOperacao = PK_TipoOperacaoSelecionada,
+                    Anotacao = Anotacao,
+                    DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada),
+                    DataVencimento = DataVencimentoFormatada == "" ? null : Convert.ToDateTime(DataVencimentoFormatada),
+                    Valor = Convert.ToDecimal(Valor),
                 };
-
 
                 var ret = _operacaoFinanceiraRepository.Adicionar(OperacaoFinanceiraSelecionada);
             }
             else if (_tipoOperacao == eTipoOperacao.Editar)
             {
+                OperacaoFinanceiraSelecionada.FK_Categoria = PK_CategoriaSelecionada;
+                OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira = PK_EntidadeFinanceiraSelecionada;
+                OperacaoFinanceiraSelecionada.FK_StatusPagamento = PK_StatusPagamentoSelecionada;
+                OperacaoFinanceiraSelecionada.FK_TipoOperacao = PK_TipoOperacaoSelecionada;
+                OperacaoFinanceiraSelecionada.Anotacao = Anotacao;
+                OperacaoFinanceiraSelecionada.DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada);
+                OperacaoFinanceiraSelecionada.DataVencimento = DataVencimentoFormatada == "" ? null : Convert.ToDateTime(DataVencimentoFormatada);
+                OperacaoFinanceiraSelecionada.Valor = Convert.ToDecimal(Valor);
+
                 var ret = _operacaoFinanceiraRepository.Atualizar(OperacaoFinanceiraSelecionada);
             }
             else if (_tipoOperacao == eTipoOperacao.Excluir)
