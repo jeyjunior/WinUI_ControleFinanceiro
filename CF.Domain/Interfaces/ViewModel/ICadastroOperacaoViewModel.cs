@@ -24,7 +24,7 @@ namespace CF.Domain.Interfaces.ViewModel
 
         string Valor { get; set; }
 
-        DateTimeOffset? DataVencimento { get; set; }
+        DateTimeOffset DataVencimento { get; set; }
         string DataVencimentoFormatada { get; set; }
         DateTimeOffset? DataTransacao { get; set; }
         string DataTransacaoFormatada { get; set; }

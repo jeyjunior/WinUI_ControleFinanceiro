@@ -47,7 +47,8 @@ namespace CF.InfraData.Repository
             query += orderby;
 
             var resultado = unitOfWork.Connection.Query<OperacaoFinanceiraGrid>(
-                sql: query).ToList();
+                sql: query,
+                param: parameters).ToList();
 
             return resultado;
         }

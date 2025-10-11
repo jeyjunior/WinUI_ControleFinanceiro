@@ -12,5 +12,6 @@ namespace CF.Domain.Interfaces.ViewModel
     {
         ObservableCollection<OperacaoFinanceiraGrid> OperacaoFinanceiraCollection { get; }
         void CarregarColecoes();
+        void Pesquisar(DateTime dataInicial, DateTime dataFinal);
     }
 }

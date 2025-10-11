@@ -70,7 +70,7 @@ namespace CF.ViewModel.ViewModel
         #endregion
 
         #region DataVencimento
-        public DateTimeOffset? DataVencimento
+        public DateTimeOffset DataVencimento
         {
             get 
             {
@@ -81,7 +81,7 @@ namespace CF.ViewModel.ViewModel
             } 
             set
             {
-                OperacaoFinanceiraSelecionada.DataVencimento = (value == null) ? null : Convert.ToDateTime(value.Value.Date);
+                OperacaoFinanceiraSelecionada.DataVencimento = (value == null) ? DateTime.Now : Convert.ToDateTime(value.Date);
                 PropriedadeAlterada(nameof(DataVencimentoFormatada));
             }
         }
@@ -90,22 +90,19 @@ namespace CF.ViewModel.ViewModel
         {
             get
             {
-                if (OperacaoFinanceiraSelecionada.DataVencimento == null)
-                    return "";
-
-                return OperacaoFinanceiraSelecionada.DataVencimento.Value.ToShortDateString();
+                return OperacaoFinanceiraSelecionada.DataVencimento.ToShortDateString();
             }
             set
             {
                 if (value == null || value == "")
                 {
                     _dataVencimento = "";
-                    OperacaoFinanceiraSelecionada.DataVencimento = null;
+                    OperacaoFinanceiraSelecionada.DataVencimento = DateTime.Now;
                 }
                 else
                 {
                     OperacaoFinanceiraSelecionada.DataVencimento = Convert.ToDateTime(value);
-                    _dataVencimento = OperacaoFinanceiraSelecionada.DataVencimento.Value.ToShortDateString();
+                    _dataVencimento = OperacaoFinanceiraSelecionada.DataVencimento.ToShortDateString();
                 }
 
                 PropriedadeAlterada(nameof(DataVencimento));
@@ -260,7 +257,7 @@ namespace CF.ViewModel.ViewModel
                     FK_TipoOperacao = 0,
                     Anotacao = "",
                     DataTransacao = null,
-                    DataVencimento = null,
+                    DataVencimento = DateTime.Now,
                     Valor = 0,
                     
                     FK_Usuario = null,
@@ -305,7 +302,7 @@ namespace CF.ViewModel.ViewModel
                     FK_TipoOperacao = PK_TipoOperacaoSelecionada,
                     Anotacao = Anotacao,
                     DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada),
-                    DataVencimento = DataVencimentoFormatada == "" ? null : Convert.ToDateTime(DataVencimentoFormatada),
+                    DataVencimento = DataVencimento.Date,
                     Valor = Convert.ToDecimal(Valor),
                 };
 
@@ -319,7 +316,7 @@ namespace CF.ViewModel.ViewModel
                 OperacaoFinanceiraSelecionada.FK_TipoOperacao = PK_TipoOperacaoSelecionada;
                 OperacaoFinanceiraSelecionada.Anotacao = Anotacao;
                 OperacaoFinanceiraSelecionada.DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada);
-                OperacaoFinanceiraSelecionada.DataVencimento = DataVencimentoFormatada == "" ? null : Convert.ToDateTime(DataVencimentoFormatada);
+                OperacaoFinanceiraSelecionada.DataVencimento = DataVencimentoFormatada == "" ? DateTime.Now : Convert.ToDateTime(DataVencimentoFormatada);
                 OperacaoFinanceiraSelecionada.Valor = Convert.ToDecimal(Valor);
 
                 var ret = _operacaoFinanceiraRepository.Atualizar(OperacaoFinanceiraSelecionada);

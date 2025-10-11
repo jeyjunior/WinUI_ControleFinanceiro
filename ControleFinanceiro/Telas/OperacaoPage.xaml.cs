@@ -1,3 +1,4 @@
+using CF.Domain.Entidades;
 using CF.Domain.Interfaces.ViewModel;
 using CF.ViewModel;
 using CF.ViewModel.ViewModel;
@@ -19,22 +20,16 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace ControleFinanceiro.Telas
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class OperacaoPage : Page
     {
-
         #region Interfaces
         private readonly IOperacaoViewModel _operacaoViewModel;
         #endregion
 
         #region Propriedades
+        private int PK_OperacaoFinanceiraSelecionada = 0;
         #endregion
 
         #region Construtor
@@ -45,13 +40,15 @@ namespace ControleFinanceiro.Telas
             _operacaoViewModel = Bootstrap.ServiceProvider.GetRequiredService<IOperacaoViewModel>();
 
             this.DataContext = _operacaoViewModel;
+            dtgPrincipal.ItemsSource = _operacaoViewModel.OperacaoFinanceiraCollection;
         }
         #endregion
 
         #region Eventos
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            _operacaoViewModel.CarregarColecoes();
+            CarregarMesAtual();
+            Pesquisar();
         }
         private async void btnAdicionar_Click(object sender, RoutedEventArgs e)
         {
@@ -64,7 +61,6 @@ namespace ControleFinanceiro.Telas
                 cadastroOperacaoDialog.VerticalAlignment = VerticalAlignment.Center;
 
                 await cadastroOperacaoDialog.ShowAsync();
-                _operacaoViewModel.CarregarColecoes();
             }
             catch (Exception ex)
             {
@@ -80,15 +76,13 @@ namespace ControleFinanceiro.Telas
                 if (btn == null)
                     return;
 
-                int pK_OperacaoFinanceira = Convert.ToInt32(btn.Tag);
-                var cadastroOperacaoDialog = new CadastroOperacaoDialog(CF.Domain.Enumeradores.eTipoOperacao.Editar, pK_OperacaoFinanceira);
+                var cadastroOperacaoDialog = new CadastroOperacaoDialog(CF.Domain.Enumeradores.eTipoOperacao.Editar, PK_OperacaoFinanceiraSelecionada);
 
                 cadastroOperacaoDialog.XamlRoot = this.XamlRoot;
                 cadastroOperacaoDialog.HorizontalAlignment = HorizontalAlignment.Center;
                 cadastroOperacaoDialog.VerticalAlignment = VerticalAlignment.Center;
 
                 await cadastroOperacaoDialog.ShowAsync();
-                _operacaoViewModel.CarregarColecoes();
             }
             catch (Exception ex)
             {
@@ -104,16 +98,13 @@ namespace ControleFinanceiro.Telas
                 if (btn == null)
                     return;
 
-                int pK_OperacaoFinanceira = Convert.ToInt32(btn.Tag);
-
-                var cadastroOperacaoDialog = new CadastroOperacaoDialog(CF.Domain.Enumeradores.eTipoOperacao.Excluir, pK_OperacaoFinanceira);
+                var cadastroOperacaoDialog = new CadastroOperacaoDialog(CF.Domain.Enumeradores.eTipoOperacao.Excluir, PK_OperacaoFinanceiraSelecionada);
 
                 cadastroOperacaoDialog.XamlRoot = this.XamlRoot;
                 cadastroOperacaoDialog.HorizontalAlignment = HorizontalAlignment.Center;
                 cadastroOperacaoDialog.VerticalAlignment = VerticalAlignment.Center;
-
+                
                 await cadastroOperacaoDialog.ShowAsync();
-                _operacaoViewModel.CarregarColecoes();
             }
             catch (Exception ex)
             {
@@ -121,15 +112,46 @@ namespace ControleFinanceiro.Telas
                 await m.ShowAsync();
             }
         }
+
+        private void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            OperacaoFinanceiraGrid operacaoFinanceiraGrid = new OperacaoFinanceiraGrid();
+
+            if (dtgPrincipal.SelectedItem != null)
+                operacaoFinanceiraGrid = dtgPrincipal.SelectedItem as OperacaoFinanceiraGrid;
+
+            PK_OperacaoFinanceiraSelecionada = operacaoFinanceiraGrid.PK_OperacaoFinanceira;
+        }
+        private void btnPesquisar_Click(object sender, RoutedEventArgs e)
+        {
+            Pesquisar();
+        }
+
         private void scroll_LayoutUpdated(object sender, object e)
         {
 
         }
+
         #endregion
 
         #region Metodos
+        private void CarregarMesAtual()
+        {
+            DateTime hoje = DateTime.Today;
+            DateTime primeiroDiaDoMes = new DateTime(hoje.Year, hoje.Month, 1);
+            DateTime ultimoDiaDoMes = primeiroDiaDoMes.AddMonths(1).AddDays(-1);
+
+            cdpDataInicial.Date = primeiroDiaDoMes;
+            cdpDataFinal.Date = ultimoDiaDoMes;
+        }
+
+        private void Pesquisar()
+        {
+            DateTime dataInicial = cdpDataInicial.Date.Value.DateTime;
+            DateTime dataFinal = cdpDataFinal.Date.Value.DateTime;
+
+            _operacaoViewModel.Pesquisar(dataInicial, dataFinal);
+        }
         #endregion
-
-
     }
 }

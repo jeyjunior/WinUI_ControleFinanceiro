@@ -6,6 +6,7 @@
     xmlns:local="using:ControleFinanceiro.Telas"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
@@ -23,7 +24,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="100*" MaxWidth="900"/>
+            <ColumnDefinition Width="100*" MaxWidth="1100"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
@@ -37,107 +38,100 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="btnAdicionar" 
-                    Grid.Row="0" Grid.Column="1"
-                    Height="34" Width="34" 
-                    Padding="0" Margin="0" 
-                    Style="{StaticResource AccentButtonStyle}"
-                    Click="btnAdicionar_Click">
-                <FontIcon Glyph="&#xE710;" FontSize="16"/>
-            </Button>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                
+                <StackPanel Spacing="2" VerticalAlignment="Stretch">
+                    <TextBlock Text="Data Inicial" FontSize="12" Foreground="{StaticResource Cinza2}"/>
+                    <CalendarDatePicker x:Name="cdpDataInicial" PlaceholderText="" Width="120"/>
+                </StackPanel>
+                
+                <StackPanel Spacing="2" VerticalAlignment="Stretch">
+                    <TextBlock Text="Data Final" FontSize="12" Foreground="{StaticResource Cinza2}"/>
+                    <CalendarDatePicker x:Name="cdpDataFinal" PlaceholderText="" Width="120"/>
+                </StackPanel>
+                
+                <Button x:Name="btnPesquisar" 
+                        Height="32" Width="32" 
+                        Padding="0" Margin="0" 
+                        Click="btnPesquisar_Click"
+                        VerticalAlignment="Bottom"
+                        Style="{StaticResource DefaultButtonStyle}">
+                    <FontIcon Glyph="&#xE72C;" FontSize="16"/>
+                </Button>
+                
+            </StackPanel>
+            
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                <Button x:Name="btnExcluir" 
+                        Height="34" Width="34" 
+                        Padding="0" Margin="0" 
+                        Style="{StaticResource AlternateCloseButtonStyle}"
+                        Click="btnExcluir_Click">
+                    <FontIcon Glyph="&#xE74D;" FontSize="16"/>
+                </Button>
+                
+                <Button x:Name="btnEditar" 
+                        Height="34" Width="34" 
+                        Padding="0" Margin="0" 
+                        Style="{StaticResource AlternateCloseButtonStyle}"
+                        Click="btnEditar_Click">
+                    <FontIcon Glyph="&#xE70F;" FontSize="16"/>
+                </Button>
+                
+                <Button x:Name="btnAdicionar" 
+                        Height="34" Width="34" 
+                        Padding="0" Margin="0" 
+                        Style="{StaticResource AccentButtonStyle}"
+                        Click="btnAdicionar_Click">
+                    <FontIcon Glyph="&#xE710;" FontSize="16"/>
+                </Button>
+            </StackPanel>
         </Grid>
 
         <!-- 2- Operações -->
-        <ScrollViewer Grid.Row="2" Grid.Column="1" x:Name="scroll" LayoutUpdated="scroll_LayoutUpdated" >
-            <ItemsControl x:Name="spPrincipal" ItemsSource="{Binding OperacaoFinanceiraCollection}" Margin="0" MaxWidth="1366" >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid x:Name="gOPeracoes" Background="{StaticResource Cinza11}"
-                              Padding="0,0,4,0"
-                              Margin="0,0,0,2"
-                              Height="40"
-                              CornerRadius="8"
-                              HorizontalAlignment="Stretch">
+        <controls:DataGrid  x:Name="dtgPrincipal"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="0,16,0,0"
+                            Background="{StaticResource Cinza10Transp50}"
+                            AutoGenerateColumns="False"
+                            CanUserSortColumns="True"
+                            CanUserResizeColumns="True"
+                            IsReadOnly="True"
+                            SelectionMode="Single"
+                            HeadersVisibility="Column"
+                            RowDetailsVisibilityMode="Collapsed"
+                            SelectionChanged="dtgPrincipal_SelectionChanged"
+                            GridLinesVisibility="All">
+            
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn x:Name="colPK_OperacaoFinanceira" Visibility="Collapsed" Header="PK_OperacaoFinanceira" Binding="{Binding PK_OperacaoFinanceira}" Width="1"/>
+                <controls:DataGridTextColumn x:Name="colCategoria" Header="Categoria" Binding="{Binding Categoria}" Width="*" MinWidth="110" MaxWidth="200">
+                    <controls:DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                        </Style>
+                    </controls:DataGridTextColumn.ElementStyle>
+                </controls:DataGridTextColumn>
+                
+            <controls:DataGridTextColumn x:Name="colEntidadeFinanceira" Header="Entidade Financeira" Binding="{Binding EntidadeFinanceira}" Width="*" MinWidth="100"/>
+                <controls:DataGridTextColumn x:Name="colVencimento" Header="Vencimento" Binding="{Binding DataVencimentoFormatado}" Width="110"/>
+                <controls:DataGridTextColumn x:Name="colTransacao" Header="Transação" Binding="{Binding DataTransacaoFormatado}" Width="110"/>
+                
+                <controls:DataGridTextColumn x:Name="colValor" CanUserReorder="True" Header="Valor" Binding="{Binding Valor}" CanUserSort="True" Width="*">
+                    <controls:DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                            <Setter Property="Margin" Value="0,0,8,0"/>
+                        </Style>
+                    </controls:DataGridTextColumn.ElementStyle>
+                </controls:DataGridTextColumn>
+            </controls:DataGrid.Columns>
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4"/>
-                                <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="*" MinWidth="100"/>
-                                <ColumnDefinition Width="90"/>
-                                <ColumnDefinition Width="90"/>
-                                <ColumnDefinition Width="*" MaxWidth="160" MinWidth="110"/>
-                                <ColumnDefinition Width="24"/>
-                                <ColumnDefinition Width="32"/>
-                                <ColumnDefinition Width="32"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Frame Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{Binding StatusOperacaoCor}"/>
-                            <Frame Grid.Column="1" Background="{StaticResource Cinza13}">
-                                <TextBlock Grid.Column="1" Padding="8,0" FontSize="12" TextWrapping="Wrap" TextAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Categoria, Mode=OneWay}" />
-                            </Frame>
-
-                            <TextBlock Grid.Column="2" Padding="8,0" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding EntidadeFinanceira, Mode=OneWay}"/>
-
-                            <StackPanel Grid.Column="3" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
-                                <TextBlock Text="Vencimento" FontSize="10" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding DataVencimentoFormatado, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource Vermelho2}"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="4" Padding="8,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
-                                <TextBlock Text="Transação" FontSize="10" HorizontalAlignment="Center"/>
-                                <TextBlock Text="{Binding DataTransacaoFormatado, Mode=OneWay}" FontSize="12" HorizontalAlignment="Center" FontWeight="Bold" Foreground="{StaticResource Verde1}"/>
-                            </StackPanel>
-
-                            <TextBlock Grid.Column="5" Padding="8,0,16,0" FontSize="14" TextWrapping="Wrap" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Valor, Mode=OneWay}" />
-
-                            <Frame Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
-                                <FontIcon x:Name="iconStatusPagamento" 
-                                          FontFamily="Segoe Fluent Icons" 
-                                          VerticalAlignment="Center" 
-                                          HorizontalAlignment="Center" 
-                                          Glyph="{Binding StatusPagamentoIcone}" 
-                                          Foreground="{Binding StatusPagamentoCor}" 
-                                          FontSize="14"/>
-                            </Frame>
-
-                            <Frame Grid.Column="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
-                                <Button 
-                                        VerticalAlignment="Center" 
-                                        HorizontalAlignment="Center" 
-                                        x:Name="btnExcluir" 
-                                        Tag="{Binding PK_OperacaoFinanceira}"
-                                        Width="32" 
-                                        Height="32" 
-                                        Padding="0" 
-                                    Click="btnExcluir_Click"
-                                        Style="{StaticResource AlternateCloseButtonStyle}">
-                                    <FontIcon Glyph="&#xE74D;" FontSize="12"/>
-                                </Button>
-                            </Frame>
-
-                            <Frame Grid.Column="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource Cinza13}">
-                                <Button 
-                                        VerticalAlignment="Center" 
-                                        HorizontalAlignment="Center" 
-                                        x:Name="btnEditar" 
-                                        Click="btnEditar_Click"
-                                        Tag="{Binding PK_OperacaoFinanceira}"
-                                        Width="32" 
-                                        Height="32" 
-                                        Padding="0"  
-                                        Style="{StaticResource AlternateCloseButtonStyle}">
-                                    <FontIcon Glyph="&#xE70F;" FontSize="12"/>
-                                </Button>
-                            </Frame>
-                        </Grid>
-
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        
+        </controls:DataGrid>
+                
     </Grid>
 </Page>

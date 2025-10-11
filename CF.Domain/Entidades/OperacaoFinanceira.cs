@@ -29,9 +29,10 @@ namespace CF.Domain.Entidades
         [Obrigatorio, TamanhoDecimal(18, 2)]
         public decimal Valor { get; set; }
         
-        public DateTime? DataTransacao { get; set; } 
+        public DateTime? DataTransacao { get; set; }
         
-        public DateTime? DataVencimento { get; set; } 
+        [Obrigatorio]
+        public DateTime DataVencimento { get; set; } 
 
         [TamanhoString(200)]
         public string Anotacao { get; set; }
@@ -61,7 +62,7 @@ namespace CF.Domain.Entidades
         public string DataTransacaoFormatado { get; set; }
         public DateTime? DataTransacao { get; set; }
         public string DataVencimentoFormatado { get; set; }
-        public DateTime? DataVencimento { get; set; }
+        public DateTime DataVencimento { get; set; }
         public string Anotacao { get; set; }
         public string TipoOperacao { get; set; }
         public string EntidadeFinanceira { get; set; }
