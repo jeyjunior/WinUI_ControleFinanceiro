@@ -23,7 +23,6 @@ namespace CF.InfraData
                         uow.Begin();
 
                         uow.Connection.CriarTabela(typeof(Usuario), uow.Transaction);
-                        uow.Connection.CriarTabela(typeof(StatusPagamento), uow.Transaction);
                         uow.Connection.CriarTabela(typeof(TipoOperacao), uow.Transaction);
                         uow.Connection.CriarTabela(typeof(EntidadeFinanceira), uow.Transaction);
                         uow.Connection.CriarTabela(typeof(Categoria), uow.Transaction);
@@ -45,7 +44,6 @@ namespace CF.InfraData
             using (var uow = new UnitOfWork())
             {
                 var tipoOperacaoFinanceiraRepository = new TipoOperacaoRepository(uow);
-                var statusPagamentoRepository = new StatusPagamentoRepository(uow);
 
                 if (tipoOperacaoFinanceiraRepository.ObterLista().Count() <= 0)
                 {
@@ -55,10 +53,6 @@ namespace CF.InfraData
 
                         tipoOperacaoFinanceiraRepository.Adicionar(new TipoOperacao { Nome = "Entrada" });
                         tipoOperacaoFinanceiraRepository.Adicionar(new TipoOperacao { Nome = "Saída" });
-
-                        statusPagamentoRepository.Adicionar(new StatusPagamento { Nome = "Pago" });
-                        statusPagamentoRepository.Adicionar(new StatusPagamento { Nome = "Em Aberto" });
-                        statusPagamentoRepository.Adicionar(new StatusPagamento { Nome = "Vencido" });
 
                         uow.Commit();
                     }

@@ -1,4 +1,5 @@
 ﻿using CF.Domain.Atributos;
+using CF.Domain.Enumeradores;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,9 @@ namespace CF.Domain.Entidades
 
         [Obrigatorio, Relacionamento("Categoria", "PK_Categoria")]
         public int FK_Categoria { get; set; }
-
-        [Obrigatorio, Relacionamento("StatusPagamento", "PK_StatusPagamento")]
-        public int FK_StatusPagamento { get; set; }
         
         [Obrigatorio, TamanhoDecimal(18, 2)]
         public decimal Valor { get; set; }
-        
         public DateTime? DataTransacao { get; set; }
         
         [Obrigatorio]
@@ -40,6 +37,8 @@ namespace CF.Domain.Entidades
         [Relacionamento("Usuario", "PK_Usuario")]
         public int? FK_Usuario { get; set; }
 
+        [Editavel(false)]
+        public eStatusPagamento StatusPagamento { get; set; }
 
         [Editavel(false)]
         public TipoOperacao TipoOperacao { get; set; }
@@ -49,15 +48,13 @@ namespace CF.Domain.Entidades
 
         [Editavel(false)]
         public Categoria Categoria { get; set; }
-
-        [Editavel(false)]
-        public StatusPagamento StatusPagamento { get; set; }
     }
 
     public class OperacaoFinanceiraGrid
     {
         [ChavePrimaria]
         public int PK_OperacaoFinanceira { get; set; }
+        public int FK_TipoOperacao { get; set; }
         public string Valor { get; set; }
         public string DataTransacaoFormatado { get; set; }
         public DateTime? DataTransacao { get; set; }
@@ -67,9 +64,10 @@ namespace CF.Domain.Entidades
         public string TipoOperacao { get; set; }
         public string EntidadeFinanceira { get; set; }
         public string Categoria { get; set; }
-        public int FK_StatusPagamento { get; set; }
         public string StatusPagamentoIcone { get; set; }
-        public SolidColorBrush StatusPagamentoCor { get; set; }
         public SolidColorBrush StatusOperacaoCor { get; set; }
+        public SolidColorBrush StatusPagamentoCor { get; set; }
+        public SolidColorBrush DataVencimentoCor { get; set; }  
+        public string StatusOperacaoIcone { get; set; }
     }
 }

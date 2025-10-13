@@ -24,7 +24,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" ColumnSpacing="12" RowSpacing="0" MinWidth="500">
@@ -75,7 +74,7 @@
         <Grid Grid.Row="2" ColumnSpacing="12" RowSpacing="0">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
@@ -85,17 +84,8 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="txtTituloStatusPagamento" Text="Pagamento:" Grid.Row="0"/>
-            <ComboBox x:Name="cboStatusPagamento"
-                       Grid.Row="1"
-                        HorizontalAlignment="Stretch"
-                        ItemsSource="{Binding StatusPagamentoCollection}"
-                        DisplayMemberPath="Nome"
-                        SelectedValuePath="PK_StatusPagamento"
-                        SelectedValue="{Binding PK_StatusPagamentoSelecionada, Mode=TwoWay}" />
-
-            <TextBlock x:Name="txtTituloDataVencimento" Text="Vencimento:" Grid.Row="0" Grid.Column="1"/>
-            <StackPanel x:Name="spDataVencimento" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
+            <TextBlock x:Name="txtTituloDataVencimento" Text="Vencimento:" Grid.Row="0" Grid.Column="0"/>
+            <StackPanel x:Name="spDataVencimento" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
                 <Grid HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -124,8 +114,8 @@
                 </Grid>
             </StackPanel>
 
-            <TextBlock x:Name="txtTituloDataTransacao" Text="Transação:" Grid.Row="0" Grid.Column="2"/>
-            <StackPanel x:Name="spDataTransacao" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch">
+            <TextBlock x:Name="txtTituloDataTransacao" Text="Transação:" Grid.Row="0" Grid.Column="1"/>
+            <StackPanel x:Name="spDataTransacao" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
                 <Grid HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -153,19 +143,13 @@
                                       BorderThickness="1,1,1,1"/>
                 </Grid>
             </StackPanel>
+
+            <TextBlock x:Name="txtTituloValor" Text="Valor:"  Grid.Row="0" Grid.Column="2"/>
+            <NumberBox x:Name="txtValor"  Grid.Row="1" Grid.Column="2" Text="{Binding Valor, Mode=TwoWay}"/>
         </Grid>
 
-        <Grid Grid.Row="3" ColumnSpacing="12" RowSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
 
-            <TextBlock x:Name="txtTituloValor" Text="Valor:" Grid.Row="0"/>
-            <NumberBox x:Name="txtValor" Grid.Row="1" Text="{Binding Valor, Mode=TwoWay}"/>
-        </Grid>
-
-        <StackPanel x:Name="spAnotacao" Grid.Row="4">
+        <StackPanel x:Name="spAnotacao" Grid.Row="3">
             <TextBlock x:Name="txtTituloAnotacao" Text="Anotação:"/>
             <TextBox x:Name="txtAnotacao" Height="74" MaxLength="200" TextWrapping="Wrap" AcceptsReturn="False" Text="{Binding Anotacao, Mode=TwoWay}"/>
         </StackPanel>

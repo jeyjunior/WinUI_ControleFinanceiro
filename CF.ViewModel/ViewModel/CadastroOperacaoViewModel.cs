@@ -19,7 +19,6 @@ namespace CF.ViewModel.ViewModel
         private readonly IEntidadeFinanceiraRepository _entidadeFinanceiraRepository;
         private readonly ICategoriaRepository _categoriaRepository;
         private readonly ITipoOperacaoRepository _tipoOperacaoRepository;
-        private readonly IStatusPagamentoRepository _statusPagamentoRepository;
 
         private eHabilitarEdicao _habilitarEdicao;
         private eTipoOperacao _tipoOperacao;
@@ -29,7 +28,6 @@ namespace CF.ViewModel.ViewModel
             _entidadeFinanceiraRepository = Bootstrap.ServiceProvider.GetRequiredService<IEntidadeFinanceiraRepository>();
             _categoriaRepository = Bootstrap.ServiceProvider.GetRequiredService<ICategoriaRepository>();
             _tipoOperacaoRepository = Bootstrap.ServiceProvider.GetRequiredService<ITipoOperacaoRepository>();
-            _statusPagamentoRepository = Bootstrap.ServiceProvider.GetRequiredService<IStatusPagamentoRepository>();
         }
 
         #region OperacaoFinanceira
@@ -51,11 +49,6 @@ namespace CF.ViewModel.ViewModel
         #region EntidadeFinanceira
         public ObservableCollection<EntidadeFinanceira> EntidadeFinanceiraCollection { get; set; } = new ObservableCollection<EntidadeFinanceira>();
         public int PK_EntidadeFinanceiraSelecionada { get => OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira; set => OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira = value; }
-        #endregion
-
-        #region StatusPagamento
-        public ObservableCollection<StatusPagamento> StatusPagamentoCollection { get; set; } = new ObservableCollection<StatusPagamento>();
-        public int PK_StatusPagamentoSelecionada { get => OperacaoFinanceiraSelecionada.FK_StatusPagamento; set => OperacaoFinanceiraSelecionada.FK_StatusPagamento = value; }
         #endregion
 
         #region Valor
@@ -179,7 +172,6 @@ namespace CF.ViewModel.ViewModel
             CarregarColecaoCategoria();
             CarregarColecaoEntidadeFinanceira();
             CarregarColecaoTipoOperacao();
-            CarregarColecaoStatusPagamento();
         }
         private void CarregarColecaoCategoria()
         {
@@ -226,21 +218,6 @@ namespace CF.ViewModel.ViewModel
 
             PropriedadeAlterada(nameof(TipoOperacaoCollection));
         }
-        private void CarregarColecaoStatusPagamento()
-        {
-            if (StatusPagamentoCollection == null)
-                StatusPagamentoCollection = new ObservableCollection<StatusPagamento>();
-
-            if (StatusPagamentoCollection.Any())
-                StatusPagamentoCollection.Clear();
-
-            var statusPagamento = _statusPagamentoRepository.ObterLista().OrderBy(i => i.Nome);
-
-            foreach (var item in statusPagamento)
-                StatusPagamentoCollection.Add(item);
-
-            PropriedadeAlterada(nameof(StatusPagamentoCollection));
-        }
 
         public void DefinirOperacao(eTipoOperacao _tipoOperacao, int PK_OperacaoFinanceira)
         {
@@ -253,18 +230,15 @@ namespace CF.ViewModel.ViewModel
                     PK_OperacaoFinanceira = 0,
                     FK_Categoria = 0,
                     FK_EntidadeFinanceira = 0,
-                    FK_StatusPagamento = 0,
                     FK_TipoOperacao = 0,
                     Anotacao = "",
                     DataTransacao = null,
                     DataVencimento = DateTime.Now,
                     Valor = 0,
-                    
                     FK_Usuario = null,
                     Categoria = null,
                     EntidadeFinanceira = null,
-                    TipoOperacao = null,
-                    StatusPagamento = null,
+                    TipoOperacao = null
                 };
             }
             else
@@ -280,7 +254,6 @@ namespace CF.ViewModel.ViewModel
             PropriedadeAlterada(nameof(PK_TipoOperacaoSelecionada));
             PropriedadeAlterada(nameof(PK_CategoriaSelecionada));
             PropriedadeAlterada(nameof(PK_EntidadeFinanceiraSelecionada));
-            PropriedadeAlterada(nameof(PK_StatusPagamentoSelecionada));
             PropriedadeAlterada(nameof(Valor));
             PropriedadeAlterada(nameof(DataVencimento));
             PropriedadeAlterada(nameof(DataVencimentoFormatada));
@@ -298,7 +271,6 @@ namespace CF.ViewModel.ViewModel
                     PK_OperacaoFinanceira = 0,
                     FK_Categoria = PK_CategoriaSelecionada,
                     FK_EntidadeFinanceira = PK_EntidadeFinanceiraSelecionada,
-                    FK_StatusPagamento = PK_StatusPagamentoSelecionada,
                     FK_TipoOperacao = PK_TipoOperacaoSelecionada,
                     Anotacao = Anotacao,
                     DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada),
@@ -312,7 +284,6 @@ namespace CF.ViewModel.ViewModel
             {
                 OperacaoFinanceiraSelecionada.FK_Categoria = PK_CategoriaSelecionada;
                 OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira = PK_EntidadeFinanceiraSelecionada;
-                OperacaoFinanceiraSelecionada.FK_StatusPagamento = PK_StatusPagamentoSelecionada;
                 OperacaoFinanceiraSelecionada.FK_TipoOperacao = PK_TipoOperacaoSelecionada;
                 OperacaoFinanceiraSelecionada.Anotacao = Anotacao;
                 OperacaoFinanceiraSelecionada.DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada);

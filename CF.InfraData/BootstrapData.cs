@@ -16,9 +16,7 @@ namespace CF.InfraData
         public static void RegistrarServicos(IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //services.AddSingleton<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-            services.AddScoped<IStatusPagamentoRepository, StatusPagamentoRepository>();
             services.AddScoped<ITipoOperacaoRepository, TipoOperacaoRepository>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<IEntidadeFinanceiraRepository, EntidadeFinanceiraRepository>();

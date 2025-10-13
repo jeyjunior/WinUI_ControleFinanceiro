@@ -79,7 +79,7 @@ namespace CF.Domain.Atributos
         public string Glyph { get; }
         public string FontFamily { get; }
 
-        public CodigoGlyph(string glyph, string fontFamily)
+        public CodigoGlyph(string glyph, string fontFamily = "Segoe Fluent Icons")
         {
             Glyph = glyph;
             FontFamily = fontFamily;
