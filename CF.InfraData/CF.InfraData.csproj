@@ -9,16 +9,16 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.6584" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250916003" />
-	  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
+	  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
+	  <PackageReference Include="MySql.Data" Version="9.4.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	  <PackageReference Include="Dapper" Version="2.1.66" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.9" />
 	  <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
-	  <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.7" />
-	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
-	  <PackageReference Include="MySqlConnector" Version="2.4.0" />
+	  <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.9" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CF.Data\CF.Data.csproj" />

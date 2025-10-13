@@ -3,8 +3,10 @@ using CF.Data.Provider;
 using CF.Domain.Dto;
 using CF.Domain.Enumeradores;
 using CF.Domain.Interfaces;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace CF.Data
 {
@@ -33,6 +35,8 @@ namespace CF.Data
             return config.TipoBanco switch
             {
                 eTipoBancoDados.SQLite => SqliteProvider.CriarConexao(),
+                eTipoBancoDados.SQLServer => new SqlConnection(config.StringConexao),
+                eTipoBancoDados.MySQL => new MySqlConnection(config.StringConexao), 
                 _ => throw new InvalidOperationException($"Tipo de banco não suportado: {config.TipoBanco}")
             };
         }
