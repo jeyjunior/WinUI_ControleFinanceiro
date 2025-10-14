@@ -18,8 +18,9 @@ namespace CF.Domain.Interfaces.ViewModel
         bool ExibeBotoesConfirmacao { get; }
         bool HabilitaBotaoEditarExcluir { get; }
         string Nome { get; set; }
+        bool HabilitarNome { get; }
         int SelecionarIndice { get; }
-
+        string Total { get; }
         void CarregarColecoes();
         void DefinirTipoOperacao(eTipoOperacaoCrud tipoOperacao);
         void DefinirItemSelecionado(Categoria categoria);

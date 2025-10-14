@@ -39,14 +39,15 @@ namespace CF.ViewModel.ViewModel
             get => _nome;
             set => _nome = value;
         }
+        public bool HabilitarNome { get => !ExibeBotoesCrud && _tipoOperacao != eTipoOperacaoCrud.Excluir; }
 
         // CONTROLAR EXIBIÇÃO DE COMPONENTES
         public bool ExibeBotoesCrud { get => this._habilitarEdicao == eHabilitarEdicao.Nao; }
         public bool ExibeBotoesConfirmacao { get => !ExibeBotoesCrud; }
         public bool HabilitaBotaoEditarExcluir { get => _categoriaCollection.Count > 0 && _categoriaSelecionada != null && _categoriaSelecionada.PK_Categoria > 0; }
-
         private int _indice = -1;
         public int SelecionarIndice { get => _indice; }
+        public string Total { get => ("Categorias: " + CategoriaCollection.Count.ToString("N0")); }
 
         // METÓDOS
         public void CarregarColecoes()
@@ -99,6 +100,8 @@ namespace CF.ViewModel.ViewModel
                 _indice = 0;
 
             PropriedadeAlterada(nameof(SelecionarIndice));
+            PropriedadeAlterada(nameof(Total));
+            PropriedadeAlterada(nameof(HabilitarNome));
         }
         public void Salvar()
         {

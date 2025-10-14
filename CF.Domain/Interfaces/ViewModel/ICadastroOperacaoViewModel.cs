@@ -31,6 +31,10 @@ namespace CF.Domain.Interfaces.ViewModel
 
         string Anotacao { get; set; }
         string TextoBotaoPrimario { get; }
+
+        bool HabilitarBotaoPrimario { get; }
+        bool HabilitarComponentes { get; }
+
         void Salvar();
         void Limpar();
         void DefinirOperacao(eTipoOperacaoCrud _tipoOperacao, int PK_OperacaoFinanceira);

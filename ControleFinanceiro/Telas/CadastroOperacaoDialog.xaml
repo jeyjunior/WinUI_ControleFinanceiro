@@ -11,6 +11,7 @@
     PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
     PrimaryButtonClick="CadastroOperacaoFinanceira_PrimaryButtonClick"
     PrimaryButtonText="{Binding TextoBotaoPrimario}"
+    IsPrimaryButtonEnabled="{Binding HabilitarBotaoPrimario}"
     SecondaryButtonClick="CadastroOperacaoFinanceira_SecondaryButtonClick"
     SecondaryButtonText="Cancelar"
     mc:Ignorable="d"
@@ -41,6 +42,7 @@
             <ComboBox x:Name="cboTipoOperacao"
                       Grid.Row="1" Grid.Column="0"
                       HorizontalAlignment="Stretch"
+                      IsEnabled="{Binding HabilitarComponentes}"
                       ItemsSource="{Binding TipoOperacaoCollection}"
                       DisplayMemberPath="Nome"
                       SelectedValuePath="PK_TipoOperacao"
@@ -50,6 +52,7 @@
             <ComboBox x:Name="cboCategoria" Grid.Row="1" Grid.Column="1"
                       HorizontalAlignment="Stretch"
                       ItemsSource="{Binding CategoriaCollection}"
+                      IsEnabled="{Binding HabilitarComponentes}"
                       DisplayMemberPath="Nome"
                       SelectedValuePath="PK_Categoria"
                       SelectedValue="{Binding PK_CategoriaSelecionada, Mode=TwoWay}" />
@@ -66,6 +69,7 @@
                       Grid.Row="1"
                     HorizontalAlignment="Stretch"
                     ItemsSource="{Binding EntidadeFinanceiraCollection}"
+                      IsEnabled="{Binding HabilitarComponentes}"
                     DisplayMemberPath="Nome"
                     SelectedValuePath="PK_EntidadeFinanceira"
                     SelectedValue="{Binding PK_EntidadeFinanceiraSelecionada, Mode=TwoWay}" />
@@ -99,6 +103,7 @@
                             VerticalContentAlignment="Center"
                             TextAlignment="Start"
                             Text="{Binding DataVencimentoFormatada, Mode=TwoWay}"
+                             IsEnabled="{Binding HabilitarComponentes}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,0"/>
 
@@ -109,6 +114,7 @@
                               Padding="0"
                               VerticalAlignment="Top"
                               Date="{Binding DataVencimento, Mode=TwoWay}"
+                                        IsEnabled="{Binding HabilitarComponentes}"
                               HorizontalAlignment="Stretch"
                               BorderThickness="1,1,1,1"/>
                 </Grid>
@@ -129,6 +135,7 @@
                                 VerticalContentAlignment="Center"
                                 TextAlignment="Start"
                                 Text="{Binding DataTransacaoFormatada, Mode=TwoWay}"
+                             IsEnabled="{Binding HabilitarComponentes}"
                                 HorizontalAlignment="Stretch"
                                 Margin="0,0,0,0"/>
 
@@ -139,19 +146,20 @@
                                       Padding="0"
                                       VerticalAlignment="Top"
                                       Date="{Binding DataTransacao, Mode=TwoWay}"
+                                        IsEnabled="{Binding HabilitarComponentes}"
                                       HorizontalAlignment="Stretch"
                                       BorderThickness="1,1,1,1"/>
                 </Grid>
             </StackPanel>
 
             <TextBlock x:Name="txtTituloValor" Text="Valor:"  Grid.Row="0" Grid.Column="2"/>
-            <NumberBox x:Name="txtValor"  Grid.Row="1" Grid.Column="2" Text="{Binding Valor, Mode=TwoWay}"/>
+            <NumberBox x:Name="txtValor"  Grid.Row="1" Grid.Column="2" Text="{Binding Valor, Mode=TwoWay}" IsEnabled="{Binding HabilitarComponentes}"/>
         </Grid>
 
 
         <StackPanel x:Name="spAnotacao" Grid.Row="3">
             <TextBlock x:Name="txtTituloAnotacao" Text="Anotação:"/>
-            <TextBox x:Name="txtAnotacao" Height="74" MaxLength="200" TextWrapping="Wrap" AcceptsReturn="False" Text="{Binding Anotacao, Mode=TwoWay}"/>
+            <TextBox x:Name="txtAnotacao" Height="74" MaxLength="200" TextWrapping="Wrap" AcceptsReturn="False" Text="{Binding Anotacao, Mode=TwoWay}" IsEnabled="{Binding HabilitarComponentes}"/>
         </StackPanel>
     </Grid>
 

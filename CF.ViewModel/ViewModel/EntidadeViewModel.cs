@@ -39,6 +39,7 @@ namespace CF.ViewModel.ViewModel
             get => _nome;
             set => _nome = value;
         }
+        public bool HabilitarNome { get => !ExibeBotoesCrud && _tipoOperacao != eTipoOperacaoCrud.Excluir; }
 
         // CONTROLAR EXIBIÇÃO DE COMPONENTES
         public bool ExibeBotoesCrud { get => this._habilitarEdicao == eHabilitarEdicao.Nao; }
@@ -47,7 +48,7 @@ namespace CF.ViewModel.ViewModel
 
         private int _indice = -1;
         public int SelecionarIndice { get => _indice; }
-
+        public string Total { get => ("Entidades financeiras: " + EntidadeFinanceiraCollection.Count.ToString("N0")); }
         // METÓDOS
         public void CarregarColecoes()
         {
@@ -102,6 +103,7 @@ namespace CF.ViewModel.ViewModel
                 _indice = 0;
 
             PropriedadeAlterada(nameof(SelecionarIndice));
+            PropriedadeAlterada(nameof(Total));
         }
         public void Salvar()
         {

@@ -37,18 +37,42 @@ namespace CF.ViewModel.ViewModel
 
         #region TipoOperacao
         public ObservableCollection<TipoOperacao> TipoOperacaoCollection { get; set; } = new ObservableCollection<TipoOperacao>();
-        public int PK_TipoOperacaoSelecionada { get => OperacaoFinanceiraSelecionada.FK_TipoOperacao; set => OperacaoFinanceiraSelecionada.FK_TipoOperacao = value; }
+        public int PK_TipoOperacaoSelecionada 
+        { 
+            get => OperacaoFinanceiraSelecionada.FK_TipoOperacao;
+            set
+            {
+                 OperacaoFinanceiraSelecionada.FK_TipoOperacao = value;
+                 PropriedadeAlterada(nameof(HabilitarBotaoPrimario));
+            }
+        }
         #endregion
 
         #region Categoria
         public ObservableCollection<Categoria> CategoriaCollection { get; set; } = new ObservableCollection<Categoria>();
-        public int PK_CategoriaSelecionada { get => OperacaoFinanceiraSelecionada.FK_Categoria; set => OperacaoFinanceiraSelecionada.FK_Categoria = value; }
+        public int PK_CategoriaSelecionada 
+        { 
+            get => OperacaoFinanceiraSelecionada.FK_Categoria;
+            set
+            {
+                 OperacaoFinanceiraSelecionada.FK_Categoria = value;
+                PropriedadeAlterada(nameof(HabilitarBotaoPrimario));
+            }
+        }
 
         #endregion
 
         #region EntidadeFinanceira
         public ObservableCollection<EntidadeFinanceira> EntidadeFinanceiraCollection { get; set; } = new ObservableCollection<EntidadeFinanceira>();
-        public int PK_EntidadeFinanceiraSelecionada { get => OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira; set => OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira = value; }
+        public int PK_EntidadeFinanceiraSelecionada 
+        { 
+            get => OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira;
+            set
+            {
+                OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira = value;
+                PropriedadeAlterada(nameof(HabilitarBotaoPrimario));
+            }
+        }
         #endregion
 
         #region Valor
@@ -99,6 +123,8 @@ namespace CF.ViewModel.ViewModel
                 }
 
                 PropriedadeAlterada(nameof(DataVencimento));
+                PropriedadeAlterada(nameof(DataVencimentoFormatada));
+                PropriedadeAlterada(nameof(HabilitarBotaoPrimario));
             }
         }
         #endregion
@@ -165,6 +191,32 @@ namespace CF.ViewModel.ViewModel
                 return "Salvar";
             }
         }
+        public bool HabilitarBotaoPrimario
+        {
+            get
+            {
+                if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
+                    return true;
+                if (PK_TipoOperacaoSelecionada <= 0)
+                    return false;
+                if (PK_CategoriaSelecionada <= 0)
+                    return false;
+                if (PK_EntidadeFinanceiraSelecionada <= 0)
+                    return false;
+                if (DataVencimentoFormatada == "")
+                    return false;
+                return true;
+            }
+        }
+        public bool HabilitarComponentes
+        {
+            get
+            {
+                if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
+                    return false;
+                return true;
+            }
+        }
 
         // METÓDOS
         public void CarregarColecoes()
@@ -218,7 +270,6 @@ namespace CF.ViewModel.ViewModel
 
             PropriedadeAlterada(nameof(TipoOperacaoCollection));
         }
-
         public void DefinirOperacao(eTipoOperacaoCrud _tipoOperacao, int PK_OperacaoFinanceira)
         {
             this._tipoOperacao = _tipoOperacao;
@@ -261,34 +312,23 @@ namespace CF.ViewModel.ViewModel
             PropriedadeAlterada(nameof(DataTransacaoFormatada));
             PropriedadeAlterada(nameof(Anotacao));
             PropriedadeAlterada(nameof(TextoBotaoPrimario));
+            PropriedadeAlterada(nameof(HabilitarBotaoPrimario));
+            PropriedadeAlterada(nameof(HabilitarComponentes));
         }
         public void Salvar()
         {
             if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
             {
-                OperacaoFinanceiraSelecionada = new OperacaoFinanceira
-                {
-                    PK_OperacaoFinanceira = 0,
-                    FK_Categoria = PK_CategoriaSelecionada,
-                    FK_EntidadeFinanceira = PK_EntidadeFinanceiraSelecionada,
-                    FK_TipoOperacao = PK_TipoOperacaoSelecionada,
-                    Anotacao = Anotacao,
-                    DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada),
-                    DataVencimento = DataVencimento.Date,
-                    Valor = Convert.ToDecimal(Valor),
-                };
+                OperacaoFinanceiraSelecionada.PK_OperacaoFinanceira = 0;
+                OperacaoFinanceiraSelecionada.DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada);
+                OperacaoFinanceiraSelecionada.DataVencimento = DataVencimentoFormatada == "" ? DateTime.Now : Convert.ToDateTime(DataVencimentoFormatada);
 
                 var ret = _operacaoFinanceiraRepository.Adicionar(OperacaoFinanceiraSelecionada);
             }
             else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
             {
-                OperacaoFinanceiraSelecionada.FK_Categoria = PK_CategoriaSelecionada;
-                OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira = PK_EntidadeFinanceiraSelecionada;
-                OperacaoFinanceiraSelecionada.FK_TipoOperacao = PK_TipoOperacaoSelecionada;
-                OperacaoFinanceiraSelecionada.Anotacao = Anotacao;
                 OperacaoFinanceiraSelecionada.DataTransacao = DataTransacaoFormatada == "" ? null : Convert.ToDateTime(DataTransacaoFormatada);
                 OperacaoFinanceiraSelecionada.DataVencimento = DataVencimentoFormatada == "" ? DateTime.Now : Convert.ToDateTime(DataVencimentoFormatada);
-                OperacaoFinanceiraSelecionada.Valor = Convert.ToDecimal(Valor);
 
                 var ret = _operacaoFinanceiraRepository.Atualizar(OperacaoFinanceiraSelecionada);
             }
