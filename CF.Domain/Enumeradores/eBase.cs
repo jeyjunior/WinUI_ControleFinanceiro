@@ -13,7 +13,8 @@ namespace CF.Domain.Enumeradores
         SQLServer = 2,
         MySQL = 3,
     }
-    public enum eTipoOperacao
+
+    public enum eTipoOperacaoCrud
     {
         Adicionar = 1,
         Editar = 2,
@@ -35,6 +36,14 @@ namespace CF.Domain.Enumeradores
         EmAberto = 2,
         [CodigoGlyph("\xE783")]
         Vencido = 3
+    }
+    public enum eTipoOperacao
+    {
+        Nenhum = 0,
+        [CodigoGlyph("\xEB11")]
+        Receita = 1,
+        [CodigoGlyph("\xEB0F")]
+        Despesa = 2
     }
 
     public enum eCor

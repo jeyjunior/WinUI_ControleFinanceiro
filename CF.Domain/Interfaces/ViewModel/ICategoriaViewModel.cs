@@ -21,7 +21,7 @@ namespace CF.Domain.Interfaces.ViewModel
         int SelecionarIndice { get; }
 
         void CarregarColecoes();
-        void DefinirTipoOperacao(eTipoOperacao tipoOperacao);
+        void DefinirTipoOperacao(eTipoOperacaoCrud tipoOperacao);
         void DefinirItemSelecionado(Categoria categoria);
         void Salvar();
     }

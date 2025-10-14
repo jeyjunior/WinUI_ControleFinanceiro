@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
 
 namespace CF.Domain.Entidades
 {
@@ -55,7 +56,9 @@ namespace CF.Domain.Entidades
         [ChavePrimaria]
         public int PK_OperacaoFinanceira { get; set; }
         public int FK_TipoOperacao { get; set; }
-        public string Valor { get; set; }
+        public decimal Valor { get; set; }
+        public string ValorFormatado { get => Valor.ToString("N2"); }
+
         public string DataTransacaoFormatado { get; set; }
         public DateTime? DataTransacao { get; set; }
         public string DataVencimentoFormatado { get; set; }
@@ -69,5 +72,29 @@ namespace CF.Domain.Entidades
         public SolidColorBrush StatusPagamentoCor { get; set; }
         public SolidColorBrush DataVencimentoCor { get; set; }  
         public string StatusOperacaoIcone { get; set; }
+    }
+
+    public class OperacaoFinanceiraResumo
+    {
+        public decimal TotalReceitaPaga { get; set; }
+        public decimal TotalReceita { get; set; }
+        public int ReceitaProgressoAtual { get; set; }
+        public int ReceitaProgressoMaximo { get; set; }
+        public string TotalReceitaPagaFormatado { get; set; }
+        public string TotalReceitaFormatado { get; set; }
+        public string PercentualReceita { get; set; }
+
+        public decimal TotalDespesaPaga { get; set; }
+        public decimal TotalDespesa { get; set; }
+        public int DespesaProgressoAtual { get; set; }
+        public int DespesaProgressoMaximo { get; set; }
+        public string TotalDespesaPagaFormatado { get; set; }
+        public string TotalDespesaFormatado { get; set; }
+        public string PercentualDespesa { get; set; }
+
+        public decimal Saldo { get; set; }
+        public string SaldoFormatado { get; set; }
+        public string SaldoFormatadoIcone { get; set; }
+        public SolidColorBrush SaldoFormatadoCor { get; set; }
     }
 }

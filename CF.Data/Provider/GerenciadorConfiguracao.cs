@@ -74,14 +74,14 @@ namespace CF.Data.Provider
                 },
                 new ParametrosConfiguracao
                 {
-                    Ativo = false,
+                    Ativo = true,
                     TipoBanco = eTipoBancoDados.SQLServer,
                     NomeAplicacao = "ControleFinanceiro",
-                    StringConexao = "Server=JJ;Database=ControleFinanceiro;Integrated Security=True;TrustServerCertificate=True;"
+                    StringConexao = "Server=JUNIOR\\JJ;Database=ControleFinanceiro;Integrated Security=True;TrustServerCertificate=True;"
                 },
                 new ParametrosConfiguracao
                 {
-                    Ativo = true,
+                    Ativo = false,
                     TipoBanco = eTipoBancoDados.MySQL,
                     NomeAplicacao = "ControleFinanceiro",
                     StringConexao = "server=localhost;port=3306;user=root;password=1234;database=controlefinanceiro;"

@@ -18,7 +18,7 @@ namespace CF.ViewModel.ViewModel
     {
         private readonly ICategoriaRepository _categoriaRepository;
         private eHabilitarEdicao _habilitarEdicao;
-        private eTipoOperacao _tipoOperacao;
+        private eTipoOperacaoCrud _tipoOperacao;
         public CategoriaViewModel()
         {
             _categoriaRepository = Bootstrap.ServiceProvider.GetRequiredService<ICategoriaRepository>();
@@ -64,12 +64,12 @@ namespace CF.ViewModel.ViewModel
 
             PropriedadeAlterada(nameof(CategoriaCollection));
         }
-        public void DefinirTipoOperacao(eTipoOperacao tipoOperacao)
+        public void DefinirTipoOperacao(eTipoOperacaoCrud tipoOperacao)
         {
             _tipoOperacao = tipoOperacao;
-            _habilitarEdicao = (tipoOperacao == eTipoOperacao.Adicionar || tipoOperacao == eTipoOperacao.Editar || tipoOperacao == eTipoOperacao.Excluir) ? eHabilitarEdicao.Sim: eHabilitarEdicao.Nao;
+            _habilitarEdicao = (tipoOperacao == eTipoOperacaoCrud.Adicionar || tipoOperacao == eTipoOperacaoCrud.Editar || tipoOperacao == eTipoOperacaoCrud.Excluir) ? eHabilitarEdicao.Sim: eHabilitarEdicao.Nao;
 
-            if (tipoOperacao != eTipoOperacao.Adicionar)
+            if (tipoOperacao != eTipoOperacaoCrud.Adicionar)
             {
                 _nome = CategoriaSelecionada != null ? CategoriaSelecionada.Nome : "";
             }
@@ -102,24 +102,24 @@ namespace CF.ViewModel.ViewModel
         }
         public void Salvar()
         {
-            if (_tipoOperacao == eTipoOperacao.Adicionar)
+            if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
             {
                 _categoriaSelecionada = new Categoria { PK_Categoria = 0, Nome = _nome, FK_Usuario = null };
                 var ret = _categoriaRepository.Adicionar(_categoriaSelecionada);
             }
-            else if (_tipoOperacao == eTipoOperacao.Editar)
+            else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
             {
                 _categoriaSelecionada.Nome = _nome;
                 var ret = _categoriaRepository.Atualizar(_categoriaSelecionada);
             }
-            else if (_tipoOperacao == eTipoOperacao.Excluir)
+            else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
             {
                 var ret = _categoriaRepository.Deletar(_categoriaSelecionada.PK_Categoria);
             }
 
             CarregarColecoes();
             DefinirItemSelecionado(null);
-            DefinirTipoOperacao(eTipoOperacao.Salvar);
+            DefinirTipoOperacao(eTipoOperacaoCrud.Salvar);
         }
     }
 }

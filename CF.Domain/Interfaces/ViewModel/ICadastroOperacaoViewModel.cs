@@ -33,6 +33,6 @@ namespace CF.Domain.Interfaces.ViewModel
         string TextoBotaoPrimario { get; }
         void Salvar();
         void Limpar();
-        void DefinirOperacao(eTipoOperacao _tipoOperacao, int PK_OperacaoFinanceira);
+        void DefinirOperacao(eTipoOperacaoCrud _tipoOperacao, int PK_OperacaoFinanceira);
     }
 }

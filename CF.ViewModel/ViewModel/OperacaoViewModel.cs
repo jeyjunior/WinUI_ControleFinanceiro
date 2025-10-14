@@ -18,17 +18,55 @@ namespace CF.ViewModel.ViewModel
     {
         private readonly IOperacaoFinanceiraRepository _operacaoFinanceiraRepository;
 
+        private int _pK_OperacaoFinanceiraSelecionada;
+        public int PK_OperacaoFinanceiraSelecionada 
+        { 
+            get => _pK_OperacaoFinanceiraSelecionada;
+            set 
+            {
+                _pK_OperacaoFinanceiraSelecionada = value;
+                PropriedadeAlterada(nameof(HabilitaBotaoEditarExcluir));
+            } 
+        }
+
         public OperacaoViewModel()
         {
             _operacaoFinanceiraRepository = Bootstrap.ServiceProvider.GetRequiredService<IOperacaoFinanceiraRepository>();
         }
         public ObservableCollection<OperacaoFinanceiraGrid> OperacaoFinanceiraCollection { get; set; } = new ObservableCollection<OperacaoFinanceiraGrid>();
+        public OperacaoFinanceiraResumo OperacaoFinanceiraResumo { get; set; } = new OperacaoFinanceiraResumo();
 
+        public string Total { get => ("Operações financeiras: " + OperacaoFinanceiraCollection.Count.ToString("N0")); }
+        public bool HabilitaBotaoEditarExcluir { get => OperacaoFinanceiraCollection.Count > 0 && PK_OperacaoFinanceiraSelecionada > 0; }
+
+        private bool _dataFinalSelecionada = false;
+        public bool DataFinalSelecionada 
+        { 
+            get => _dataFinalSelecionada; 
+            set 
+            { 
+                _dataFinalSelecionada = value;
+                PropriedadeAlterada(nameof(HabilitarBotaoPesquisa)); 
+            } 
+        }
+        private bool _dataInicialSelecionada = false;
+        public bool DataInicialSelecionada
+        {
+            get => _dataInicialSelecionada;
+            set
+            {
+                _dataInicialSelecionada = value;
+                PropriedadeAlterada(nameof(HabilitarBotaoPesquisa));
+            }
+        }
+        public bool HabilitarBotaoPesquisa 
+        { 
+            get => _dataFinalSelecionada && _dataInicialSelecionada;
+        }
         public void CarregarColecoes()
         {
            
         }
-   
         public void Pesquisar(DateTime dataInicial, DateTime dataFinal)
         {
             if (OperacaoFinanceiraCollection == null)
@@ -37,22 +75,25 @@ namespace CF.ViewModel.ViewModel
             if (OperacaoFinanceiraCollection.Any())
                 OperacaoFinanceiraCollection.Clear();
 
-            string _inicial = dataInicial.ToString("yyyy-MM-dd");
-            string _final = dataFinal.AddDays(1).ToString("yyyy-MM-dd");
+            DateTime _inicial = dataInicial;
+            DateTime _final = dataFinal.AddDays(1);
 
             var operacaoFinanceira = _operacaoFinanceiraRepository.ObterListaGrid("OperacaoFinanceira.DataVencimento >= @DataInicial AND OperacaoFinanceira.DataVencimento < @DataFinal", new {DataInicial = _inicial, DataFinal = _final});
 
             foreach (var item in operacaoFinanceira)
             {
-                item.Valor = Convert.ToDecimal(item.Valor).ToString("N2");
-
                 DefinirStatusOperacao(item);
                 DefinirStatusPagamento(item);
 
                 OperacaoFinanceiraCollection.Add(item);
             }
 
+            OperacaoFinanceiraResumo = _operacaoFinanceiraRepository.ObterResumoOperacao("DataVencimento >= @DataInicial AND DataVencimento < @DataFinal", new { DataInicial = _inicial, DataFinal = _final });
+            FormatarDadosDoResumo(OperacaoFinanceiraResumo);
+
             PropriedadeAlterada(nameof(OperacaoFinanceiraCollection));
+            PropriedadeAlterada(nameof(OperacaoFinanceiraResumo));
+            PropriedadeAlterada(nameof(Total));
         }
         private void DefinirStatusOperacao(OperacaoFinanceiraGrid operacao)
         {
@@ -70,7 +111,6 @@ namespace CF.ViewModel.ViewModel
                 operacao.StatusOperacaoIcone = "\xEB0F";
             }
         }
-
         public void DefinirStatusPagamento(OperacaoFinanceiraGrid operacao)
         {
             if (operacao.DataTransacao != null)
@@ -107,6 +147,39 @@ namespace CF.ViewModel.ViewModel
                 operacao.StatusPagamentoIcone = eStatusPagamento.EmAberto.ObterCodigoGlyph();
                 operacao.StatusPagamentoCor = eCor.Cinza1.ObterCor();
                 operacao.DataVencimentoCor = eCor.Cinza1.ObterCor();
+            }
+        }
+        public void FormatarDadosDoResumo(OperacaoFinanceiraResumo resumo)
+        {
+            if (resumo == null)
+                resumo = new OperacaoFinanceiraResumo();
+
+            // RECEITA
+            resumo.ReceitaProgressoAtual = Convert.ToInt32(resumo.TotalReceitaPaga);
+            resumo.ReceitaProgressoMaximo = Convert.ToInt32(resumo.TotalReceita);
+            resumo.TotalReceitaPagaFormatado = resumo.TotalReceitaPaga.ToString("N2");
+            resumo.TotalReceitaFormatado = resumo.TotalReceita.ToString("N2");
+            resumo.PercentualReceita = (resumo.TotalReceita == 0) ? "0%" : ((float)(resumo.TotalReceitaPaga / resumo.TotalReceita) * 100).ToString("N2") + "%";
+
+            // DESPESA
+            resumo.DespesaProgressoAtual = Convert.ToInt32(resumo.TotalDespesaPaga);
+            resumo.DespesaProgressoMaximo = Convert.ToInt32(resumo.TotalDespesa);
+            resumo.TotalDespesaPagaFormatado = resumo.TotalDespesaPaga.ToString("N2");
+            resumo.TotalDespesaFormatado = resumo.TotalDespesa.ToString("N2");
+            resumo.PercentualDespesa = (resumo.TotalDespesa == 0) ? "0%" : ((float)(resumo.TotalDespesaPaga / resumo.TotalDespesa) * 100).ToString("N2") + "%";
+
+            // SALDO
+            resumo.SaldoFormatado = ("R$ " + resumo.Saldo.ToString("N2"));
+
+            if (resumo.Saldo >= 0)
+            {
+                resumo.SaldoFormatadoIcone = eTipoOperacao.Receita.ObterCodigoGlyph();
+                resumo.SaldoFormatadoCor = eCor.Verde1.ObterCor();
+            }
+            else
+            {
+                resumo.SaldoFormatadoIcone = eTipoOperacao.Despesa.ObterCodigoGlyph();
+                resumo.SaldoFormatadoCor = eCor.Vermelho1.ObterCor();
             }
         }
     }

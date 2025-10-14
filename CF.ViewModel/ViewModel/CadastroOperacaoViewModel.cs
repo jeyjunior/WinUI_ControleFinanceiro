@@ -21,7 +21,7 @@ namespace CF.ViewModel.ViewModel
         private readonly ITipoOperacaoRepository _tipoOperacaoRepository;
 
         private eHabilitarEdicao _habilitarEdicao;
-        private eTipoOperacao _tipoOperacao;
+        private eTipoOperacaoCrud _tipoOperacao;
         public CadastroOperacaoViewModel()
         {
             _operacaoFinanceiraRepository = Bootstrap.ServiceProvider.GetRequiredService<IOperacaoFinanceiraRepository>();
@@ -159,7 +159,7 @@ namespace CF.ViewModel.ViewModel
         {
             get
             {
-                if (_tipoOperacao == eTipoOperacao.Excluir)
+                if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
                     return "Excluir";
 
                 return "Salvar";
@@ -219,7 +219,7 @@ namespace CF.ViewModel.ViewModel
             PropriedadeAlterada(nameof(TipoOperacaoCollection));
         }
 
-        public void DefinirOperacao(eTipoOperacao _tipoOperacao, int PK_OperacaoFinanceira)
+        public void DefinirOperacao(eTipoOperacaoCrud _tipoOperacao, int PK_OperacaoFinanceira)
         {
             this._tipoOperacao = _tipoOperacao;
 
@@ -264,7 +264,7 @@ namespace CF.ViewModel.ViewModel
         }
         public void Salvar()
         {
-            if (_tipoOperacao == eTipoOperacao.Adicionar)
+            if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
             {
                 OperacaoFinanceiraSelecionada = new OperacaoFinanceira
                 {
@@ -280,7 +280,7 @@ namespace CF.ViewModel.ViewModel
 
                 var ret = _operacaoFinanceiraRepository.Adicionar(OperacaoFinanceiraSelecionada);
             }
-            else if (_tipoOperacao == eTipoOperacao.Editar)
+            else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
             {
                 OperacaoFinanceiraSelecionada.FK_Categoria = PK_CategoriaSelecionada;
                 OperacaoFinanceiraSelecionada.FK_EntidadeFinanceira = PK_EntidadeFinanceiraSelecionada;
@@ -292,7 +292,7 @@ namespace CF.ViewModel.ViewModel
 
                 var ret = _operacaoFinanceiraRepository.Atualizar(OperacaoFinanceiraSelecionada);
             }
-            else if (_tipoOperacao == eTipoOperacao.Excluir)
+            else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
             {
                 var ret = _operacaoFinanceiraRepository.Deletar(OperacaoFinanceiraSelecionada.PK_OperacaoFinanceira);
             }

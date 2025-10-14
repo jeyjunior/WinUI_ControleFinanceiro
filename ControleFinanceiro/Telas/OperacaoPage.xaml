@@ -10,96 +10,344 @@
     Loaded="Page_Loaded"
     mc:Ignorable="d">
 
-    <Grid Background="{StaticResource Cinza10}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- 0- Resumo entrada/saída -->
-            <RowDefinition Height="Auto"/>
-            <!-- 1- Pesquisa/Filtros -->
-            <RowDefinition Height="*"/>
-            <!-- 2- Operações -->
-            <RowDefinition Height="32"/>
-            <!-- 3- Rodapé -->
-        </Grid.RowDefinitions>
-
+    <Grid Background="{StaticResource Cinza10}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="100*" MaxWidth="1100"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- 1- Pesquisa/Filtros -->
-        <Grid x:Name="gPesquisa" Background="{StaticResource Cinza11}"
-              Padding="8"
-              Grid.Row="1"
-              Grid.Column="1"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Resumo entrada/saída -->
+        <Grid Background="{StaticResource Cinza11}"
               ColumnSpacing="24" 
+              Grid.Row="0"
+              Grid.Column="1"
+              Margin="0,8,0,0" 
+              CornerRadius="8,8,0,0"
+              Padding="20,12"
               HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" MaxWidth="200" MinWidth="100"/>
+                <ColumnDefinition Width="*" MaxWidth="200" MinWidth="100"/>
+                <ColumnDefinition Width="*" MinWidth="260"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
-                
-                <StackPanel Spacing="2" VerticalAlignment="Stretch">
-                    <TextBlock Text="Data Inicial" FontSize="12" Foreground="{StaticResource Cinza2}"/>
-                    <CalendarDatePicker x:Name="cdpDataInicial" IsTodayHighlighted="True" PlaceholderText="" Width="120"/>
+            <!-- Despesa -->
+            <Grid Background="{StaticResource Nenhuma}" 
+                  Grid.Column="0"
+                  RowSpacing="4"
+                  Padding="0"
+                  Margin="0"
+                  HorizontalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" 
+                      Padding="0"
+                      Margin="0"
+                      Background="{StaticResource Nenhuma}" 
+                      HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="txtDespesaTitulo" 
+                               Grid.Column="0"
+                               Text="Despesa"
+                               FontSize="12"
+                               FontWeight="Normal"
+                               Foreground="{StaticResource Vermelho1}"
+                               VerticalAlignment="Center"/>
+
+                    <StackPanel x:Name="spDespesaTituloPorcentagem"
+                                Grid.Column="1" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Bottom" 
+                                Spacing="4">
+
+                        <FontIcon FontFamily="Segoe Fluent Icons" 
+                                  Glyph="&#xEB0F;" 
+                                  Foreground="{StaticResource Vermelho1}"
+                                  FontSize="14"/>
+
+                        <TextBlock x:Name="txtDespesaTituloPorcentagem"
+                                   Text="{Binding OperacaoFinanceiraResumo.PercentualDespesa}" 
+                                   FontWeight="SemiBold" 
+                                   FontSize="12"
+                                   Foreground="{StaticResource Branco}"/>
+                    </StackPanel>
+                </Grid>
+
+                <ProgressBar Value="{Binding OperacaoFinanceiraResumo.DespesaProgressoAtual}" 
+                             Grid.Row="1"
+                             Maximum="{Binding OperacaoFinanceiraResumo.DespesaProgressoMaximo}"
+                             Minimum="0"
+                             MinHeight="3"
+                             Padding="0"
+                             Margin="0"
+                             Foreground="{StaticResource Vermelho1}"
+                             Background="{StaticResource Cinza4}"
+                             CornerRadius="2"/>
+
+                <StackPanel Grid.Row="2" 
+                            Orientation="Horizontal"
+                            Background="{StaticResource Nenhuma}" 
+                            HorizontalAlignment="Right">
+
+                    <TextBlock x:Name="txtDespesaTituloRecebido" 
+                               Grid.Column="0"
+                               Text="{Binding OperacaoFinanceiraResumo.TotalDespesaPagaFormatado}"
+                               FontSize="14"
+                               Foreground="{StaticResource Vermelho1}"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Text="|"
+                               Padding="2,0"
+                               FontSize="14"
+                               Foreground="{StaticResource Cinza2}"
+                               FontWeight="Normal"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock x:Name="txtDespesaTituloTotal" 
+                               Grid.Column="0"
+                               Text="{Binding OperacaoFinanceiraResumo.TotalDespesaFormatado}"
+                               FontSize="14"
+                               Foreground="{StaticResource Cinza2}"
+                               FontWeight="Normal"
+                               VerticalAlignment="Center"/>
                 </StackPanel>
-                
-                <StackPanel Spacing="2" VerticalAlignment="Stretch">
-                    <TextBlock Text="Data Final" FontSize="12" Foreground="{StaticResource Cinza2}"/>
-                    <CalendarDatePicker x:Name="cdpDataFinal" IsTodayHighlighted="True" PlaceholderText="" Width="120"/>
+            </Grid>
+
+            <!-- Receita -->
+            <Grid Background="{StaticResource Nenhuma}" 
+                  Grid.Column="1"
+                  RowSpacing="4"
+                  Padding="0"
+                  Margin="0"
+                  HorizontalAlignment="Stretch">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" 
+                      Padding="0"
+                      Margin="0"
+                      Background="{StaticResource Nenhuma}" 
+                      HorizontalAlignment="Stretch">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="txtReceitaTitulo" 
+                               Grid.Column="0"
+                               Text="Receita"
+                               FontSize="12"
+                               FontWeight="Normal"
+                               Foreground="{StaticResource Verde1}"
+                               VerticalAlignment="Center"/>
+
+                    <StackPanel x:Name="spReceitaTituloPorcentagem"
+                                Grid.Column="1" 
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Bottom" 
+                                Spacing="4">
+
+                        <FontIcon FontFamily="Segoe Fluent Icons" 
+                                  Glyph="&#xEB11;" 
+                                  Foreground="{StaticResource Verde1}"
+                                  FontSize="14"/>
+
+                        <TextBlock x:Name="txtReceitaTituloPorcentagem"
+                                   Text="{Binding OperacaoFinanceiraResumo.PercentualReceita}" 
+                                   FontWeight="SemiBold" 
+                                   FontSize="12"
+                                   Foreground="{StaticResource Branco}"/>
+                    </StackPanel>
+                </Grid>
+
+                <ProgressBar Value="{Binding OperacaoFinanceiraResumo.ReceitaProgressoAtual}" 
+                             Grid.Row="1"
+                             Maximum="{Binding OperacaoFinanceiraResumo.ReceitaProgressoMaximo}" 
+                             Minimum="0"
+                             MinHeight="3"
+                             Padding="0"
+                             Margin="0"
+                             Foreground="{StaticResource Verde1}"
+                             Background="{StaticResource Cinza4}"
+                             CornerRadius="2"/>
+
+                <StackPanel Grid.Row="2" 
+                            Orientation="Horizontal"
+                            Background="{StaticResource Nenhuma}" 
+                            HorizontalAlignment="Right">
+
+                    <TextBlock x:Name="txtReceitaTituloRecebido" 
+                               Grid.Column="0"
+                               Text="{Binding OperacaoFinanceiraResumo.TotalReceitaPagaFormatado}" 
+                               FontSize="14"
+                               Foreground="{StaticResource Verde1}"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Text="|"
+                               Padding="2,0"
+                               FontSize="14"
+                               Foreground="{StaticResource Cinza2}"
+                               FontWeight="Normal"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock x:Name="txtReceitaTituloTotal" 
+                               Grid.Column="0"
+                               Text="{Binding OperacaoFinanceiraResumo.TotalReceitaFormatado}"
+                               FontSize="14"
+                               Foreground="{StaticResource Cinza2}"
+                               FontWeight="Normal"
+                               VerticalAlignment="Center"/>
                 </StackPanel>
-                
-                <Button x:Name="btnPesquisar" 
-                        Height="32" Width="32" 
-                        Padding="0" Margin="0" 
-                        Click="btnPesquisar_Click"
-                        VerticalAlignment="Bottom"
-                        Style="{StaticResource DefaultButtonStyle}">
-                    <FontIcon Glyph="&#xE72C;" FontSize="16"/>
-                </Button>
-                
-            </StackPanel>
-            
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8">
-                <Button x:Name="btnExcluir" 
-                        Height="34" Width="34" 
-                        Padding="0" Margin="0" 
-                        VerticalAlignment="Bottom"
-                        Style="{StaticResource DefaultButtonStyle}"
-                        Click="btnExcluir_Click">
-                    <FontIcon Glyph="&#xE74D;" FontSize="16"/>
-                </Button>
-                
-                <Button x:Name="btnEditar" 
-                        Height="34" Width="34" 
-                        Padding="0" Margin="0" 
-                        VerticalAlignment="Bottom"
-                        Style="{StaticResource DefaultButtonStyle}"
-                        Click="btnEditar_Click">
-                    <FontIcon Glyph="&#xE70F;" FontSize="16"/>
-                </Button>
-                
-                <Button x:Name="btnAdicionar" 
-                        Height="34" Width="34" 
-                        Padding="0" Margin="0" 
-                        VerticalAlignment="Bottom"
-                        Style="{StaticResource AccentButtonStyle}"
-                        Click="btnAdicionar_Click">
-                    <FontIcon Glyph="&#xE710;" FontSize="16"/>
-                </Button>
+            </Grid>
+
+            <!-- Saldo -->
+            <StackPanel Grid.Column="2" 
+                        Padding="0" 
+                        Spacing="0" 
+                        VerticalAlignment="Center" 
+                        MaxWidth="600" 
+                        HorizontalAlignment="Right"
+                        Background="{StaticResource Nenhuma}" CornerRadius="8">
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            Spacing="2"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top">
+
+                    <TextBlock Grid.Column="0"
+                               Text="Saldo"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center"/>
+
+                    <FontIcon FontFamily="Segoe Fluent Icons" 
+                                    Glyph="{Binding OperacaoFinanceiraResumo.SaldoFormatadoIcone}" 
+                                    Foreground="{Binding OperacaoFinanceiraResumo.SaldoFormatadoCor}"
+                                    FontSize="14"/>
+                </StackPanel>
+
+                <Border Height="0" 
+                        Width="200" 
+                        HorizontalAlignment="Right"
+                        Background="{StaticResource Cinza4}"/>
+
+                <TextBlock Text="{Binding OperacaoFinanceiraResumo.SaldoFormatado}"
+                           Foreground="{Binding OperacaoFinanceiraResumo.SaldoFormatadoCor}"
+                           FontSize="14"
+                           HorizontalAlignment="Right"
+                           FontWeight="Bold"/>
             </StackPanel>
         </Grid>
+        
+        <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource Cinza9Transp10}" Padding="16, 8, 16, 0" Margin="0" CornerRadius="0" BorderThickness="1" BorderBrush="{StaticResource Cinza11}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!-- 2- Operações -->
-        <controls:DataGrid  x:Name="dtgPrincipal"
-                    Grid.Row="2"
-                    Grid.Column="1"
+            <!-- Pesquisa/Filtros -->
+            <Grid x:Name="gPesquisa" Background="{StaticResource Nenhuma}"
+                  Padding="0"
+                  Grid.Row="0"
+                  ColumnSpacing="24" 
+                  Margin="0"
+                  CornerRadius="4"
+                  HorizontalAlignment="Stretch">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+
+                    <StackPanel Spacing="2" VerticalAlignment="Stretch">
+                        <TextBlock Text="Data Inicial" FontSize="12" Foreground="{StaticResource Cinza2}"/>
+                        <CalendarDatePicker x:Name="cdpDataInicial" IsTodayHighlighted="True" DateChanged="cdpDataInicial_DateChanged" PlaceholderText="" Width="120"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="2" VerticalAlignment="Stretch">
+                        <TextBlock Text="Data Final" FontSize="12" Foreground="{StaticResource Cinza2}"/>
+                        <CalendarDatePicker x:Name="cdpDataFinal" IsTodayHighlighted="True" DateChanged="cdpDataFinal_DateChanged" PlaceholderText="" Width="120"/>
+                    </StackPanel>
+
+                    <Button x:Name="btnPesquisar" 
+                            Height="32" Width="32" 
+                            Padding="0" Margin="0" 
+                            Click="btnPesquisar_Click"
+                            VerticalAlignment="Bottom"
+                            IsEnabled="{Binding HabilitarBotaoPesquisa}"
+                            Style="{StaticResource DefaultButtonStyle}">
+                        <FontIcon Glyph="&#xE72C;" FontSize="16"/>
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                    <Button x:Name="btnExcluir" 
+                            Height="34" Width="34" 
+                            Padding="0" Margin="0" 
+                            VerticalAlignment="Bottom"
+                            IsEnabled="{Binding HabilitaBotaoEditarExcluir}"
+                            Style="{StaticResource DefaultButtonStyle}"
+                            Click="btnExcluir_Click">
+                        <FontIcon Glyph="&#xE74D;" FontSize="16"/>
+                    </Button>
+
+                    <Button x:Name="btnEditar" 
+                            Height="34" Width="34" 
+                            Padding="0" Margin="0" 
+                            VerticalAlignment="Bottom"
+                            IsEnabled="{Binding HabilitaBotaoEditarExcluir}"
+                            Style="{StaticResource DefaultButtonStyle}"
+                            Click="btnEditar_Click">
+                        <FontIcon Glyph="&#xE70F;" FontSize="16"/>
+                    </Button>
+
+                    <Button x:Name="btnAdicionar" 
+                            Height="34" Width="34" 
+                            Padding="0" Margin="0" 
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource AccentButtonStyle}"
+                            Click="btnAdicionar_Click">
+                        <FontIcon Glyph="&#xE710;" FontSize="16"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- Operações -->
+            <controls:DataGrid  x:Name="dtgPrincipal"
+                    Grid.Row="1"
+                    CornerRadius="0"
                     Margin="0,16,0,0"
-                    Background="{StaticResource Cinza10Transp50}"
+                    Background="{StaticResource Nenhuma}"
                     AutoGenerateColumns="False"
                     CanUserSortColumns="True"
                     CanUserResizeColumns="False"
@@ -109,116 +357,120 @@
                     RowDetailsVisibilityMode="Collapsed"
                     SelectionChanged="dtgPrincipal_SelectionChanged"
                     GridLinesVisibility="All">
-            <controls:DataGrid.Columns>
-                <!-- Oculto -->
-                <controls:DataGridTextColumn x:Name="colPK_OperacaoFinanceira" 
+                <controls:DataGrid.Columns>
+                    <!-- Oculto -->
+                    <controls:DataGridTextColumn x:Name="colPK_OperacaoFinanceira" 
                                      Visibility="Collapsed" 
                                      Header="PK_OperacaoFinanceira" 
                                      Binding="{Binding PK_OperacaoFinanceira}" 
                                      Width="1"/>
 
-                <!-- Status Pagamento -->
-                <controls:DataGridTemplateColumn x:Name="colStatusPagamento" Header="" Width="30">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <FontIcon FontFamily="Segoe Fluent Icons"
+                    <!-- Status Pagamento -->
+                    <controls:DataGridTemplateColumn x:Name="colStatusPagamento" Header="" Width="30">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <FontIcon FontFamily="Segoe Fluent Icons"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Center"
                               Glyph="{Binding StatusPagamentoIcone}"
                               Foreground="{Binding StatusPagamentoCor}"
                               FontSize="14"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
 
-                <!-- Categoria -->
-                <controls:DataGridTemplateColumn x:Name="colCategoria" Header="Categoria" Width="*" MinWidth="110" MaxWidth="200">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Categoria}"
+                    <!-- Categoria -->
+                    <controls:DataGridTemplateColumn x:Name="colCategoria" Header="Categoria" Width="*" MinWidth="110" MaxWidth="200">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Categoria}"
                                        Padding="8,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="12"
                                        FontWeight="Normal"
                                        Margin="0"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
 
-                <!-- Entidade Financeira -->
-                <controls:DataGridTemplateColumn x:Name="colEntidadeFinanceira" Header="Entidade" Width="*" MinWidth="100">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding EntidadeFinanceira}"
+                    <!-- Entidade Financeira -->
+                    <controls:DataGridTemplateColumn x:Name="colEntidadeFinanceira" Header="Entidade" Width="*" MinWidth="100">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding EntidadeFinanceira}"
                                        Padding="8,0"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontSize="12"
                                        FontWeight="Normal"
                                        Margin="0"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
 
-                <!-- Vencimento -->
-                <controls:DataGridTemplateColumn x:Name="colVencimento" Header="Vencimento" Width="110">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding DataVencimentoFormatado}"
+                    <!-- Vencimento -->
+                    <controls:DataGridTemplateColumn x:Name="colVencimento" Header="Vencimento" Width="110">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DataVencimentoFormatado}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         FontWeight="Bold"
                                         Foreground="{Binding DataVencimentoCor}"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
 
-                <!-- Transação -->
-                <controls:DataGridTemplateColumn x:Name="colTransacao" Header="Transação" Width="110">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding DataTransacaoFormatado}"
+                    <!-- Transação -->
+                    <controls:DataGridTemplateColumn x:Name="colTransacao" Header="Transação" Width="110">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DataTransacaoFormatado}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        FontSize="12"
                                        FontWeight="Bold"
                                        Foreground="{StaticResource Verde1}"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
 
-                <!-- Valor -->
-                <controls:DataGridTemplateColumn x:Name="colValor" Header="Valor" Width="*">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Valor}"
+                    <!-- Valor -->
+                    <controls:DataGridTemplateColumn x:Name="colValor" Header="Valor" Width="*">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ValorFormatado}"
                                HorizontalAlignment="Right"
                                VerticalAlignment="Center"
                                FontSize="12"
                                FontWeight="Bold"
                                Margin="0"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
 
-                <!-- Status Operação -->
-                <controls:DataGridTemplateColumn x:Name="colStatusOperacao" Header="" Width="30">
-                    <controls:DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <FontIcon FontFamily="Segoe Fluent Icons"
+                    <!-- Status Operação -->
+                    <controls:DataGridTemplateColumn x:Name="colStatusOperacao" Header="" Width="30">
+                        <controls:DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <FontIcon FontFamily="Segoe Fluent Icons"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Center"
                               Glyph="{Binding StatusOperacaoIcone}"
                               Foreground="{Binding StatusOperacaoCor}"
                               FontSize="14"/>
-                        </DataTemplate>
-                    </controls:DataGridTemplateColumn.CellTemplate>
-                </controls:DataGridTemplateColumn>
+                            </DataTemplate>
+                        </controls:DataGridTemplateColumn.CellTemplate>
+                    </controls:DataGridTemplateColumn>
 
-            </controls:DataGrid.Columns>
-        </controls:DataGrid>
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+        </Grid>
 
+        <Frame Grid.Row="2" Grid.Column="1" Background="{StaticResource Cinza11}" CornerRadius="0,0,8,8" Margin="0,0,0,8" MinHeight="32" Padding="16,0">
+            <TextBlock Text="{Binding Total}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource Cinza3}" FontSize="10"/>
+        </Frame>
     </Grid>
 </Page>

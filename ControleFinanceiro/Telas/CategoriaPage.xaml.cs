@@ -44,28 +44,28 @@ namespace ControleFinanceiro.Telas
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             _categoriaViewModel.CarregarColecoes();
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Cancelar);
+            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
             dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
         }
         private void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Excluir);
+            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Excluir);
         }
         private void btnEditar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Editar);
+            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Editar);
             txtNome.Focus(FocusState.Keyboard);
             txtNome.SelectAll();
         }
         private void btnAdicionar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Adicionar);
+            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Adicionar);
             txtNome.Focus(FocusState.Keyboard);
             txtNome.SelectAll();
         }
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacao.Cancelar);
+            _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
             dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
         }
         private void btnSalvar_Click(object sender, RoutedEventArgs e)

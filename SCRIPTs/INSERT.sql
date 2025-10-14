@@ -2,11 +2,10 @@
 -- SCRIPT DE INSERTS PARA DADOS DE TESTE
 -- =============================================
 
--- Inserir Usu�rio de teste
 INSERT INTO Usuario (Email, Nome, LoginApi, DataCadastro, Ativo)
 VALUES ('usuario.teste@gmail.com', 'Usuário Teste', 'google_oauth_data', GETDATE(), 1);
 
--- Inserir Tipos de Opera��o
+
 INSERT INTO TipoOperacaoFinanceira (Nome) VALUES 
 ('Entrada'),
 ('Saída');
@@ -32,78 +31,32 @@ INSERT INTO Categoria (Nome, FK_Usuario) VALUES
 
 -- Inserir Entidades Financeiras
 INSERT INTO EntidadeFinanceira (Nome, FK_Usuario) VALUES 
-('Empresa XYZ', 1),
-('Imobiliária ABC', 1),
-('Condomínio Edifício Central', 1),
-('Supermercado Preço Bom', 1),
-('Posto de Gasolina Shell', 1),
-('Uber/Táxi', 1),
-('Restaurante Sabor Caseiro', 1),
-('Academia Fit', 1),
-('Hospital Saúde Total', 1),
-('Faculdade USP', 1),
-('Senhor Zé - Serviços Gerais', 1);
+('Empresa XYZ', NULL),
+('Imobiliária ABC', NULL),
+('Condomínio Edifício Central', NULL),
+('Supermercado Preço Bom', NULL),
+('Posto de Gasolina Shell', NULL),
+('Uber/Táxi', NULL),
+('Restaurante Sabor Caseiro', NULL),
+('Academia Fit', NULL),
+('Hospital Saúde Total', NULL),
+('Faculdade USP', NULL),
+('Senhor Zé - Serviços Gerais', NULL);
 
-INSERT INTO OperacaoFinanceira (
-    FK_TipoOperacaoFinanceira, FK_EntidadeFinanceira, FK_Categoria, FK_StatusPagamento, 
-    Valor, DataOperacao, DataVencimento, Descricao, FK_Usuario
-) VALUES 
+-- INSERINDO OPERAÇÕES FINANCEIRAS (OUTUBRO/2025)
+INSERT INTO OperacaoFinanceira 
+    (FK_TipoOperacao, FK_EntidadeFinanceira, FK_Categoria, Valor, DataVencimento, DataTransacao, Anotacao, FK_Usuario)
+VALUES
 -- ENTRADAS
-(1, 1, 1, 2, 2500.00, '2024-01-05', '2024-01-05', 'Salário mensal', 1), -- Pago
-(1, 1, 2, 1, 500.00, NULL, '2024-01-20', 'Freelance desenvolvimento', 1), -- Em Aberto
+(1, 1, 1, 10.99, GETDATE(), NULL, 'Salário recebido', NULL),
+(1, 2, 2, 20.99,      GETDATE(), GETDATE(), 'Aluguel recebido', NULL),
+(1, 3, 3, 30.00,   GETDATE(), NULL, 'Freelance projeto X', NULL),
+(1, 4, 4, 40.50,       GETDATE(), GETDATE(), 'Reembolso condomínio', NULL),
 
--- SA�DAS - PAGAS
-(2, 2, 3, 2, 1000.00, '2024-01-10', '2024-01-10', 'Aluguel janeiro', 1),
-(2, 3, 4, 2, 350.00, '2024-01-08', '2024-01-08', 'Condomínio janeiro', 1),
-(2, 4, 5, 2, 450.00, '2024-01-12', '2024-01-12', 'Compras do mês', 1),
-(2, 5, 6, 2, 200.00, '2024-01-15', '2024-01-15', 'Abastecimento carro', 1),
-(2, 6, 6, 2, 80.00, '2024-01-18', '2024-01-18', 'Corridas de Uber', 1),
+-- SAÍDAS
+(2, 5, 5, 5.99, GETDATE(), NULL, 'Compra supermercado', NULL),
+(2, 6, 6, 6.00,       GETDATE(), NULL, 'Combustível / transporte', NULL),
+(2, 7, 7, 7.75,      GETDATE(), GETDATE(), 'Restaurante / lazer', NULL),
+(2, 8, 8, 8.00,       GETDATE(), NULL, 'Academia mensalidade', NULL),
+(2, 9, 9, 9.99,  GETDATE(), GETDATE(), 'Exames hospitalares', NULL);
 
--- SA�DAS - EM ABERTO (contas futuras)
-(2, 2, 3, 1, 1000.00, NULL, '2024-02-10', 'Aluguel fevereiro', 1),
-(2, 3, 4, 1, 350.00, NULL, '2024-02-08', 'Condomínio fevereiro', 1),
-(2, 8, 8, 1, 120.00, NULL, '2024-02-05', 'Mensalidade academia', 1),
-(2, 11, 7, 1, 300.00, NULL, '2024-02-15', 'Serviço de pintura', 1),
-
--- SA�DAS - VENCIDAS (exemplo de atraso)
-(2, 9, 8, 3, 150.00, NULL, '2023-12-20', 'Consulta médica', 1);
-
--- =============================================
--- CONSULTAS DE VERIFICA��O
--- =============================================
-
--- Verificar totais por tipo
-SELECT 
-    tof.Nome as Tipo,
-    COUNT(*) as Quantidade,
-    SUM(o.Valor) as Total
-FROM OperacaoFinanceira o
-INNER JOIN TipoOperacaoFinanceira tof ON o.FK_TipoOperacaoFinanceira = tof.PK_TipoOperacaoFinanceira
-GROUP BY tof.Nome;
-
--- Verificar opera��es por status
-SELECT 
-    sp.Nome as Status,
-    COUNT(*) as Quantidade,
-    SUM(o.Valor) as Total
-FROM OperacaoFinanceira o
-INNER JOIN StatusPagamento sp ON o.FK_StatusPagamento = sp.PK_StatusPagamento
-GROUP BY sp.Nome;
-
--- Listar opera��es em aberto (pr�ximas do vencimento)
-SELECT 
-    o.PK_OperacaoFinanceira,
-    tof.Nome as Tipo,
-    ef.Nome as Entidade,
-    c.Nome as Categoria,
-    o.Valor,
-    o.DataVencimento,
-    o.Descricao
-FROM OperacaoFinanceira o
-INNER JOIN TipoOperacaoFinanceira tof ON o.FK_TipoOperacaoFinanceira = tof.PK_TipoOperacaoFinanceira
-INNER JOIN EntidadeFinanceira ef ON o.FK_EntidadeFinanceira = ef.PK_EntidadeFinanceira
-INNER JOIN Categoria c ON o.FK_Categoria = c.PK_Categoria
-INNER JOIN StatusPagamento sp ON o.FK_StatusPagamento = sp.PK_StatusPagamento
-WHERE sp.Nome = 'Em Aberto'
-AND o.DataVencimento >= GETDATE()
-ORDER BY o.DataVencimento;

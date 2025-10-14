@@ -18,5 +18,12 @@ namespace CF.Domain.Extensoes
             var attribute = member[0].GetCustomAttribute<CodigoGlyph>();
             return attribute?.Glyph ?? string.Empty;
         }
+        public static string ObterCodigoGlyph(this eTipoOperacao operacao)
+        {
+            var type = operacao.GetType();
+            var member = type.GetMember(operacao.ToString());
+            var attribute = member[0].GetCustomAttribute<CodigoGlyph>();
+            return attribute?.Glyph ?? string.Empty;
+        }
     }
 }

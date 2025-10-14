@@ -10,5 +10,6 @@ namespace CF.Domain.Interfaces.Repository
     public interface IOperacaoFinanceiraRepository : IRepository<OperacaoFinanceira>
     {
         IEnumerable<OperacaoFinanceiraGrid> ObterListaGrid(string condition = "", object parameters = null);
+        OperacaoFinanceiraResumo ObterResumoOperacao(string condition = "", object parameters = null);
     }
 }

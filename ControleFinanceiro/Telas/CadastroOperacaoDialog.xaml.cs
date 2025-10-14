@@ -27,7 +27,7 @@ public sealed partial class CadastroOperacaoDialog : ContentDialog
     private readonly ICadastroOperacaoViewModel _cadastroOperacaoViewModel;
     #endregion
 
-    public CadastroOperacaoDialog(eTipoOperacao tipoOperacao, int PK_OperacaoFinanceira)
+    public CadastroOperacaoDialog(eTipoOperacaoCrud tipoOperacao, int PK_OperacaoFinanceira)
     {
         InitializeComponent();
 

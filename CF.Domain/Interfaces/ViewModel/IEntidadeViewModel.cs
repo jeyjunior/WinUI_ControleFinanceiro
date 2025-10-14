@@ -22,7 +22,7 @@ namespace CF.Domain.Interfaces.ViewModel
 
 
         void CarregarColecoes();
-        void DefinirTipoOperacao(eTipoOperacao tipoOperacao);
+        void DefinirTipoOperacao(eTipoOperacaoCrud tipoOperacao);
         void DefinirItemSelecionado(EntidadeFinanceira entidadeFinanceira);
         void Salvar();
     }

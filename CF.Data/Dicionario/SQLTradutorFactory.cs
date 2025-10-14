@@ -26,21 +26,14 @@ namespace CF.Data.Dicionario
 
             return query;
         }
-
         public static object TratarData(object value)
         {
-            DateTime dateTimeValue = (DateTime)value;
+            if (value is DateTime dt && TipoBancoDados == eTipoBancoDados.SQLite)
+                return dt.ToString("yyyy-MM-dd HH:mm:ss");
 
-            switch (TipoBancoDados)
-            {
-                case eTipoBancoDados.SQLite:
-                case eTipoBancoDados.MySQL:
-                case eTipoBancoDados.SQLServer:
-                    break;
-            }
-
-            return dateTimeValue;
+            return value;
         }
+
 
         public static string ObterSintaxeChavePrimaria()
         {

@@ -40,7 +40,7 @@ namespace CF.InfraData.Repository
         public IEnumerable<OperacaoFinanceiraGrid> ObterListaGrid(string condition = "", object parameters = null)
         {
             string query = "";
-            string where = "";
+            string where = condition;
             string orderby = "";
 
             query = "" +
@@ -54,16 +54,47 @@ namespace CF.InfraData.Repository
                 " INNER    JOIN    EntidadeFinanceira\n" +
                 "        ON    EntidadeFinanceira.PK_EntidadeFinanceira    = OperacaoFinanceira.FK_EntidadeFinanceira  \n" +
                 " INNER    JOIN    Categoria\n" +
-                "        ON    Categoria.PK_Categoria    = OperacaoFinanceira.FK_Categoria\n"; ;
+                "        ON    Categoria.PK_Categoria    = OperacaoFinanceira.FK_Categoria\n"; 
 
-            if (!string.IsNullOrWhiteSpace(condition))
-                query += " WHERE " + condition + "\n";
+            if (!string.IsNullOrWhiteSpace(where))
+                query += " WHERE " + where + "\n";
 
             query += orderby;
 
             var resultado = unitOfWork.Connection.Query<OperacaoFinanceiraGrid>(
                 sql: query,
                 param: parameters).ToList();
+
+            return resultado;
+        }
+
+        public OperacaoFinanceiraResumo ObterResumoOperacao(string condition = "", object parameters = null)
+        {
+            string query = "";
+            string where = condition;
+            string orderby = "";
+
+            query = "" +
+                " SELECT    Operacao.TotalReceitaPaga,\n" +
+                "           Operacao.TotalReceita,\n" +
+                "           Operacao.TotalDespesaPaga,\n" +
+                "           Operacao.TotalDespesa,\n" +
+                "           (Operacao.TotalReceita - Operacao.TotalDespesa) AS Saldo\n" +
+                " FROM \n" +
+                " (\n" +
+                "       SELECT  SUM (CASE WHEN DataTransacao IS NOT NULL AND FK_TipoOperacao = 2 THEN Valor ELSE 0 END) AS TotalDespesaPaga,\n" +
+                "               SUM (CASE WHEN FK_TipoOperacao = 2 THEN Valor ELSE 0 END) AS TotalDespesa,\n" +
+                "               SUM (CASE WHEN DataTransacao IS NOT NULL AND FK_TipoOperacao = 1 THEN Valor ELSE 0 END) AS TotalReceitaPaga,\n" +
+                "               SUM (CASE WHEN FK_TipoOperacao = 1 THEN Valor ELSE 0 END) AS TotalReceita\n" +
+                "       FROM    OperacaoFinanceira\n" +
+                "       WHERE   (OperacaoFinanceira.DataVencimento >= @DataInicial AND OperacaoFinanceira.DataVencimento < @DataFinal)\n" +
+                " )     AS Operacao\n";
+
+            query += orderby;
+
+            var resultado = unitOfWork.Connection.QuerySingleOrDefault<OperacaoFinanceiraResumo>(
+                sql: query,
+                param: parameters);
 
             return resultado;
         }
