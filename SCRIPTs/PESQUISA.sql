@@ -29,11 +29,31 @@ SELECT	Operacao.TotalReceitaPaga,
 		(Operacao.TotalReceita - Operacao.TotalDespesa) AS Saldo
 FROM	
 (
-	SELECT	
-			SUM (CASE WHEN DataTransacao IS NOT NULL AND FK_TipoOperacao = 2 THEN Valor ELSE 0 END) AS TotalDespesaPaga,
+	SELECT	SUM (CASE WHEN DataTransacao IS NOT NULL AND FK_TipoOperacao = 2 THEN Valor ELSE 0 END) AS TotalDespesaPaga,
 			SUM (CASE WHEN FK_TipoOperacao = 2 THEN Valor ELSE 0 END) AS TotalDespesa,
 			SUM (CASE WHEN DataTransacao IS NOT NULL AND FK_TipoOperacao = 1 THEN Valor ELSE 0 END) AS TotalReceitaPaga,
 			SUM (CASE WHEN FK_TipoOperacao = 1 THEN Valor ELSE 0 END) AS TotalReceita
 	FROM	OperacaoFinanceira
 	WHERE	(DataVencimento > @DataInicial	AND DataVencimento < @DataFinal)
 )	AS Operacao
+
+
+
+
+
+ SELECT    Operacao.TotalReceitaPaga,
+           Operacao.TotalReceita,
+           Operacao.TotalDespesaPaga,
+           Operacao.TotalDespesa,
+           (Operacao.TotalReceita - Operacao.TotalDespesa) AS Saldo
+ FROM 
+ (
+       SELECT  SUM (CASE WHEN DataTransacao IS NOT NULL AND FK_TipoOperacao = 2 THEN Valor ELSE 0 END) AS TotalDespesaPaga,
+               SUM (CASE WHEN FK_TipoOperacao = 2 THEN Valor ELSE 0 END) AS TotalDespesa,
+               SUM (CASE WHEN DataTransacao IS NOT NULL AND FK_TipoOperacao = 1 THEN Valor ELSE 0 END) AS TotalReceitaPaga,
+               SUM (CASE WHEN FK_TipoOperacao = 1 THEN Valor ELSE 0 END) AS TotalReceita
+       FROM    OperacaoFinanceira
+       WHERE   (OperacaoFinanceira.DataVencimento > @DataInicial AND OperacaoFinanceira.DataVencimento < @DataFinal)
+ )     AS Operacao
+
+ select len('Gestor Tecnologia')

@@ -1,5 +1,15 @@
-using CF.Domain.Entidades;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Org.BouncyCastle.Asn1.Crmf;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+using ControleFinanceiro.Componentes;
+using ControleFinanceiro.Mensagem;
 using ControleFinanceiro.Telas;
+using CF.Domain.Entidades;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -9,21 +19,13 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-
 
 namespace ControleFinanceiro
 {
-    
     public sealed partial class MainWindow : Window
     {
+        public static MainWindow Instance { get; private set; }
+
         #region Propriedades
         private const int Largura = 800;
         private const int Altura = 600;
@@ -36,13 +38,42 @@ namespace ControleFinanceiro
         public MainWindow()
         {
             InitializeComponent();
-
+            Instance = this;
+            Notificacao.RegisterContainer(gNotificacao);
             DefinirPadraoUI();
             SetWindowMinSize();
         }
         #endregion
+
         #region Eventos
+        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            try
+            {
+                var item = args.InvokedItemContainer as NavigationViewItem;
+                if (item == null)
+                    return;
+
+                if (item.Tag.ToString() == "Categoria")
+                {
+                    MainFrame.Navigate(typeof(CategoriaPage));
+                }
+                else if (item.Tag.ToString() == "EntidadeFinanceira")
+                {
+                    MainFrame.Navigate(typeof(EntidadePage));
+                }
+                else if (item.Tag.ToString() == "OperacaoFinanceira")
+                {
+                    MainFrame.Navigate(typeof(OperacaoPage));
+                }
+            }
+            catch
+            {
+
+            }
+        }
         #endregion
+
         #region Metodos
         private void DefinirPadraoUI()
         {
@@ -108,32 +139,5 @@ namespace ControleFinanceiro
             presenter.PreferredMinimumWidth = Largura;
         }
         #endregion
-
-        private async void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
-        {
-            try
-            {
-                var item = args.InvokedItemContainer as NavigationViewItem;
-                if (item == null)
-                    return;
-
-                if (item.Tag.ToString() == "Categoria")
-                {
-                    MainFrame.Navigate(typeof(CategoriaPage));
-                }
-                else if (item.Tag.ToString() == "EntidadeFinanceira")
-                {
-                    MainFrame.Navigate(typeof(EntidadePage));
-                }
-                else if (item.Tag.ToString() == "OperacaoFinanceira")
-                {
-                    MainFrame.Navigate(typeof(OperacaoPage));
-                }
-            }
-            catch
-            {
-
-            }
-        }
     }
 }

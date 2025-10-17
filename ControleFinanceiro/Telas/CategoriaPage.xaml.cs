@@ -41,6 +41,7 @@ namespace ControleFinanceiro.Telas
         }
         #endregion
 
+        #region Eventos
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             _categoriaViewModel.CarregarColecoes();
@@ -82,5 +83,6 @@ namespace ControleFinanceiro.Telas
 
             _categoriaViewModel.DefinirItemSelecionado(categoria);
         }
+        #endregion
     }
 }

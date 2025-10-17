@@ -18,6 +18,7 @@ using CF.Domain.Entidades;
 using CF.Domain.Enumeradores;
 using CF.Domain.Interfaces.ViewModel;
 using CF.ViewModel;
+using ControleFinanceiro.Mensagem;
 
 namespace ControleFinanceiro.Telas
 {
@@ -41,6 +42,7 @@ namespace ControleFinanceiro.Telas
         }
         #endregion
 
+        #region Eventos
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             _entidadeViewModel.CarregarColecoes();
@@ -59,6 +61,9 @@ namespace ControleFinanceiro.Telas
         }
         private void btnAdicionar_Click(object sender, RoutedEventArgs e)
         {
+            Notificacao.Exibir(txtNome.Text);
+            //MainWindow.Instance.ShowAlert("Mensagem de teste!"); 
+            return;
             _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Adicionar);
             txtNome.Focus(FocusState.Keyboard);
             txtNome.SelectAll();
@@ -82,5 +87,6 @@ namespace ControleFinanceiro.Telas
 
             _entidadeViewModel.DefinirItemSelecionado(entidadeFinanceira);
         }
+        #endregion
     }
 }

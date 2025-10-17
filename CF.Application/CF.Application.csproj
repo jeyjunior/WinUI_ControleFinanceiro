@@ -23,5 +23,8 @@
     <ProjectReference Include="..\CF.Domain\CF.Domain.csproj" />
     <ProjectReference Include="..\CF.InfraData\CF.InfraData.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
   
 </Project>
