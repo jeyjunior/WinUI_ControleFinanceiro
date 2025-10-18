@@ -1,4 +1,5 @@
-﻿using CF.Domain.Entidades;
+﻿using CF.Domain.Dto;
+using CF.Domain.Entidades;
 using CF.Domain.Enumeradores;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,6 @@ namespace CF.Domain.Interfaces.ViewModel
         void CarregarColecoes();
         void DefinirTipoOperacao(eTipoOperacaoCrud tipoOperacao);
         void DefinirItemSelecionado(EntidadeFinanceira entidadeFinanceira);
-        void Salvar();
+        ValidacaoResultado Salvar();
     }
 }

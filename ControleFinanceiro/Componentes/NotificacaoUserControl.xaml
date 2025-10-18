@@ -12,7 +12,7 @@
           Padding="8"
           ColumnSpacing="8"
           CornerRadius="0,4,0,8"
-          BorderBrush="{StaticResource Vermelho3}"
+          BorderBrush="{Binding CorNotificacao}"
           BorderThickness="6,0,0,1"
           Background="{StaticResource Cinza11Transp20}"
           VerticalAlignment="Bottom"
@@ -26,7 +26,7 @@
                    MaxWidth="258"
                    TextWrapping="Wrap"
                    Grid.Column="0"
-                   Text="Mensagem"
+                   Text="{Binding Mensagem}"
                    Foreground="{StaticResource Branco}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"/>

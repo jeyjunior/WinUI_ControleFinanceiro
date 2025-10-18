@@ -138,4 +138,11 @@ namespace CF.Domain.Enumeradores
         Preto
     }
 
+    public enum eNotificacao
+    {
+        Informacao = 1,
+        Sucesso = 2,
+        Aviso = 3,
+        Erro = 4
+    }
 }

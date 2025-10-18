@@ -1,15 +1,16 @@
-﻿using System;
+﻿using CF.Domain.Dto;
+using CF.Domain.Entidades;
+using CF.Domain.Enumeradores;
+using CF.Domain.Interfaces.Repository;
+using CF.Domain.Interfaces.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.UI.Xaml.Controls;
-using CF.Domain.Entidades;
-using CF.Domain.Enumeradores;
-using CF.Domain.Interfaces.Repository;
-using CF.Domain.Interfaces.ViewModel;
 using Windows.UI.Input;
 
 namespace CF.ViewModel.ViewModel
@@ -104,27 +105,44 @@ namespace CF.ViewModel.ViewModel
 
             PropriedadeAlterada(nameof(SelecionarIndice));
             PropriedadeAlterada(nameof(Total));
+            PropriedadeAlterada(nameof(HabilitarNome));
         }
-        public void Salvar()
+        public ValidacaoResultado Salvar()
         {
+            int ret = -1;
+            var resultado = new ValidacaoResultado() 
+            { 
+                Sucesso = true, 
+                Erros = new List<string>() 
+            };
+
             if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
             {
                 _entidadeFinanceiraSelecionada = new EntidadeFinanceira { PK_EntidadeFinanceira = 0, Nome = _nome, FK_Usuario = null };
-                var ret = _entidadeFinanceiraRepository.Adicionar(_entidadeFinanceiraSelecionada);
+                ret = _entidadeFinanceiraRepository.Adicionar(_entidadeFinanceiraSelecionada);
+
             }
             else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
             {
                 _entidadeFinanceiraSelecionada.Nome = _nome;
-                var ret = _entidadeFinanceiraRepository.Atualizar(_entidadeFinanceiraSelecionada);
+                ret = _entidadeFinanceiraRepository.Atualizar(_entidadeFinanceiraSelecionada);
             }
             else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
             {
-                var ret = _entidadeFinanceiraRepository.Deletar(_entidadeFinanceiraSelecionada.PK_EntidadeFinanceira);
+                ret = _entidadeFinanceiraRepository.Deletar(_entidadeFinanceiraSelecionada.PK_EntidadeFinanceira);
             }
 
+            if (ret <= 0)
+            {
+                resultado.Sucesso = false;
+                resultado.Erros.Add("Não foi possível realizar a operação.");
+            }
+            
             CarregarColecoes();
             DefinirItemSelecionado(null);
             DefinirTipoOperacao(eTipoOperacaoCrud.Salvar);
+
+            return resultado;
         }
     }
 }

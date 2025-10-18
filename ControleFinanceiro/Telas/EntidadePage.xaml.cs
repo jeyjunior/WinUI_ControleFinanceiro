@@ -61,22 +61,42 @@ namespace ControleFinanceiro.Telas
         }
         private void btnAdicionar_Click(object sender, RoutedEventArgs e)
         {
-            Notificacao.Exibir(txtNome.Text);
-            //MainWindow.Instance.ShowAlert("Mensagem de teste!"); 
-            return;
             _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Adicionar);
             txtNome.Focus(FocusState.Keyboard);
             txtNome.SelectAll();
         }
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
-            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
-            dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
+            try
+            {
+                _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
+                dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         private void btnSalvar_Click(object sender, RoutedEventArgs e)
         {
-            _entidadeViewModel.Salvar();
-            dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
+            try
+            {
+                var ret = _entidadeViewModel.Salvar();
+                dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
+
+                if (ret.Sucesso)
+                {
+                    Notificacao.Exibir("Operação realizada com sucesso.", eNotificacao.Sucesso);
+                }
+                else
+                {
+                    Notificacao.Exibir(ret.Erros.FirstOrDefault(), eNotificacao.Aviso);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         private void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

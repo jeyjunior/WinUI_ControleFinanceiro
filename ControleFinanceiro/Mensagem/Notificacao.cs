@@ -1,4 +1,5 @@
-﻿using ControleFinanceiro.Componentes;
+﻿using CF.Domain.Enumeradores;
+using ControleFinanceiro.Componentes;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,16 @@ namespace ControleFinanceiro.Mensagem
             _container = container;
         }
 
-        public static void Exibir(string message)
+        public static void Exibir(string mensagem, eNotificacao notificacao)
         {
-            if (_container == null) return;
+            if (_container == null) 
+                return;
 
-            var alert = new NotificacaoUserControl();
-            alert.SetMessage(message);
-            _container.Children.Add(alert);
-            _ = alert.ShowAsync();
+            var notificacaoUserControl = new NotificacaoUserControl();
+            _container.Children.Add(notificacaoUserControl);
+
+            notificacaoUserControl.DefinirTipoNotificacao(mensagem, notificacao);
+            _ = notificacaoUserControl.ExibirAsync();
         }
     }
 }
