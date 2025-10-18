@@ -69,7 +69,7 @@ namespace CF.ViewModel.ViewModel
         public void DefinirTipoOperacao(eTipoOperacaoCrud tipoOperacao)
         {
             _tipoOperacao = tipoOperacao;
-            _habilitarEdicao = (tipoOperacao == eTipoOperacaoCrud.Adicionar || tipoOperacao == eTipoOperacaoCrud.Editar || tipoOperacao == eTipoOperacaoCrud.Excluir) ? eHabilitarEdicao.Sim: eHabilitarEdicao.Nao;
+            _habilitarEdicao = (tipoOperacao == eTipoOperacaoCrud.Adicionar || tipoOperacao == eTipoOperacaoCrud.Editar) ? eHabilitarEdicao.Sim: eHabilitarEdicao.Nao;
 
             if (tipoOperacao != eTipoOperacaoCrud.Adicionar)
             {

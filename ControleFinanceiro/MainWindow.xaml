@@ -40,7 +40,17 @@
         <Grid x:Name="gNotificacao"
               VerticalAlignment="Bottom"
               HorizontalAlignment="Right"
-              Margin="20"
-              IsHitTestVisible="False"/>
+              Margin="0,0,20,20"
+              Background="Transparent"
+              IsHitTestVisible="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Linha 0 - TOPO -->
+                <RowDefinition Height="Auto"/>
+                <!-- Linha 1 - MEIO -->
+                <RowDefinition Height="Auto"/>
+                <!-- Linha 2 - BASE (última notificação) -->
+            </Grid.RowDefinitions>
+        </Grid>
     </Grid>
 </Window>

@@ -145,4 +145,27 @@ namespace CF.Domain.Enumeradores
         Aviso = 3,
         Erro = 4
     }
+
+    public enum eMensagem
+    {
+        Informacao = 1,
+        Pergunta = 2,
+        Confirmacao = 3,
+        Erro = 4
+    }
+
+    public enum eBotoesMensagem
+    {
+        OK = 1,
+        SimNao = 2,
+        OKCancelar = 3
+    }
+    public enum eMensagemResultado
+    {
+        Nenhuma = 0,
+        OK = 1,
+        Cancelar = 2,
+        Sim = 3,
+        Nao = 4
+    }
 }

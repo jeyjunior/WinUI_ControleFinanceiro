@@ -53,7 +53,6 @@ namespace CF.ViewModel
             services.AddSingleton<IEntidadeViewModel, EntidadeViewModel>();
             services.AddSingleton<ICadastroOperacaoViewModel, CadastroOperacaoViewModel>();
             services.AddSingleton<IOperacaoViewModel, OperacaoViewModel>();
-            services.AddSingleton<INotificacaoUserControlViewModel, NotificacaoUserControlViewModel>();
         }
     }
 }

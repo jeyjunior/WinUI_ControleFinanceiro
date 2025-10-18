@@ -33,7 +33,6 @@
                 <StackPanel x:Name="spNome" Grid.Row="0" Spacing="8">
                     <TextBlock x:Name="txtTitulo" Text="Entidade Financeira:" FontSize="16" Foreground="{StaticResource Cinza2}" FontWeight="Bold"/>
                     <TextBox x:Name="txtNome" Text="{Binding Nome, Mode=TwoWay}" IsEnabled="{Binding HabilitarNome}" MaxLength="50"/>
-                    <TextBlock x:Name="txtErro" Text="! Erros" Padding="8,0,0,0" Foreground="{StaticResource Vermelho1}"/>
                 </StackPanel>
 
                 <StackPanel x:Name="spBotoes" Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="8">

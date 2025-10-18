@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using CF.Domain.Enumeradores;
+using CF.Domain.Extensoes;
 using CF.Domain.Interfaces.ViewModel;
 using CF.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,46 +24,76 @@ namespace ControleFinanceiro.Componentes
 {
     public sealed partial class NotificacaoUserControl : UserControl
     {
-        private readonly INotificacaoUserControlViewModel _viewModel;
-
         public NotificacaoUserControl()
         {
             InitializeComponent();
-
-            _viewModel = Bootstrap.ServiceProvider.GetRequiredService<INotificacaoUserControlViewModel>();
-
-            this.DataContext = _viewModel;
         }
+
         public void DefinirTipoNotificacao(string mensagem, eNotificacao notificacao = eNotificacao.Informacao)
         {
-            _viewModel.DefinirTipoNotificacao(mensagem, notificacao);
+           txtNotificacao.Text = mensagem;
+
+            switch (notificacao)
+            {
+                case eNotificacao.Informacao:
+                    gPrincipal.BorderBrush = eCor.Azul3.ObterCor();
+                    break;
+                case eNotificacao.Sucesso:
+                    gPrincipal.BorderBrush = eCor.Verde3.ObterCor();
+                    break;
+                case eNotificacao.Aviso:
+                    gPrincipal.BorderBrush = eCor.Amarelo.ObterCor();
+                    break;
+                case eNotificacao.Erro:
+                    gPrincipal.BorderBrush = eCor.Vermelho3.ObterCor();
+                    break;
+                default:
+                    gPrincipal.BorderBrush = eCor.Cinza10.ObterCor();
+                    break;
+            }
         }
-        public async Task ExibirAsync(int durationMs = 3000)
+
+        public async Task ExibirAsync(int durationMs = 10000)
         {
-            // Fade in
-            var fadeIn = new FadeInThemeAnimation();
-            gPrincipal.Opacity = 1;
-            Storyboard sbIn = new Storyboard();
-            sbIn.Children.Add(fadeIn);
-            Storyboard.SetTarget(fadeIn, gPrincipal);
-            sbIn.Begin();
+            try
+            {
+                // Fade in
+                var fadeIn = new FadeInThemeAnimation();
+                gPrincipal.Opacity = 1;
+                Storyboard sbIn = new Storyboard();
+                sbIn.Children.Add(fadeIn);
+                Storyboard.SetTarget(fadeIn, gPrincipal);
+                sbIn.Begin();
 
-            await Task.Delay(durationMs);
+                await Task.Delay(durationMs);
 
-            // Fade out
-            var fadeOut = new FadeOutThemeAnimation();
-            Storyboard sbOut = new Storyboard();
-            sbOut.Children.Add(fadeOut);
-            Storyboard.SetTarget(fadeOut, gPrincipal);
-            sbOut.Completed += (s, e) =>
+                // Fade out
+                var fadeOut = new FadeOutThemeAnimation();
+                Storyboard sbOut = new Storyboard();
+                sbOut.Children.Add(fadeOut);
+                Storyboard.SetTarget(fadeOut, gPrincipal);
+
+                var tcs = new TaskCompletionSource<bool>();
+                sbOut.Completed += (s, e) =>
+                {
+                    (this.Parent as Panel)?.Children.Remove(this);
+                    tcs.SetResult(true);
+                };
+
+                sbOut.Begin();
+                await tcs.Task;
+            }
+            catch (TaskCanceledException)
             {
                 (this.Parent as Panel)?.Children.Remove(this);
-            };
-
-            sbOut.Begin();
+            }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            (this.Parent as Panel)?.Children.Remove(this);
+        }
+        public void ForceClose()
         {
             (this.Parent as Panel)?.Children.Remove(this);
         }

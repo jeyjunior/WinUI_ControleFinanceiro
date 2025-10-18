@@ -19,6 +19,7 @@ using CF.Domain.Enumeradores;
 using CF.Domain.Interfaces.ViewModel;
 using CF.ViewModel;
 using ControleFinanceiro.Mensagem;
+using Windows.UI.Popups;
 
 namespace ControleFinanceiro.Telas
 {
@@ -49,23 +50,50 @@ namespace ControleFinanceiro.Telas
             _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
             dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
         }
-        private void btnDeletar_Click(object sender, RoutedEventArgs e)
+        private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
-            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Excluir);
+            try
+            {
+                var ret = await this.XamlRoot.ExibirAsync("Tem certeza que deseja excluir essa entidade financeira?\nEsta operação não poderá ser desfeita.", eMensagem.Pergunta);
+
+                if (ret != eMensagemResultado.Sim)
+                    return;
+
+                _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Excluir);
+                _entidadeViewModel.Salvar();
+            }
+            catch (Exception ex)
+            {
+                await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
+            }
         }
-        private void btnEditar_Click(object sender, RoutedEventArgs e)
+        private async void btnEditar_Click(object sender, RoutedEventArgs e)
         {
-            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Editar);
-            txtNome.Focus(FocusState.Keyboard);
-            txtNome.SelectAll();
+            try
+            {
+                _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Editar);
+                txtNome.Focus(FocusState.Keyboard);
+                txtNome.SelectAll();
+            }
+            catch (Exception ex)
+            {
+                await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
+            }
         }
-        private void btnAdicionar_Click(object sender, RoutedEventArgs e)
+        private async void btnAdicionar_Click(object sender, RoutedEventArgs e)
         {
-            _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Adicionar);
-            txtNome.Focus(FocusState.Keyboard);
-            txtNome.SelectAll();
+            try
+            {
+                _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Adicionar);
+                txtNome.Focus(FocusState.Keyboard);
+                txtNome.SelectAll();
+            }
+            catch (Exception ex)
+            {
+                await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
+            }
         }
-        private void btnCancelar_Click(object sender, RoutedEventArgs e)
+        private async void btnCancelar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -74,10 +102,11 @@ namespace ControleFinanceiro.Telas
             }
             catch (Exception ex)
             {
-
+                await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
             }
         }
-        private void btnSalvar_Click(object sender, RoutedEventArgs e)
+
+        private async void btnSalvar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -86,26 +115,41 @@ namespace ControleFinanceiro.Telas
 
                 if (ret.Sucesso)
                 {
-                    Notificacao.Exibir("Operação realizada com sucesso.", eNotificacao.Sucesso);
+                    Notificacao.Exibir(new NotificacaoRequest
+                    {
+                        Mensagem = "Operação realizada com sucesso.",
+                        TipoNotificacao = eNotificacao.Sucesso
+                    });
                 }
                 else
                 {
-                    Notificacao.Exibir(ret.Erros.FirstOrDefault(), eNotificacao.Aviso);
+                    Notificacao.Exibir(new NotificacaoRequest
+                    {
+                        Mensagem = ret.Erros.FirstOrDefault(),
+                        TipoNotificacao = eNotificacao.Aviso
+                    });
                 }
             }
             catch (Exception ex)
             {
-
+                await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
             }
         }
-        private void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            EntidadeFinanceira entidadeFinanceira = new EntidadeFinanceira();
+            try
+            {
+                EntidadeFinanceira entidadeFinanceira = new EntidadeFinanceira();
 
-            if (dtgPrincipal.SelectedItem != null)
-                entidadeFinanceira = dtgPrincipal.SelectedItem as EntidadeFinanceira;
+                if (dtgPrincipal.SelectedItem != null)
+                    entidadeFinanceira = dtgPrincipal.SelectedItem as EntidadeFinanceira;
 
-            _entidadeViewModel.DefinirItemSelecionado(entidadeFinanceira);
+                _entidadeViewModel.DefinirItemSelecionado(entidadeFinanceira);
+            }
+            catch (Exception ex)
+            {
+                await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
+            }
         }
         #endregion
     }
