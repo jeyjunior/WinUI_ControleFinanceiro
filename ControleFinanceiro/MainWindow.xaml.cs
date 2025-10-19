@@ -42,35 +42,23 @@ namespace ControleFinanceiro
             Notificacao.RegisterContainer(gNotificacao);
             DefinirPadraoUI();
             SetWindowMinSize();
+
+            MainFrame.Navigate(typeof(OperacaoPage));
         }
         #endregion
 
         #region Eventos
-        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void btnOperacaoFinanceira_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var item = args.InvokedItemContainer as NavigationViewItem;
-                if (item == null)
-                    return;
-
-                if (item.Tag.ToString() == "Categoria")
-                {
-                    MainFrame.Navigate(typeof(CategoriaPage));
-                }
-                else if (item.Tag.ToString() == "EntidadeFinanceira")
-                {
-                    MainFrame.Navigate(typeof(EntidadePage));
-                }
-                else if (item.Tag.ToString() == "OperacaoFinanceira")
-                {
-                    MainFrame.Navigate(typeof(OperacaoPage));
-                }
-            }
-            catch
-            {
-
-            }
+            MainFrame.Navigate(typeof(OperacaoPage));
+        }
+        private void btnCategoria_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(CategoriaPage));
+        }
+        private void btnEntidade_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(EntidadePage));
         }
         #endregion
 

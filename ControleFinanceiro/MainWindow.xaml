@@ -14,29 +14,32 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
-        <NavigationView x:Name="NavView"
-                        PaneDisplayMode="LeftCompact"
-                        IsBackButtonVisible="Collapsed"
-                        IsPaneToggleButtonVisible="False"
-                        IsSettingsVisible="False"
-                        ItemInvoked="NavView_ItemInvoked">
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="nviOperacaoFinanceira" Tag="OperacaoFinanceira" Margin="0,34,0,0">
-                    <Image Source="/Assets/operacao_financeira_64x.png" Margin="0,0,4,0" HorizontalAlignment="Stretch" Width="24" Height="24"/>
-                </NavigationViewItem>
-                <NavigationViewItem x:Name="nviCategoria" Tag="Categoria">
-                    <Image Source="/Assets/categoria_64x.png" Margin="0,0,4,0" HorizontalAlignment="Stretch"  Width="24" Height="24"/>
-                </NavigationViewItem>
-                <NavigationViewItem x:Name="nviEntidadeFinanceira" Tag="EntidadeFinanceira">
-                    <Image Source="/Assets/entidade_64x.png" Margin="0,0,4,0" HorizontalAlignment="Center"  Width="24" Height="24"/>
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
+    <Grid Background="{StaticResource Cinza10}" Padding="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <Frame x:Name="MainFrame" Background="{StaticResource Vermelho2}"/>
+        <Grid Grid.Column="0" Background="{StaticResource Cinza13}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" ColumnSpacing="2" CornerRadius="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        </NavigationView>
-
+            <Button Grid.Row="0" x:Name="btnOperacaoFinanceira" Click="btnOperacaoFinanceira_Click" ToolTipService.ToolTip="Operação Financeira" Style="{StaticResource AlternateCloseButtonStyle}" Padding="0">
+                <Image Source="/Assets/operacao_financeira_64x.png" Margin="0" HorizontalAlignment="Stretch" Width="24" Height="24"/>
+            </Button>
+            <Button Grid.Row="1" x:Name="btnCategoria" Click="btnCategoria_Click" ToolTipService.ToolTip="Categoria" Style="{StaticResource AlternateCloseButtonStyle}" Padding="0">
+                <Image Source="/Assets/categoria_64x.png" Margin="0" HorizontalAlignment="Stretch"  Width="24" Height="24"/>
+            </Button>
+            <Button Grid.Row="2" x:Name="btnEntidade" Click="btnEntidade_Click" ToolTipService.ToolTip="Entidade Financeira" Style="{StaticResource AlternateCloseButtonStyle}" Padding="0">
+                <Image Source="/Assets/entidade_64x.png" Margin="0" HorizontalAlignment="Center"  Width="24" Height="24"/>
+            </Button>
+        </Grid>
+        
+        <Frame Grid.Column="1" x:Name="MainFrame" Background="{StaticResource Cinza13}"/>
+        
         <Grid x:Name="gNotificacao"
               VerticalAlignment="Bottom"
               HorizontalAlignment="Right"
