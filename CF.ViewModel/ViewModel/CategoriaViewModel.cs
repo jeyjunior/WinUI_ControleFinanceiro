@@ -1,15 +1,17 @@
-﻿using System;
+﻿using CF.Domain.Dto;
+using CF.Domain.Entidades;
+using CF.Domain.Enumeradores;
+using CF.Domain.Interfaces.Repository;
+using CF.Domain.Interfaces.ViewModel;
+using CF.InfraData.Repository;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.UI.Xaml.Controls;
-using CF.Domain.Entidades;
-using CF.Domain.Enumeradores;
-using CF.Domain.Interfaces.Repository;
-using CF.Domain.Interfaces.ViewModel;
 using Windows.UI.Input;
 
 namespace CF.ViewModel.ViewModel
@@ -68,7 +70,7 @@ namespace CF.ViewModel.ViewModel
         public void DefinirTipoOperacao(eTipoOperacaoCrud tipoOperacao)
         {
             _tipoOperacao = tipoOperacao;
-            _habilitarEdicao = (tipoOperacao == eTipoOperacaoCrud.Adicionar || tipoOperacao == eTipoOperacaoCrud.Editar || tipoOperacao == eTipoOperacaoCrud.Excluir) ? eHabilitarEdicao.Sim: eHabilitarEdicao.Nao;
+            _habilitarEdicao = (tipoOperacao == eTipoOperacaoCrud.Adicionar || tipoOperacao == eTipoOperacaoCrud.Editar) ? eHabilitarEdicao.Sim: eHabilitarEdicao.Nao;
 
             if (tipoOperacao != eTipoOperacaoCrud.Adicionar)
             {
@@ -103,26 +105,43 @@ namespace CF.ViewModel.ViewModel
             PropriedadeAlterada(nameof(Total));
             PropriedadeAlterada(nameof(HabilitarNome));
         }
-        public void Salvar()
+        
+        public ValidacaoResultado Salvar()
         {
+            int ret = -1;
+            var resultado = new ValidacaoResultado()
+            {
+                Sucesso = true,
+                Erros = new List<string>()
+            };
+
             if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
             {
                 _categoriaSelecionada = new Categoria { PK_Categoria = 0, Nome = _nome, FK_Usuario = null };
-                var ret = _categoriaRepository.Adicionar(_categoriaSelecionada);
+                ret = _categoriaRepository.Adicionar(_categoriaSelecionada);
+
             }
             else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
             {
                 _categoriaSelecionada.Nome = _nome;
-                var ret = _categoriaRepository.Atualizar(_categoriaSelecionada);
+                ret = _categoriaRepository.Atualizar(_categoriaSelecionada);
             }
             else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
             {
-                var ret = _categoriaRepository.Deletar(_categoriaSelecionada.PK_Categoria);
+                ret = _categoriaRepository.Deletar(_categoriaSelecionada.PK_Categoria);
+            }
+
+            if (ret <= 0)
+            {
+                resultado.Sucesso = false;
+                resultado.Erros.Add("Não foi possível realizar a operação.");
             }
 
             CarregarColecoes();
             DefinirItemSelecionado(null);
             DefinirTipoOperacao(eTipoOperacaoCrud.Salvar);
+
+            return resultado;
         }
     }
 }

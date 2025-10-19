@@ -23,7 +23,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Column="1" Grid.Row="0" Padding="16,16,16,0" Margin="0,8,0,0" CornerRadius="8,8,0,0" Background="{StaticResource Cinza9Transp10}" BorderThickness="1" BorderBrush="{StaticResource Cinza11}">
+            <Grid Grid.Column="1" Grid.Row="0" Padding="16,16,16,0" RowSpacing="16" Margin="0,8,0,0" CornerRadius="8,8,0,0" Background="{StaticResource Cinza9Transp10}" BorderThickness="1" BorderBrush="{StaticResource Cinza11}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -55,7 +55,6 @@
 
                 <controls:DataGrid  x:Name="dtgPrincipal"
                         Grid.Row="2"
-                        Margin="0,16,0,0"
                         Background="{StaticResource Nenhuma}"
                         AutoGenerateColumns="False"
                         CanUserSortColumns="True"
@@ -68,8 +67,8 @@
                         SelectionChanged="dtgPrincipal_SelectionChanged"
                         GridLinesVisibility="All">
                     <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn x:Name="colPK_Categoria" Visibility="Collapsed" Header="PK_Categoria" Binding="{Binding PK_Categoria}" Width="120"/>
-                        <controls:DataGridTextColumn x:Name="colCategoria" Header="Categoria" Binding="{Binding Nome}" Width="*"/>
+                        <controls:DataGridTextColumn x:Name="colPK_EntidadeFinanceira" Visibility="Collapsed" Header="PK_EntidadeFinanceira" Binding="{Binding PK_EntidadeFinanceira}" Width="120"/>
+                        <controls:DataGridTextColumn x:Name="colEntidadeFinanceira" Header="Entidade Financeira" Binding="{Binding Nome}" Width="*"/>
                     </controls:DataGrid.Columns>
 
                 </controls:DataGrid>

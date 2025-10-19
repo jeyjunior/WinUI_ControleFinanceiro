@@ -28,7 +28,6 @@ namespace ControleFinanceiro.Componentes
         {
             InitializeComponent();
         }
-
         public void DefinirTipoNotificacao(string mensagem, eNotificacao notificacao = eNotificacao.Informacao)
         {
            txtNotificacao.Text = mensagem;
@@ -52,8 +51,7 @@ namespace ControleFinanceiro.Componentes
                     break;
             }
         }
-
-        public async Task ExibirAsync(int durationMs = 10000)
+        public async Task ExibirAsync(int durationMs = 2000)
         {
             try
             {
@@ -87,11 +85,6 @@ namespace ControleFinanceiro.Componentes
             {
                 (this.Parent as Panel)?.Children.Remove(this);
             }
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            (this.Parent as Panel)?.Children.Remove(this);
         }
         public void ForceClose()
         {
