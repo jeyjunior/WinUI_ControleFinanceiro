@@ -11,6 +11,9 @@ IF OBJECT_ID('StatusPagamento', 'U') IS NOT NULL
 IF OBJECT_ID('TipoOperacaoFinanceira', 'U') IS NOT NULL
     DROP TABLE TipoOperacaoFinanceira;
 
+IF OBJECT_ID('TipoOperacao', 'U') IS NOT NULL
+    DROP TABLE TipoOperacao;
+
 IF OBJECT_ID('EntidadeFinanceira', 'U') IS NOT NULL
     DROP TABLE EntidadeFinanceira;
 

@@ -37,10 +37,11 @@
                 <Image Source="/Assets/entidade_64x.png" Margin="0" HorizontalAlignment="Center"  Width="24" Height="24"/>
             </Button>
         </Grid>
-        
+
         <Frame Grid.Column="1" x:Name="MainFrame" Background="{StaticResource Cinza13}"/>
-        
-        <Grid x:Name="gNotificacao"
+
+        <Grid Grid.Column="1"  
+              x:Name="gNotificacao"
               VerticalAlignment="Bottom"
               HorizontalAlignment="Right"
               Margin="0,0,20,20"

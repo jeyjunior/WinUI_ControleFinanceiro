@@ -9,7 +9,6 @@ namespace ControleFinanceiro.Mensagem
     public static class Notificacao
     {
         private static Grid _container;
-        private static readonly Queue<NotificacaoUserControl> _filaNotificacoes = new Queue<NotificacaoUserControl>();
         private static readonly List<NotificacaoUserControl> _notificacoesAtivas = new List<NotificacaoUserControl>();
 
         public static void RegisterContainer(Grid container)
