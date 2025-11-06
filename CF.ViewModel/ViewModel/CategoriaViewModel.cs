@@ -134,10 +134,6 @@ namespace CF.ViewModel.ViewModel
                         resultado.Sucesso = false;
                         resultado.Erros.Add("Não foi possível adicionar a categoria. Verifique os dados e tente novamente.");
                     }
-                    else
-                    {
-                        resultado.Erros.Add("Categoria adicionada com sucesso!");
-                    }
                 }
                 else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
                 {
@@ -148,10 +144,6 @@ namespace CF.ViewModel.ViewModel
                     {
                         resultado.Sucesso = false;
                         resultado.Erros.Add("Não foi possível atualizar a categoria. Verifique os dados e tente novamente.");
-                    }
-                    else
-                    {
-                        resultado.Erros.Add("Categoria atualizada com sucesso!");
                     }
                 }
                 else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
@@ -169,15 +161,11 @@ namespace CF.ViewModel.ViewModel
                             resultado.Sucesso = false;
                             resultado.Erros.Add("Não foi possível excluir a categoria. Tente novamente.");
                         }
-                        else
-                        {
-                            resultado.Erros.Add("Categoria excluída com sucesso!");
-                        }
                     }
                     else
                     {
                         resultado.Sucesso = false;
-                        resultado.Erros.Add($"Não é possível excluir a categoria '{_categoriaSelecionada.Nome}' pois ela está vinculada a {operacoesFinanceiras.Count()} operação(ões) financeira(s).");
+                        resultado.Erros.Add($"Não é possível excluir a categoria '{_categoriaSelecionada.Nome}' pois ela está vinculada a {operacoesFinanceiras.Count()} operação(ões) financeira(s).\n");
                         resultado.Erros.Add("Remova ou altere as operações financeiras vinculadas antes de excluir esta categoria.");
                     }
                 }

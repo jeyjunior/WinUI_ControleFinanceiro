@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using CF.Domain.Entidades;
+using CF.Domain.Enumeradores;
+using CF.Domain.Interfaces.ViewModel;
+using CF.ViewModel;
+using CF.ViewModel.ViewModel;
+using ControleFinanceiro.Mensagem;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -14,11 +12,14 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using CF.Domain.Entidades;
-using CF.Domain.Enumeradores;
-using CF.Domain.Interfaces.ViewModel;
-using CF.ViewModel;
-using ControleFinanceiro.Mensagem;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 
 namespace ControleFinanceiro.Telas
@@ -39,7 +40,7 @@ namespace ControleFinanceiro.Telas
             _entidadeViewModel = Bootstrap.ServiceProvider.GetRequiredService<IEntidadeViewModel>();
 
             this.DataContext = _entidadeViewModel;
-            dtgPrincipal.ItemsSource = _entidadeViewModel.EntidadeFinanceiraCollection;
+            lstPrincipal.ItemsSource = _entidadeViewModel.EntidadeFinanceiraCollection;
         }
         #endregion
 
@@ -48,7 +49,7 @@ namespace ControleFinanceiro.Telas
         {
             _entidadeViewModel.CarregarColecoes();
             _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
-            dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
+            lstPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
         }
         private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +61,13 @@ namespace ControleFinanceiro.Telas
                     return;
 
                 _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Excluir);
-                _entidadeViewModel.Salvar();
+                var retorno = _entidadeViewModel.Salvar();
+
+                if (!retorno.Sucesso)
+                {
+                    string erros = string.Join("\n", retorno.Erros);
+                    await this.XamlRoot.ExibirAsync(erros, eMensagem.Confirmacao);
+                }
             }
             catch (Exception ex)
             {
@@ -98,7 +105,7 @@ namespace ControleFinanceiro.Telas
             try
             {
                 _entidadeViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
-                dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
+                lstPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
             }
             catch (Exception ex)
             {
@@ -111,7 +118,7 @@ namespace ControleFinanceiro.Telas
             try
             {
                 var ret = _entidadeViewModel.Salvar();
-                dtgPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
+                lstPrincipal.SelectedIndex = _entidadeViewModel.SelecionarIndice;
 
                 if (ret.Sucesso)
                 {
@@ -135,14 +142,14 @@ namespace ControleFinanceiro.Telas
                 await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
             }
         }
-        private async void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void lstPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 EntidadeFinanceira entidadeFinanceira = new EntidadeFinanceira();
 
-                if (dtgPrincipal.SelectedItem != null)
-                    entidadeFinanceira = dtgPrincipal.SelectedItem as EntidadeFinanceira;
+                if (lstPrincipal.SelectedItem != null)
+                    entidadeFinanceira = (EntidadeFinanceira)lstPrincipal.SelectedItem;
 
                 _entidadeViewModel.DefinirItemSelecionado(entidadeFinanceira);
             }

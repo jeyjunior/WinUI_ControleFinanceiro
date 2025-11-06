@@ -3,6 +3,7 @@ using CF.Domain.Entidades;
 using CF.Domain.Enumeradores;
 using CF.Domain.Interfaces.Repository;
 using CF.Domain.Interfaces.ViewModel;
+using CF.InfraData.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -17,11 +18,14 @@ namespace CF.ViewModel.ViewModel
 {
     public class EntidadeViewModel : ViewModelBase, IEntidadeViewModel
     {
+        private readonly IOperacaoFinanceiraRepository _operacaoFinanceiraRepository;
         private readonly IEntidadeFinanceiraRepository _entidadeFinanceiraRepository;
         private eHabilitarEdicao _habilitarEdicao;
         private eTipoOperacaoCrud _tipoOperacao;
+
         public EntidadeViewModel()
         {
+            _operacaoFinanceiraRepository = Bootstrap.ServiceProvider.GetRequiredService<IOperacaoFinanceiraRepository>();
             _entidadeFinanceiraRepository = Bootstrap.ServiceProvider.GetRequiredService<IEntidadeFinanceiraRepository>();
         }
 
@@ -110,37 +114,78 @@ namespace CF.ViewModel.ViewModel
         public ValidacaoResultado Salvar()
         {
             int ret = -1;
-            var resultado = new ValidacaoResultado() 
-            { 
-                Sucesso = true, 
-                Erros = new List<string>() 
+            var resultado = new ValidacaoResultado()
+            {
+                Sucesso = true,
+                Erros = new List<string>()
             };
 
-            if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
+            try
             {
-                _entidadeFinanceiraSelecionada = new EntidadeFinanceira { PK_EntidadeFinanceira = 0, Nome = _nome, FK_Usuario = null };
-                ret = _entidadeFinanceiraRepository.Adicionar(_entidadeFinanceiraSelecionada);
+                if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
+                {
+                    _entidadeFinanceiraSelecionada = new EntidadeFinanceira
+                    {
+                        PK_EntidadeFinanceira = 0,
+                        Nome = _nome,
+                        FK_Usuario = null
+                    };
+                    ret = _entidadeFinanceiraRepository.Adicionar(_entidadeFinanceiraSelecionada);
 
-            }
-            else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
-            {
-                _entidadeFinanceiraSelecionada.Nome = _nome;
-                ret = _entidadeFinanceiraRepository.Atualizar(_entidadeFinanceiraSelecionada);
-            }
-            else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
-            {
-                ret = _entidadeFinanceiraRepository.Deletar(_entidadeFinanceiraSelecionada.PK_EntidadeFinanceira);
-            }
+                    if (ret <= 0)
+                    {
+                        resultado.Sucesso = false;
+                        resultado.Erros.Add("Não foi possível adicionar a entidade financeira. Verifique os dados e tente novamente.");
+                    }
+                }
+                else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
+                {
+                    _entidadeFinanceiraSelecionada.Nome = _nome;
+                    ret = _entidadeFinanceiraRepository.Atualizar(_entidadeFinanceiraSelecionada);
 
-            if (ret <= 0)
+                    if (ret <= 0)
+                    {
+                        resultado.Sucesso = false;
+                        resultado.Erros.Add("Não foi possível atualizar a entidade financeira. Verifique os dados e tente novamente.");
+                    }
+                }
+                else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
+                {
+                    var operacoesFinanceiras = _operacaoFinanceiraRepository.ObterLista(
+                        "OperacaoFinanceira.FK_EntidadeFinanceira = @PK_EntidadeFinanceira",
+                        new { PK_EntidadeFinanceira = _entidadeFinanceiraSelecionada.PK_EntidadeFinanceira });
+
+                    if (operacoesFinanceiras == null || !operacoesFinanceiras.Any())
+                    {
+                        ret = _entidadeFinanceiraRepository.Deletar(_entidadeFinanceiraSelecionada.PK_EntidadeFinanceira);
+
+                        if (ret <= 0)
+                        {
+                            resultado.Sucesso = false;
+                            resultado.Erros.Add("Não foi possível excluir a entidade financeira. Tente novamente.");
+                        }
+                    }
+                    else
+                    {
+                        resultado.Sucesso = false;
+                        resultado.Erros.Add($"Não é possível excluir a entidade financeira '{_entidadeFinanceiraSelecionada.Nome}' pois ela está vinculada a {operacoesFinanceiras.Count()} operação(ões) financeira(s).\n");
+                        resultado.Erros.Add("Remova ou altere as operações financeiras vinculadas antes de excluir esta categoria.");
+                    }
+                }
+
+                if (resultado.Sucesso)
+                {
+                    CarregarColecoes();
+                    DefinirItemSelecionado(null);
+                    DefinirTipoOperacao(eTipoOperacaoCrud.Salvar);
+                }
+            }
+            catch (Exception ex)
             {
                 resultado.Sucesso = false;
-                resultado.Erros.Add("Não foi possível realizar a operação.");
+                resultado.Erros.Add("Ocorreu um erro inesperado ao processar a operação.");
+                resultado.Erros.Add($"Detalhes: {ex.Message}");
             }
-            
-            CarregarColecoes();
-            DefinirItemSelecionado(null);
-            DefinirTipoOperacao(eTipoOperacaoCrud.Salvar);
 
             return resultado;
         }
