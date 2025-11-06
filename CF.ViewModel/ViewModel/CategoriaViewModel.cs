@@ -18,11 +18,13 @@ namespace CF.ViewModel.ViewModel
 {
     public class CategoriaViewModel : ViewModelBase, ICategoriaViewModel
     {
+        private readonly IOperacaoFinanceiraRepository _operacaoFinanceiraRepository;
         private readonly ICategoriaRepository _categoriaRepository;
         private eHabilitarEdicao _habilitarEdicao;
         private eTipoOperacaoCrud _tipoOperacao;
         public CategoriaViewModel()
         {
+            _operacaoFinanceiraRepository = Bootstrap.ServiceProvider.GetRequiredService<IOperacaoFinanceiraRepository>();
             _categoriaRepository = Bootstrap.ServiceProvider.GetRequiredService<ICategoriaRepository>();
         }
 
@@ -105,7 +107,7 @@ namespace CF.ViewModel.ViewModel
             PropriedadeAlterada(nameof(Total));
             PropriedadeAlterada(nameof(HabilitarNome));
         }
-        
+
         public ValidacaoResultado Salvar()
         {
             int ret = -1;
@@ -115,31 +117,84 @@ namespace CF.ViewModel.ViewModel
                 Erros = new List<string>()
             };
 
-            if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
+            try
             {
-                _categoriaSelecionada = new Categoria { PK_Categoria = 0, Nome = _nome, FK_Usuario = null };
-                ret = _categoriaRepository.Adicionar(_categoriaSelecionada);
+                if (_tipoOperacao == eTipoOperacaoCrud.Adicionar)
+                {
+                    _categoriaSelecionada = new Categoria
+                    {
+                        PK_Categoria = 0,
+                        Nome = _nome,
+                        FK_Usuario = null
+                    };
+                    ret = _categoriaRepository.Adicionar(_categoriaSelecionada);
 
-            }
-            else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
-            {
-                _categoriaSelecionada.Nome = _nome;
-                ret = _categoriaRepository.Atualizar(_categoriaSelecionada);
-            }
-            else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
-            {
-                ret = _categoriaRepository.Deletar(_categoriaSelecionada.PK_Categoria);
-            }
+                    if (ret <= 0)
+                    {
+                        resultado.Sucesso = false;
+                        resultado.Erros.Add("Não foi possível adicionar a categoria. Verifique os dados e tente novamente.");
+                    }
+                    else
+                    {
+                        resultado.Erros.Add("Categoria adicionada com sucesso!");
+                    }
+                }
+                else if (_tipoOperacao == eTipoOperacaoCrud.Editar)
+                {
+                    _categoriaSelecionada.Nome = _nome;
+                    ret = _categoriaRepository.Atualizar(_categoriaSelecionada);
 
-            if (ret <= 0)
+                    if (ret <= 0)
+                    {
+                        resultado.Sucesso = false;
+                        resultado.Erros.Add("Não foi possível atualizar a categoria. Verifique os dados e tente novamente.");
+                    }
+                    else
+                    {
+                        resultado.Erros.Add("Categoria atualizada com sucesso!");
+                    }
+                }
+                else if (_tipoOperacao == eTipoOperacaoCrud.Excluir)
+                {
+                    var operacoesFinanceiras = _operacaoFinanceiraRepository.ObterLista(
+                        "OperacaoFinanceira.FK_Categoria = @PK_Categoria",
+                        new { PK_Categoria = _categoriaSelecionada.PK_Categoria });
+
+                    if (operacoesFinanceiras == null || !operacoesFinanceiras.Any())
+                    {
+                        ret = _categoriaRepository.Deletar(_categoriaSelecionada.PK_Categoria);
+
+                        if (ret <= 0)
+                        {
+                            resultado.Sucesso = false;
+                            resultado.Erros.Add("Não foi possível excluir a categoria. Tente novamente.");
+                        }
+                        else
+                        {
+                            resultado.Erros.Add("Categoria excluída com sucesso!");
+                        }
+                    }
+                    else
+                    {
+                        resultado.Sucesso = false;
+                        resultado.Erros.Add($"Não é possível excluir a categoria '{_categoriaSelecionada.Nome}' pois ela está vinculada a {operacoesFinanceiras.Count()} operação(ões) financeira(s).");
+                        resultado.Erros.Add("Remova ou altere as operações financeiras vinculadas antes de excluir esta categoria.");
+                    }
+                }
+
+                if (resultado.Sucesso)
+                {
+                    CarregarColecoes();
+                    DefinirItemSelecionado(null);
+                    DefinirTipoOperacao(eTipoOperacaoCrud.Salvar);
+                }
+            }
+            catch (Exception ex)
             {
                 resultado.Sucesso = false;
-                resultado.Erros.Add("Não foi possível realizar a operação.");
+                resultado.Erros.Add("Ocorreu um erro inesperado ao processar a operação.");
+                resultado.Erros.Add($"Detalhes: {ex.Message}");
             }
-
-            CarregarColecoes();
-            DefinirItemSelecionado(null);
-            DefinirTipoOperacao(eTipoOperacaoCrud.Salvar);
 
             return resultado;
         }

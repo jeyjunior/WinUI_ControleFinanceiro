@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +40,7 @@ namespace ControleFinanceiro.Telas
             _categoriaViewModel = Bootstrap.ServiceProvider.GetRequiredService<ICategoriaViewModel>();
 
             this.DataContext = _categoriaViewModel;
-            dtgPrincipal.ItemsSource = _categoriaViewModel.CategoriaCollection;
+            lstPrincipal.ItemsSource = _categoriaViewModel.CategoriaCollection;
         }
         #endregion
 
@@ -48,7 +49,7 @@ namespace ControleFinanceiro.Telas
         {
             _categoriaViewModel.CarregarColecoes();
             _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
-            dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
+            lstPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
         }
         private async void btnDeletar_Click(object sender, RoutedEventArgs e)
         {
@@ -60,7 +61,13 @@ namespace ControleFinanceiro.Telas
                     return;
 
                 _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Excluir);
-                _categoriaViewModel.Salvar();
+                var retorno = _categoriaViewModel.Salvar();
+
+                if (!retorno.Sucesso)
+                {
+                    string erros = string.Join("\n", retorno.Erros);
+                    await this.XamlRoot.ExibirAsync(erros, eMensagem.Confirmacao);
+                }
             }
             catch (Exception ex)
             {
@@ -98,7 +105,7 @@ namespace ControleFinanceiro.Telas
             try
             {
                 _categoriaViewModel.DefinirTipoOperacao(eTipoOperacaoCrud.Cancelar);
-                dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
+                lstPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
             }
             catch (Exception ex)
             {
@@ -110,7 +117,7 @@ namespace ControleFinanceiro.Telas
             try
             {
                 var ret = _categoriaViewModel.Salvar();
-                dtgPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
+                lstPrincipal.SelectedIndex = _categoriaViewModel.SelecionarIndice;
 
                 if (ret.Sucesso)
                 {
@@ -134,14 +141,14 @@ namespace ControleFinanceiro.Telas
                 await this.XamlRoot.ExibirAsync(ex.Message, eMensagem.Confirmacao);
             }
         }
-        private async void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void lstPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 Categoria categoria = new Categoria();
 
-                if (dtgPrincipal.SelectedItem != null)
-                    categoria = dtgPrincipal.SelectedItem as Categoria;
+                if (lstPrincipal.SelectedItem != null)
+                    categoria = (Categoria)lstPrincipal.SelectedItem;
 
                 _categoriaViewModel.DefinirItemSelecionado(categoria);
             }

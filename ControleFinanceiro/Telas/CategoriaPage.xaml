@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ControleFinanceiro.Telas"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -53,25 +52,55 @@
                     </Button>
                 </StackPanel>
 
-                <controls:DataGrid  x:Name="dtgPrincipal"
-                                    Grid.Row="2"
-                                    Background="{StaticResource Nenhuma}"
-                                    AutoGenerateColumns="False"
-                                    CanUserSortColumns="True"
-                                    CanUserResizeColumns="False"
-                                    CanUserReorderColumns="False"
-                                    IsReadOnly="True"
-                                    SelectionMode="Single"
-                                    HeadersVisibility="Column"
-                                    RowDetailsVisibilityMode="Collapsed"
-                                    SelectionChanged="dtgPrincipal_SelectionChanged"
-                                    GridLinesVisibility="All">
-                    <controls:DataGrid.Columns>
-                        <controls:DataGridTextColumn x:Name="colPK_Categoria" Visibility="Collapsed" Header="PK_Categoria" Binding="{Binding PK_Categoria}" Width="120"/>
-                        <controls:DataGridTextColumn x:Name="colCategoria" Header="Categoria" Binding="{Binding Nome}" Width="*"/>
-                    </controls:DataGrid.Columns>
+                <Grid Grid.Row="2" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                   
+                    <Grid  Grid.Row="0" Background="{StaticResource Cinza12}" CornerRadius="4,4,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    
+                        <Border Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" BorderBrush="{StaticResource Cinza9Transp50}" BorderThickness="0,0,2,0" Padding="0,0,4,0">
+                            <TextBlock Text="ID" Padding="8" HorizontalAlignment="Center"/>
+                        </Border>
 
-                </controls:DataGrid>
+                        <TextBlock Grid.Column="2" Text="Categoria" Padding="8"/>
+                    </Grid>
+                
+                    <ListView x:Name="lstPrincipal"
+                              Grid.Row="1"
+                              Margin="0,0,0,16"
+                              Padding="0"
+                              CornerRadius="0,0,4,4"
+                              Background="{StaticResource Cinza11Transp50}"
+                              SelectionMode="Single"
+                              SelectionChanged="lstPrincipal_SelectionChanged">
+                    
+                        <ListView.ItemTemplate>
+                            <DataTemplate >
+                                <Grid BorderBrush="{StaticResource Cinza8}" BorderThickness="0,0,0,1" Margin="0" Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" BorderBrush="{StaticResource Cinza9Transp50}" BorderThickness="0,0,2,0" Padding="0,0,4,0">
+                                        <TextBlock Text="{Binding PK_Categoria}" Padding="8" HorizontalAlignment="Center"/>
+                                    </Border>
+
+                                    <TextBlock Grid.Column="1" Text="{Binding Nome}" Padding="8"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                </Grid>
+
             </Grid>
 
             <Frame Grid.Row="2" Grid.Column="1" Background="{StaticResource Cinza11}" CornerRadius="0,0,8,8" Margin="0,0,0,8" MinHeight="32" Padding="16,0">
