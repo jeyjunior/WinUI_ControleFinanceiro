@@ -59,42 +59,38 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid  Grid.Row="0" Background="{StaticResource Cinza12}" CornerRadius="4,4,0,0">
+                    <!-- Cabeçalho -->
+                    <Grid  Grid.Row="0" Style="{StaticResource GridCabecalho}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="16"/>
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" BorderBrush="{StaticResource Cinza9Transp50}" BorderThickness="0,0,2,0" Padding="0,0,4,0">
-                            <TextBlock Text="ID" Padding="8" HorizontalAlignment="Center"/>
+                        <Border Grid.Column="1" Style="{StaticResource BorderCelulaComSeparador}">
+                            <TextBlock Text="ID" Style="{StaticResource TextBlockCabecalho}"/>
                         </Border>
 
-                        <TextBlock Grid.Column="2" Text="Entidade Financeira" Padding="8"/>
+                        <TextBlock Grid.Column="2" Text="Entidade Financeira" Style="{StaticResource TextBlockCabecalho}"/>
                     </Grid>
 
-                    <ListView x:Name="lstPrincipal"
-                              Grid.Row="1"
-                              Margin="0,0,0,16"
-                              Padding="0"
-                              CornerRadius="0,0,4,4"
-                              Background="{StaticResource Cinza11Transp50}"
-                              SelectionMode="Single"
-                              SelectionChanged="lstPrincipal_SelectionChanged">
+                    <!-- Linhas -->
+                    <ListView x:Name="lstPrincipal" Grid.Row="1" Style="{StaticResource ListViewDataGrid}" SelectionChanged="lstPrincipal_SelectionChanged">
 
                         <ListView.ItemTemplate>
                             <DataTemplate >
-                                <Grid BorderBrush="{StaticResource Cinza8}" BorderThickness="0,1,0,1" Margin="0" Padding="0">
+                                <Grid Style="{StaticResource GridLinha}">
+
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Border Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" BorderBrush="{StaticResource Cinza9Transp50}" BorderThickness="0,0,2,0" Padding="0,0,4,0">
-                                        <TextBlock Text="{Binding PK_EntidadeFinanceira}" Padding="8" HorizontalAlignment="Center"/>
+                                    <Border Grid.Column="0" Style="{StaticResource BorderCelulaComSeparador}">
+                                        <TextBlock Text="{Binding PK_EntidadeFinanceira}" Style="{StaticResource TextBlockDadoCentralizado}"/>
                                     </Border>
 
-                                    <TextBlock Grid.Column="1" Text="{Binding Nome}" Padding="8"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Nome}" Style="{StaticResource TextBlockDadoLinha}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

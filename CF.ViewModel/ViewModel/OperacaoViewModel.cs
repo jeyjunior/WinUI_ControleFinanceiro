@@ -128,12 +128,7 @@ namespace CF.ViewModel.ViewModel
                 operacao.StatusPagamentoIcone = eStatusPagamento.Vencido.ObterCodigoGlyph();
                 operacao.OperacaoCor = eCor.Vermelho3.ObterCor();
             }
-            else if (vencimento == hoje)
-            {
-                operacao.StatusPagamentoIcone = eStatusPagamento.EmAberto.ObterCodigoGlyph();
-                operacao.OperacaoCor = eCor.Laranja.ObterCor();
-            }
-            else if (vencimento == hoje.AddDays(1))
+            else if (vencimento >= hoje && vencimento <= hoje.AddDays(2))
             {
                 operacao.StatusPagamentoIcone = eStatusPagamento.EmAberto.ObterCodigoGlyph();
                 operacao.OperacaoCor = eCor.Amarelo.ObterCor();

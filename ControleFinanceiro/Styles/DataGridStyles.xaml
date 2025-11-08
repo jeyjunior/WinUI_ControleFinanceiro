@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ControleFinanceiro.Styles">
+
+    <!-- ESTILOS BASE PARA A ESTRUTURA DATAGRIDVIEW -->
+
+    <!-- Grid principal do cabeçalho -->
+    <Style x:Key="GridCabecalho" TargetType="Grid">
+        <Setter Property="Background" Value="{StaticResource Cinza12}"/>
+        <Setter Property="CornerRadius" Value="4,4,0,0"/>
+        <Setter Property="Padding" Value="4,0"/>
+        <Setter Property="Height" Value="34"/>
+    </Style>
+
+    <!-- Grid para as linhas do ListView -->
+    <Style x:Key="GridLinha" TargetType="Grid">
+        <Setter Property="BorderBrush" Value="{StaticResource Cinza8}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,1"/>
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <!-- Border para células com separador -->
+    <Style x:Key="BorderCelulaComSeparador" TargetType="Border">
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Cinza9Transp50}"/>
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        <Setter Property="Padding" Value="4,0"/>
+    </Style>
+
+    <!-- TextBlock para cabeçalhos -->
+    <Style x:Key="TextBlockCabecalho" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Cinza3}"/>
+        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+    </Style>
+
+    <!-- TextBlock para dados das linhas -->
+    <Style x:Key="TextBlockDadoLinha" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Cinza1}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="8,0"/>
+    </Style>
+
+    <!-- TextBlock para dados centralizados (como IDs) -->
+    <Style x:Key="TextBlockDadoCentralizado" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Cinza3}"/>
+        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+    </Style>
+
+    <!-- ListView principal estilizado -->
+    <Style x:Key="ListViewDataGrid" TargetType="ListView">
+        <Setter Property="Margin" Value="0,0,0,16"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="CornerRadius" Value="0,0,4,4"/>
+        <Setter Property="Background" Value="{StaticResource Cinza11Transp50}"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <!-- Remove o scrollbar padrão se desejar -->
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+    </Style>
+
+    <Style x:Key="FontIconStatusPagamento" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe Fluent Icons"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <!-- FontIcon para status da operação (centralizado) -->
+    <Style x:Key="FontIconStatusOperacao" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="Segoe Fluent Icons"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    
+    <!-- ESTILOS ESPECÍFICOS PARA COLUNAS -->
+
+    <!-- Estilo para coluna de ID (76px) -->
+    <Style x:Key="ColunaID" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="76"/>
+    </Style>
+
+    <!-- Estilo para coluna expandível -->
+    <Style x:Key="ColunaExpandivel" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="*"/>
+    </Style>
+
+    <!-- Estilo para coluna pequena (ícones, etc) -->
+    <Style x:Key="ColunaPequena" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="16"/>
+    </Style>
+
+    <!-- Estilo para linha padrão -->
+    <Style x:Key="LinhaPadrao" TargetType="RowDefinition">
+        <Setter Property="Height" Value="34"/>
+    </Style>
+
+</ResourceDictionary>

@@ -35,7 +35,9 @@ namespace CF.Domain.Enumeradores
         [CodigoGlyph("\xE823")]
         EmAberto = 2,
         [CodigoGlyph("\xE783")]
-        Vencido = 3
+        Vencido = 3,
+        [CodigoGlyph("\xE814")]
+        Alerta = 4
     }
     public enum eTipoOperacao
     {

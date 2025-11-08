@@ -13,6 +13,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Styles\DataGridStyles.xaml" />
     <None Remove="Telas\CadastroOperacaoDialog.xaml" />
     <None Remove="Telas\CategoriaPage.xaml" />
     <None Remove="Telas\OperacaoPage.xaml" />
@@ -55,9 +56,6 @@
     <ProjectReference Include="..\CF.ViewModel\CF.ViewModel.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Styles\" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Telas\EntidadePage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -71,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Componentes\NotificacaoUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\DataGridStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="Themes\Generic.xaml">

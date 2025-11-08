@@ -372,9 +372,10 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Grid  Grid.Row="0" Background="{StaticResource Cinza12}" CornerRadius="4,4,0,0" Margin="0" Padding="0">
+                <!-- Cabeçalho -->
+                <Grid  Grid.Row="0" Style="{StaticResource GridCabecalho}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="41"/>
                         <ColumnDefinition Width="*" MinWidth="100"/>
                         <ColumnDefinition Width="*" MinWidth="110" MaxWidth="200"/>
@@ -382,100 +383,40 @@
                         <ColumnDefinition Width="90"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="42"/>
-                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="8"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="1" 
-                            HorizontalAlignment="Stretch" 
-                            VerticalAlignment="Stretch" 
-                            Margin="0" 
-                            BorderBrush="{StaticResource Cinza9Transp50}" 
-                            BorderThickness="0,0,2,0" 
-                            Padding="4,0">
-                        <TextBlock Text="" Padding="8" HorizontalAlignment="Center" FontSize="10"/>
+                    <Border Grid.Column="1" Style="{StaticResource BorderCelulaComSeparador}">
+                        <TextBlock Text="" Style="{StaticResource TextBlockCabecalho}"/>
                     </Border>
 
-                    <Border Grid.Column="2" 
-                            Background="{StaticResource Nenhuma}" 
-                            BorderBrush="{StaticResource Cinza9Transp50}" 
-                            BorderThickness="0,0,2,0"
-                            Padding="4,0">
-                        <TextBlock Text="Entidade Financeira" 
-                                   Foreground="{StaticResource Cinza3}"
-                                   TextWrapping="WrapWholeWords" 
-                                   Padding="0" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center"
-                                   FontSize="10" 
-                                   FontWeight="Normal"/>
+                    <Border Grid.Column="2" Style="{StaticResource BorderCelulaComSeparador}">
+                        <TextBlock Text="Entidade Financeira" Style="{StaticResource TextBlockCabecalho}"/>
                     </Border>
 
-                    <Border Grid.Column="3" 
-                            Background="{StaticResource Nenhuma}" 
-                            BorderBrush="{StaticResource Cinza9Transp50}" 
-                            BorderThickness="0,0,2,0"
-                            Padding="4,0">
-                        <TextBlock Text="Categoria" 
-                                   Padding="0" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center" 
-                                   Foreground="{StaticResource Cinza3}"
-                                   FontSize="10" 
-                                   FontWeight="Normal"/>
+                    <Border Grid.Column="3" Style="{StaticResource BorderCelulaComSeparador}">
+                        <TextBlock Text="Categoria" Style="{StaticResource TextBlockCabecalho}"/>
                     </Border>
 
-                    <Border Grid.Column="4" 
-                            Background="{StaticResource Nenhuma}" 
-                            BorderBrush="{StaticResource Cinza9Transp50}" 
-                            BorderThickness="0,0,2,0"
-                            Padding="4,0">
-                        <TextBlock Text="Vencimento" 
-                                   Foreground="{StaticResource Cinza3}"
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center"
-                                   FontSize="10" 
-                                   FontWeight="Normal"/>
+                    <Border Grid.Column="4" Style="{StaticResource BorderCelulaComSeparador}">
+                        <TextBlock Text="Vencimento" Style="{StaticResource TextBlockCabecalho}"/>
                     </Border>
 
-                    <Border Grid.Column="5"                             
-                            Background="{StaticResource Nenhuma}" 
-                            BorderBrush="{StaticResource Cinza9Transp50}" 
-                            BorderThickness="0,0,2,0"
-                            Padding="4,0">
-                        <TextBlock Text="Transação" 
-                                   Foreground="{StaticResource Cinza3}"
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center"
-                                   FontSize="10"
-                                   FontWeight="Normal"/>
+                    <Border Grid.Column="5" Style="{StaticResource BorderCelulaComSeparador}">
+                        <TextBlock Text="Transação" Style="{StaticResource TextBlockCabecalho}"/>
                     </Border>
 
-                    <Border Grid.Column="6"                             
-                            Background="{StaticResource Nenhuma}" 
-                            BorderBrush="{StaticResource Cinza9Transp50}" 
-                            BorderThickness="0,0,2,0"
-                            Padding="4,0">
-                        <TextBlock Text="Valor" 
-                                   Foreground="{StaticResource Cinza3}"
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center"
-                                   FontSize="10"
-                                   FontWeight="Normal"/>
+                    <Border Grid.Column="6" Style="{StaticResource BorderCelulaComSeparador}">
+                        <TextBlock Text="Valor" Style="{StaticResource TextBlockCabecalho}"/>
                     </Border>
                 </Grid>
 
-                <ListView x:Name="lstPrincipal"
-                              Grid.Row="1"
-                              Margin="0,0,0,16"
-                              Padding="0"
-                              CornerRadius="0,0,4,4"
-                              Background="{StaticResource Cinza11Transp50}"
-                              SelectionMode="Single"
-                              SelectionChanged="lstPrincipal_SelectionChanged">
+                <!-- Linhas -->
+                <ListView x:Name="lstPrincipal" Grid.Row="1" Style="{StaticResource ListViewDataGrid}" SelectionChanged="lstPrincipal_SelectionChanged">
 
                     <ListView.ItemTemplate>
                         <DataTemplate >
-                            <Grid BorderBrush="{StaticResource Cinza8}" BorderThickness="0,1,0,1" Margin="0" Padding="0">
+                            <Grid Style="{StaticResource GridLinha}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0"/>
                                     <ColumnDefinition Width="41"/>
@@ -486,135 +427,42 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="42"/>
                                 </Grid.ColumnDefinitions>
-
-                                <Border Grid.Column="0" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza7Transp50}" 
-                                        BorderThickness="0,0,1,0" 
-                                        Padding="0,0,4,0">
-                                    <TextBlock Text="{Binding PK_OperacaoFinanceira}" Padding="8" HorizontalAlignment="Center"/>
-                                </Border>
-
-                                <Border Grid.Column="1" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza9Transp50}" 
-                                        BorderThickness="0,0,1,0" 
-                                        Padding="0">
-                                    <FontIcon FontFamily="Segoe Fluent Icons"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"
-                                              Glyph="{Binding StatusPagamentoIcone}"
-                                              Foreground="{Binding OperacaoCor}"
-                                              FontWeight="Normal"
-                                              FontSize="16"/>
-                                </Border>
-
-                                <Border Grid.Column="2" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza9Transp50}" 
-                                        BorderThickness="0,0,1,0" 
-                                        Padding="4,0">
-                                    <TextBlock TextWrapping="NoWrap"
-                                               Text="{Binding EntidadeFinanceira}"
-                                               Padding="8,0"
-                                               HorizontalAlignment="Left"
-                                               VerticalAlignment="Center"
-                                               FontSize="10"
-                                               Foreground="{Binding OperacaoCor}"
-                                               FontWeight="SemiBold"
-                                               Margin="0"/>
-                                </Border>
-
-                                <Border Grid.Column="3" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza9Transp50}" 
-                                        BorderThickness="0,0,1,0" 
-                                        Padding="4,0">
-                                    <TextBlock Text="{Binding Categoria}"
-                                               TextWrapping="WrapWholeWords"
-                                               Padding="8,0"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontSize="10"
-                                               Foreground="{Binding OperacaoCor}"
-                                               FontWeight="Normal"
-                                               Margin="0"/>
-                                </Border>
-
-                                <Border Grid.Column="4" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza9Transp50}" 
-                                        BorderThickness="0,0,1,0" 
-                                        Padding="4,0">
-                                    <TextBlock Text="{Binding DataVencimentoFormatado}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Foreground="{Binding OperacaoCor}"
-                                               FontSize="10"
-                                               FontWeight="Bold"/>
-                                </Border>
-
-                                <Border Grid.Column="5" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza9Transp50}" 
-                                        BorderThickness="0,0,1,0" 
-                                        Padding="4,0">
-                                    <TextBlock Text="{Binding DataTransacaoFormatado}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Foreground="{Binding OperacaoCor}"
-                                               FontSize="10"
-                                               FontWeight="Bold"/>
-                                </Border>
-
-                                <Border Grid.Column="6" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza9Transp50}" 
-                                        BorderThickness="0,0,1,0" 
-                                        Padding="4,0">
-                                    <TextBlock Text="{Binding ValorFormatado}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Foreground="{Binding OperacaoCor}"
-                                               FontSize="12"
-                                               FontWeight="SemiBold"
-                                               Margin="0"/>
-                                </Border>
-
-                                <Border Grid.Column="7" 
-                                        HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" 
-                                        Margin="0" 
-                                        BorderBrush="{StaticResource Cinza9Transp50}" 
-                                        BorderThickness="0,0,0,0" 
-                                        Padding="4,0">
-                                    <FontIcon FontFamily="Segoe Fluent Icons"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Center"
-                                              Glyph="{Binding StatusOperacaoIcone}"
-                                              Foreground="{Binding StatusOperacaoCor}"
-                                              FontSize="14"/>
-                                </Border>
                                 
+                                <Border Grid.Column="0" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <TextBlock Text="{Binding PK_OperacaoFinanceira}" Style="{StaticResource TextBlockDadoCentralizado}"/>
+                                </Border>
+
+                                <Border Grid.Column="1" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <FontIcon Glyph="{Binding StatusPagamentoIcone}" Foreground="{Binding OperacaoCor}" Style="{StaticResource FontIconStatusPagamento}"/>
+                                </Border>
+
+                                <Border Grid.Column="2" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <TextBlock Text="{Binding EntidadeFinanceira}" Foreground="{Binding OperacaoCor}" Style="{StaticResource TextBlockDadoLinha}"/>
+                                </Border>
+
+                                <Border Grid.Column="3" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <TextBlock Text="{Binding Categoria}" Foreground="{Binding OperacaoCor}" Style="{StaticResource TextBlockDadoCentralizado}"/>
+                                </Border>
+
+                                <Border Grid.Column="4" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <TextBlock Text="{Binding DataVencimentoFormatado}" Foreground="{Binding OperacaoCor}" Style="{StaticResource TextBlockDadoCentralizado}"/>
+                                </Border>
+
+                                <Border Grid.Column="5" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <TextBlock Text="{Binding DataTransacaoFormatado}" Foreground="{Binding OperacaoCor}" Style="{StaticResource TextBlockDadoCentralizado}"/>
+                                </Border>
+
+                                <Border Grid.Column="6" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <TextBlock Text="{Binding ValorFormatado}" Foreground="{Binding OperacaoCor}" Style="{StaticResource TextBlockDadoCentralizado}"/>
+                                </Border>
+
+                                <Border Grid.Column="7" Style="{StaticResource BorderCelulaComSeparador}">
+                                    <FontIcon Glyph="{Binding StatusOperacaoIcone}" Foreground="{Binding StatusOperacaoCor}" Style="{StaticResource FontIconStatusOperacao}"/>
+                                </Border>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
             </Grid>
         </Grid>
 

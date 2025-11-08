@@ -60,87 +60,38 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid  Grid.Row="0" Background="{StaticResource Cinza12}" CornerRadius="4,4,0,0" Padding="4,0">
+                    <!-- Cabeçalho -->
+                    <Grid  Grid.Row="0" Style="{StaticResource GridCabecalho}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="16"/>
                             <ColumnDefinition Width="76"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="34"/>
-                        </Grid.RowDefinitions>
-                        
-                        <Border Grid.Column="1" 
-                                Margin="0" 
-                                HorizontalAlignment="Stretch" 
-                                VerticalAlignment="Stretch" 
-                                BorderBrush="{StaticResource Cinza9Transp50}" 
-                                BorderThickness="0,0,1,0" 
-                                Padding="4,0">
-                            
-                            <TextBlock Text="ID" 
-                                       Foreground="{StaticResource Cinza3}"
-                                       TextWrapping="WrapWholeWords" 
-                                       Padding="0" 
-                                       HorizontalAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       FontSize="12" 
-                                       FontWeight="Normal"/>
+                        <Border Grid.Column="1" Style="{StaticResource BorderCelulaComSeparador}">
+                            <TextBlock Text="ID" Style="{StaticResource TextBlockCabecalho}"/>
                         </Border>
 
-                        <TextBlock Grid.Column="2" 
-                                   Text="Categoria"
-                                   Foreground="{StaticResource Cinza3}"
-                                   TextWrapping="WrapWholeWords" 
-                                   Padding="0" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center"
-                                   FontSize="12" 
-                                   FontWeight="Normal"/>
+                        <TextBlock Grid.Column="2" Text="Categoria" Style="{StaticResource TextBlockCabecalho}"/>
                     </Grid>
-                
-                    <ListView x:Name="lstPrincipal"
-                              Grid.Row="1"
-                              Margin="0,0,0,16"
-                              Padding="0"
-                              CornerRadius="0,0,4,4"
-                              Background="{StaticResource Cinza11Transp50}"
-                              SelectionMode="Single"
-                              SelectionChanged="lstPrincipal_SelectionChanged">
                     
+                    <!-- Linhas -->
+                    <ListView x:Name="lstPrincipal" Grid.Row="1" Style="{StaticResource ListViewDataGrid}" SelectionChanged="lstPrincipal_SelectionChanged">
+
                         <ListView.ItemTemplate>
                             <DataTemplate >
-                                <Grid BorderBrush="{StaticResource Cinza8}" BorderThickness="0,1,0,1" Height="36" Margin="0" Padding="0">
+                                <Grid Style="{StaticResource GridLinha}">
+                                    
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Border Grid.Column="0" 
-                                            Margin="0" 
-                                            HorizontalAlignment="Stretch" 
-                                            VerticalAlignment="Stretch" 
-                                            BorderBrush="{StaticResource Cinza9Transp50}" 
-                                            BorderThickness="0,0,1,0" 
-                                            Padding="4,0">
-                                        
-                                        <TextBlock Text="{Binding PK_Categoria}" 
-                                                   Foreground="{StaticResource Cinza3}"
-                                                   TextWrapping="WrapWholeWords" 
-                                                   Padding="0" 
-                                                   HorizontalAlignment="Center" 
-                                                   VerticalAlignment="Center"
-                                                   FontSize="12" 
-                                                   FontWeight="Normal"/>
+                                    <Border Grid.Column="0" Style="{StaticResource BorderCelulaComSeparador}">
+                                        <TextBlock Text="{Binding PK_Categoria}" Style="{StaticResource TextBlockDadoCentralizado}"/>
                                     </Border>
 
-                                    <TextBlock Grid.Column="1" 
-                                               Text="{Binding Nome}"
-                                               Foreground="{StaticResource Cinza1}"
-                                               VerticalAlignment="Center"
-                                               FontSize="12"
-                                               Padding="8,0"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Nome}" Style="{StaticResource TextBlockDadoLinha}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
