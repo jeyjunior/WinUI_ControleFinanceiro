@@ -116,8 +116,7 @@ namespace CF.ViewModel.ViewModel
             if (operacao.DataTransacao != null)
             {
                 operacao.StatusPagamentoIcone = eStatusPagamento.Pago.ObterCodigoGlyph();
-                operacao.StatusPagamentoCor = eCor.Verde1.ObterCor();
-                operacao.DataVencimentoCor = eCor.Verde1.ObterCor();
+                operacao.OperacaoCor = eCor.Cinza1.ObterCor();
                 return;
             }
 
@@ -127,26 +126,22 @@ namespace CF.ViewModel.ViewModel
             if (vencimento < hoje)
             {
                 operacao.StatusPagamentoIcone = eStatusPagamento.Vencido.ObterCodigoGlyph();
-                operacao.StatusPagamentoCor = eCor.Vermelho1.ObterCor();
-                operacao.DataVencimentoCor = eCor.Vermelho1.ObterCor();
+                operacao.OperacaoCor = eCor.Vermelho3.ObterCor();
             }
             else if (vencimento == hoje)
             {
                 operacao.StatusPagamentoIcone = eStatusPagamento.EmAberto.ObterCodigoGlyph();
-                operacao.StatusPagamentoCor = eCor.Laranja.ObterCor();
-                operacao.DataVencimentoCor = eCor.Laranja.ObterCor();
+                operacao.OperacaoCor = eCor.Laranja.ObterCor();
             }
             else if (vencimento == hoje.AddDays(1))
             {
                 operacao.StatusPagamentoIcone = eStatusPagamento.EmAberto.ObterCodigoGlyph();
-                operacao.StatusPagamentoCor = eCor.Amarelo.ObterCor();
-                operacao.DataVencimentoCor = eCor.Amarelo.ObterCor();
+                operacao.OperacaoCor = eCor.Amarelo.ObterCor();
             }
             else
             {
                 operacao.StatusPagamentoIcone = eStatusPagamento.EmAberto.ObterCodigoGlyph();
-                operacao.StatusPagamentoCor = eCor.Cinza1.ObterCor();
-                operacao.DataVencimentoCor = eCor.Cinza1.ObterCor();
+                operacao.OperacaoCor = eCor.Cinza1.ObterCor();
             }
         }
         public void FormatarDadosDoResumo(OperacaoFinanceiraResumo resumo)
@@ -155,15 +150,15 @@ namespace CF.ViewModel.ViewModel
                 resumo = new OperacaoFinanceiraResumo();
 
             // RECEITA
-            resumo.ReceitaProgressoAtual = Convert.ToInt32(resumo.TotalReceitaPaga);
-            resumo.ReceitaProgressoMaximo = Convert.ToInt32(resumo.TotalReceita);
+            resumo.ReceitaProgressoAtual = Convert.ToInt64(resumo.TotalReceitaPaga);
+            resumo.ReceitaProgressoMaximo = Convert.ToInt64(resumo.TotalReceita);
             resumo.TotalReceitaPagaFormatado = resumo.TotalReceitaPaga.ToString("N2");
             resumo.TotalReceitaFormatado = resumo.TotalReceita.ToString("N2");
             resumo.PercentualReceita = (resumo.TotalReceita == 0) ? "0%" : ((float)(resumo.TotalReceitaPaga / resumo.TotalReceita) * 100).ToString("N2") + "%";
 
             // DESPESA
-            resumo.DespesaProgressoAtual = Convert.ToInt32(resumo.TotalDespesaPaga);
-            resumo.DespesaProgressoMaximo = Convert.ToInt32(resumo.TotalDespesa);
+            resumo.DespesaProgressoAtual = Convert.ToInt64(resumo.TotalDespesaPaga);
+            resumo.DespesaProgressoMaximo = Convert.ToInt64(resumo.TotalDespesa);
             resumo.TotalDespesaPagaFormatado = resumo.TotalDespesaPaga.ToString("N2");
             resumo.TotalDespesaFormatado = resumo.TotalDespesa.ToString("N2");
             resumo.PercentualDespesa = (resumo.TotalDespesa == 0) ? "0%" : ((float)(resumo.TotalDespesaPaga / resumo.TotalDespesa) * 100).ToString("N2") + "%";

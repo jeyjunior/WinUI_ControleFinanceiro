@@ -71,7 +71,7 @@ namespace CF.Domain.Enumeradores
 
         Amarelo,
         Laranja,
-
+        Laranja1,
         Roxo,
         Rosa,
         Violeta,

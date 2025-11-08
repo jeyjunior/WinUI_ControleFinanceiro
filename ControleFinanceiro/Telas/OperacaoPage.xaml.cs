@@ -39,7 +39,7 @@ namespace ControleFinanceiro.Telas
             _operacaoViewModel = Bootstrap.ServiceProvider.GetRequiredService<IOperacaoViewModel>();
 
             this.DataContext = _operacaoViewModel;
-            dtgPrincipal.ItemsSource = _operacaoViewModel.OperacaoFinanceiraCollection;
+            lstPrincipal.ItemsSource = _operacaoViewModel.OperacaoFinanceiraCollection;
         }
         #endregion
 
@@ -117,24 +117,9 @@ namespace ControleFinanceiro.Telas
                 await m.ShowAsync();
             }
         }
-        private void dtgPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _operacaoViewModel.PK_OperacaoFinanceiraSelecionada = 0;
-
-            if (dtgPrincipal.SelectedItem != null)
-            {
-                var operacaoFinanceiraGrid = dtgPrincipal.SelectedItem as OperacaoFinanceiraGrid;
-                if (operacaoFinanceiraGrid != null)
-                    _operacaoViewModel.PK_OperacaoFinanceiraSelecionada = operacaoFinanceiraGrid.PK_OperacaoFinanceira;
-            }
-        }
         private void btnPesquisar_Click(object sender, RoutedEventArgs e)
         {
             Pesquisar();
-        }
-        private void scroll_LayoutUpdated(object sender, object e)
-        {
-
         }
         private void cdpDataFinal_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
         {
@@ -164,5 +149,17 @@ namespace ControleFinanceiro.Telas
             _operacaoViewModel.Pesquisar(dataInicial, dataFinal);
         }
         #endregion
+
+        private void lstPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _operacaoViewModel.PK_OperacaoFinanceiraSelecionada = 0;
+
+            if (lstPrincipal.SelectedItem != null)
+            {
+                var operacaoFinanceiraGrid = lstPrincipal.SelectedItem as OperacaoFinanceiraGrid;
+                if (operacaoFinanceiraGrid != null)
+                    _operacaoViewModel.PK_OperacaoFinanceiraSelecionada = operacaoFinanceiraGrid.PK_OperacaoFinanceira;
+            }
+        }
     }
 }

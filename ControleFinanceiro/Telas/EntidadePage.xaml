@@ -84,7 +84,7 @@
 
                         <ListView.ItemTemplate>
                             <DataTemplate >
-                                <Grid BorderBrush="{StaticResource Cinza8}" BorderThickness="0,0,0,1" Margin="0" Padding="0">
+                                <Grid BorderBrush="{StaticResource Cinza8}" BorderThickness="0,1,0,1" Margin="0" Padding="0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="80"/>
                                         <ColumnDefinition Width="*"/>

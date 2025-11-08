@@ -14,12 +14,16 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid Background="{StaticResource Cinza10}" Padding="0">
+    <Grid Background="{StaticResource Cinza10}" Padding="0" Margin="8,0,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
         <Grid Grid.Column="0" Background="{StaticResource Cinza13}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" ColumnSpacing="2" CornerRadius="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

@@ -153,7 +153,7 @@
             </StackPanel>
 
             <TextBlock x:Name="txtTituloValor" Text="Valor:"  Grid.Row="0" Grid.Column="2"/>
-            <NumberBox x:Name="txtValor"  Grid.Row="1" Grid.Column="2" Text="{Binding Valor, Mode=TwoWay}" IsEnabled="{Binding HabilitarComponentes}"/>
+            <NumberBox x:Name="txtValor" Maximum="999999999.99"  Grid.Row="1" Grid.Column="2" Text="{Binding Valor, Mode=TwoWay}" IsEnabled="{Binding HabilitarComponentes}"/>
         </Grid>
 
 

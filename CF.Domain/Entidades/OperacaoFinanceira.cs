@@ -69,8 +69,8 @@ namespace CF.Domain.Entidades
         public string Categoria { get; set; }
         public string StatusPagamentoIcone { get; set; }
         public SolidColorBrush StatusOperacaoCor { get; set; }
-        public SolidColorBrush StatusPagamentoCor { get; set; }
-        public SolidColorBrush DataVencimentoCor { get; set; }  
+
+        public SolidColorBrush OperacaoCor { get; set; }
         public string StatusOperacaoIcone { get; set; }
     }
 
@@ -78,16 +78,16 @@ namespace CF.Domain.Entidades
     {
         public decimal TotalReceitaPaga { get; set; }
         public decimal TotalReceita { get; set; }
-        public int ReceitaProgressoAtual { get; set; }
-        public int ReceitaProgressoMaximo { get; set; }
+        public long ReceitaProgressoAtual { get; set; }
+        public long ReceitaProgressoMaximo { get; set; }
         public string TotalReceitaPagaFormatado { get; set; }
         public string TotalReceitaFormatado { get; set; }
         public string PercentualReceita { get; set; }
 
         public decimal TotalDespesaPaga { get; set; }
         public decimal TotalDespesa { get; set; }
-        public int DespesaProgressoAtual { get; set; }
-        public int DespesaProgressoMaximo { get; set; }
+        public long DespesaProgressoAtual { get; set; }
+        public long DespesaProgressoMaximo { get; set; }
         public string TotalDespesaPagaFormatado { get; set; }
         public string TotalDespesaFormatado { get; set; }
         public string PercentualDespesa { get; set; }
