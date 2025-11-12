@@ -154,5 +154,19 @@ namespace CF.Data.Dicionario
             return tipoColuna;
         }
 
+        public static string AplicarFormatacaoData(string sql)
+        {
+            switch (SQLTradutorFactory.TipoBancoDados)
+            {
+                case eTipoBancoDados.SQLServer:
+                    return $"SET DATEFORMAT DMY; {sql}";
+                case eTipoBancoDados.MySQL:
+                    return $"SET lc_time_names = 'pt_BR'; {sql}";
+                case eTipoBancoDados.SQLite:
+                    return sql;
+                default:
+                    return sql;
+            }
+        }
     }
 }

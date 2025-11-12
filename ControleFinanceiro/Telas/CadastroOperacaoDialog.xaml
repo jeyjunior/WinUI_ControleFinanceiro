@@ -103,7 +103,7 @@
                             VerticalContentAlignment="Center"
                             TextAlignment="Start"
                             Text="{Binding DataVencimentoFormatada, Mode=TwoWay}"
-                             IsEnabled="{Binding HabilitarComponentes}"
+                            IsEnabled="{Binding HabilitarComponentes}"
                             HorizontalAlignment="Stretch"
                             Margin="0,0,0,0"/>
 
@@ -114,7 +114,7 @@
                               Padding="0"
                               VerticalAlignment="Top"
                               Date="{Binding DataVencimento, Mode=TwoWay}"
-                                        IsEnabled="{Binding HabilitarComponentes}"
+                              IsEnabled="{Binding HabilitarComponentes}"
                               HorizontalAlignment="Stretch"
                               BorderThickness="1,1,1,1"/>
                 </Grid>

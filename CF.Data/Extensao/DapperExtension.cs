@@ -158,6 +158,19 @@ namespace CF.Data.Extensao
                 sql += $" WHERE {condicao}";
             }
 
+            return connection.ObterListaBase<T>(sql, parametros, true); 
+        }
+
+        public static IEnumerable<T> ObterLista<T>(this IDbConnection connection, string sql, object parametros = null, bool tratamentoDateFormat = true)
+        {
+            return connection.ObterListaBase<T>(sql, parametros, tratamentoDateFormat);
+        }
+
+        private static IEnumerable<T> ObterListaBase<T>(this IDbConnection connection, string sql, object parametros = null, bool aplicarFormatacaoData = false)
+        {
+            if (aplicarFormatacaoData)
+                sql = SQLTradutorFactory.AplicarFormatacaoData(sql);
+
             return parametros == null ? connection.Query<T>(sql) : connection.Query<T>(sql, parametros);
         }
 

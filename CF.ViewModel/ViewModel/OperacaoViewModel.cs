@@ -75,8 +75,8 @@ namespace CF.ViewModel.ViewModel
             if (OperacaoFinanceiraCollection.Any())
                 OperacaoFinanceiraCollection.Clear();
 
-            DateTime _inicial = dataInicial;
-            DateTime _final = dataFinal.AddDays(1);
+            DateTime _inicial = dataInicial.Date;
+            DateTime _final = dataFinal.Date.AddDays(1);
 
             var operacaoFinanceira = _operacaoFinanceiraRepository.ObterListaGrid("OperacaoFinanceira.DataVencimento >= @DataInicial AND OperacaoFinanceira.DataVencimento < @DataFinal", new {DataInicial = _inicial, DataFinal = _final});
 
@@ -116,7 +116,7 @@ namespace CF.ViewModel.ViewModel
             if (operacao.DataTransacao != null)
             {
                 operacao.StatusPagamentoIcone = eStatusPagamento.Pago.ObterCodigoGlyph();
-                operacao.OperacaoCor = eCor.Cinza1.ObterCor();
+                operacao.OperacaoCor = eCor.Verde1.ObterCor();
                 return;
             }
 

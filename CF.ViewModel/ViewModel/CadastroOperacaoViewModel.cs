@@ -87,6 +87,7 @@ namespace CF.ViewModel.ViewModel
         #endregion
 
         #region DataVencimento
+        private DateTimeOffset _dataMinimaLimite = Convert.ToDateTime("01/01/1900");
         public DateTimeOffset DataVencimento
         {
             get 
@@ -98,7 +99,15 @@ namespace CF.ViewModel.ViewModel
             } 
             set
             {
-                OperacaoFinanceiraSelecionada.DataVencimento = (value == null) ? DateTime.Now : Convert.ToDateTime(value.Date);
+                if (value == null || value <= _dataMinimaLimite)
+                {
+                    OperacaoFinanceiraSelecionada.DataVencimento = DateTime.Now;
+                }
+                else
+                {
+                    OperacaoFinanceiraSelecionada.DataVencimento = Convert.ToDateTime(value.Date);
+                }
+
                 PropriedadeAlterada(nameof(DataVencimentoFormatada));
             }
         }

@@ -1,4 +1,5 @@
-﻿using CF.Domain.Entidades;
+﻿using CF.Data.Extensao;
+using CF.Domain.Entidades;
 using CF.Domain.Enumeradores;
 using CF.Domain.Interfaces;
 using CF.Domain.Interfaces.Repository;
@@ -61,9 +62,7 @@ namespace CF.InfraData.Repository
 
             query += orderby;
 
-            var resultado = unitOfWork.Connection.Query<OperacaoFinanceiraGrid>(
-                sql: query,
-                param: parameters).ToList();
+            var resultado = unitOfWork.Connection.ObterLista<OperacaoFinanceiraGrid>(query,parameters, true).ToList();
 
             return resultado;
         }
